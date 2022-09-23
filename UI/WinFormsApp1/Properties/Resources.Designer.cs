@@ -183,6 +183,16 @@ namespace WinFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _3037565bfff30ab14386e78ee9140979 {
+            get {
+                object obj = ResourceManager.GetObject("3037565bfff30ab14386e78ee9140979", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _4_of_clubs {
             get {
                 object obj = ResourceManager.GetObject("4_of_clubs", resourceCulture);
@@ -456,6 +466,16 @@ namespace WinFormsApp1.Properties {
         internal static System.Drawing.Bitmap ace_of_spades2 {
             get {
                 object obj = ResourceManager.GetObject("ace_of_spades2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap back {
+            get {
+                object obj = ResourceManager.GetObject("back", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alonl\\source\\repos\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectUniqueName": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm-Project\\UI\\WinFormsApp1\\WinFormsApp1.csproj",
       "projectName": "WinFormsApp1",
-      "projectPath": "C:\\Users\\alonl\\source\\repos\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectPath": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm-Project\\UI\\WinFormsApp1\\WinFormsApp1.csproj",
       "packagesPath": "C:\\Users\\alonl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alonl\\source\\repos\\WinFormsApp1\\obj\\",
+      "outputPath": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm-Project\\UI\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
