@@ -1,3 +1,9 @@
 is_global = true
+build_property.ApplicationManifest = 
+build_property.StartupObject = 
+build_property.ApplicationDefaultFont = 
+build_property.ApplicationHighDpiMode = 
+build_property.ApplicationUseCompatibleTextRendering = 
+build_property.ApplicationVisualStyles = 
 build_property.RootNamespace = Hokm
-build_property.ProjectDir = C:\Users\alonl\source\repos\Hokm\
+build_property.ProjectDir = C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\

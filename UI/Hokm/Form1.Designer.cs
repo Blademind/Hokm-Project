@@ -9,7 +9,7 @@ namespace Hokm
         /// <summary>
         ///  Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -30,7 +30,7 @@ namespace Hokm
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -669,7 +669,7 @@ namespace Hokm
             // 
             // pictureBox53
             // 
-            this.pictureBox53.Image = global::Hokm.Properties.Resources.king_of_clubs;
+            //this.pictureBox53.Image = global::Hokm.Properties.Resources.king_of_clubs;
             this.pictureBox53.Location = new System.Drawing.Point(591, 509);
             this.pictureBox53.Name = "pictureBox53";
             this.pictureBox53.Size = new System.Drawing.Size(84, 133);
@@ -679,7 +679,7 @@ namespace Hokm
             // 
             // pictureBox54
             // 
-            this.pictureBox54.Image = global::Hokm.Properties.Resources.king_of_clubs;
+            //this.pictureBox54.Image = global::Hokm.Properties.Resources.king_of_clubs;
 
             this.pictureBox54.Location = new System.Drawing.Point(591, 281);
             this.pictureBox54.Name = "pictureBox54";
@@ -690,8 +690,8 @@ namespace Hokm
             // 
             // pictureBox55
             // 
-            this.pictureBox55.Image = global::Hokm.Properties.Resources.king_of_clubs;
-            this.pictureBox55.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            //this.pictureBox55.Image = global::Hokm.Properties.Resources.king_of_clubs;
+            //this.pictureBox55.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
             this.pictureBox55.Location = new System.Drawing.Point(681, 417);
             this.pictureBox55.Name = "pictureBox55";
@@ -702,8 +702,8 @@ namespace Hokm
             // 
             // pictureBox56
             // 
-            this.pictureBox56.Image = global::Hokm.Properties.Resources.king_of_clubs;
-            this.pictureBox56.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            //this.pictureBox56.Image = global::Hokm.Properties.Resources.king_of_clubs;
+            //this.pictureBox56.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             this.pictureBox56.Location = new System.Drawing.Point(452, 417);
             this.pictureBox56.Name = "pictureBox56";
             this.pictureBox56.Size = new System.Drawing.Size(133, 84);
@@ -714,11 +714,13 @@ namespace Hokm
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new Font("Arial", 24, FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(113, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 15);
             this.label1.TabIndex = 58;
-            this.label1.Text = "Hokm: ♠";
+            this.label1.Text = "";
+
             // 
             // Form1
             // 
@@ -842,68 +844,72 @@ namespace Hokm
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox56)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+            Hokm.Game game = new Hokm.Game(label1);
+
+
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
-        private PictureBox pictureBox5;
-        private PictureBox pictureBox6;
-        private PictureBox pictureBox7;
-        private PictureBox pictureBox8;
-        private PictureBox pictureBox9;
-        private PictureBox pictureBox10;
-        private PictureBox pictureBox11;
-        private PictureBox pictureBox12;
-        private PictureBox pictureBox13;
-        private PictureBox pictureBox14;
-        private PictureBox pictureBox15;
-        private PictureBox pictureBox16;
-        private PictureBox pictureBox17;
-        private PictureBox pictureBox18;
-        private PictureBox pictureBox19;
-        private PictureBox pictureBox20;
-        private PictureBox pictureBox21;
-        private PictureBox pictureBox22;
-        private PictureBox pictureBox23;
-        private PictureBox pictureBox24;
-        private PictureBox pictureBox25;
-        private PictureBox pictureBox26;
-        private PictureBox pictureBox27;
-        private PictureBox pictureBox28;
-        private PictureBox pictureBox29;
-        private PictureBox pictureBox30;
-        private PictureBox pictureBox31;
-        private PictureBox pictureBox32;
-        private PictureBox pictureBox33;
-        private PictureBox pictureBox34;
-        private PictureBox pictureBox35;
-        private PictureBox pictureBox36;
-        private PictureBox pictureBox37;
-        private PictureBox pictureBox38;
-        private PictureBox pictureBox39;
-        private PictureBox pictureBox40;
-        private PictureBox pictureBox41;
-        private PictureBox pictureBox42;
-        private PictureBox pictureBox43;
-        private PictureBox pictureBox44;
-        private PictureBox pictureBox45;
-        private PictureBox pictureBox46;
-        private PictureBox pictureBox47;
-        private PictureBox pictureBox48;
-        private PictureBox pictureBox49;
-        private PictureBox pictureBox50;
-        private PictureBox pictureBox51;
-        private PictureBox pictureBox52;
-        private PictureBox pictureBox53;
-        private PictureBox pictureBox54;
-        private PictureBox pictureBox55;
-        private PictureBox pictureBox56;
-        private Label label1;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public PictureBox pictureBox2;
+        public PictureBox pictureBox3;
+        public PictureBox pictureBox4;
+        public PictureBox pictureBox5;
+        public PictureBox pictureBox6;
+        public PictureBox pictureBox7;
+        public PictureBox pictureBox8;
+        public PictureBox pictureBox9;
+        public PictureBox pictureBox10;
+        public PictureBox pictureBox11;
+        public PictureBox pictureBox12;
+        public PictureBox pictureBox13;
+        public PictureBox pictureBox14;
+        public PictureBox pictureBox15;
+        public PictureBox pictureBox16;
+        public PictureBox pictureBox17;
+        public PictureBox pictureBox18;
+        public PictureBox pictureBox19;
+        public PictureBox pictureBox20;
+        public PictureBox pictureBox21;
+        public PictureBox pictureBox22;
+        public PictureBox pictureBox23;
+        public PictureBox pictureBox24;
+        public PictureBox pictureBox25;
+        public PictureBox pictureBox26;
+        public PictureBox pictureBox27;
+        public PictureBox pictureBox28;
+        public PictureBox pictureBox29;
+        public PictureBox pictureBox30;
+        public PictureBox pictureBox31;
+        public PictureBox pictureBox32;
+        public PictureBox pictureBox33;
+        public PictureBox pictureBox34;
+        public PictureBox pictureBox35;
+        public PictureBox pictureBox36;
+        public PictureBox pictureBox37;
+        public PictureBox pictureBox38;
+        public PictureBox pictureBox39;
+        public PictureBox pictureBox40;
+        public PictureBox pictureBox41;
+        public PictureBox pictureBox42;
+        public PictureBox pictureBox43;
+        public PictureBox pictureBox44;
+        public PictureBox pictureBox45;
+        public PictureBox pictureBox46;
+        public PictureBox pictureBox47;
+        public PictureBox pictureBox48;
+        public PictureBox pictureBox49;
+        public PictureBox pictureBox50;
+        public PictureBox pictureBox51;
+        public PictureBox pictureBox52;
+        public PictureBox pictureBox53;
+        public PictureBox pictureBox54;
+        public PictureBox pictureBox55;
+        public PictureBox pictureBox56;
+        public Label label1;
+
     }
 }
 

@@ -14,7 +14,6 @@ namespace Hokm
     {
         public Form1()
         {
-            Hokm.Game game = new Hokm.Game();
             InitializeComponent();
         }
 
