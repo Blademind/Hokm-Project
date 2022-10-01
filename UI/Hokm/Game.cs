@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace Hokm
 {
-    class Game 
+    public partial class Game : Form
     {
-        public Dictionary<Card, PictureBox> dict = new Dictionary<Card, PictureBox>();
-        public Game(Label label1){
+        private Dictionary<Card, PictureBox> dict = new Dictionary<Card, PictureBox>();
 
-            List<char> list = new List<char>() { '♠', '♥', '♦', '♣'};
+        public Game()
+        {
+            InitializeComponent();
+            List<char> list = new List<char>() { '♠', '♥', '♦', '♣' };
             Random rand = new Random();
             label1.Text = "Hokm: " + list[rand.Next(0, 5)];
 
@@ -27,12 +34,14 @@ namespace Hokm
                 Console.WriteLine(card);
             }
         }
+
     }
     class Card
     {
-        public string shape {get; set;}
-        public string value {get; set;}
-        public Card(string shape, string value) {
+        public string shape { get; set; }
+        public string value { get; set; }
+        public Card(string shape, string value)
+        {
             this.shape = shape;
             this.value = value;
         }

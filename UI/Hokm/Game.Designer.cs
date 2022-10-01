@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Hokm
 {
-    partial class Form1
+    partial class Game
     {
         /// <summary>
         ///  Required designer variable.
@@ -722,7 +722,7 @@ namespace Hokm
             this.label1.Text = "";
 
             // 
-            // Form1
+            // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -784,8 +784,8 @@ namespace Hokm
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Game";
+            this.Text = "Game";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -844,8 +844,6 @@ namespace Hokm
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox56)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            Hokm.Game game = new Hokm.Game(label1);
-
 
 
         }
