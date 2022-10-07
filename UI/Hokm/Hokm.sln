@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32126.315
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hokm", "Hokm.csproj", "{52E9A5DC-CF55-4C92-BF11-EEBC389537D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hokm", "Hokm.csproj", "{52E9A5DC-CF55-4C92-BF11-EEBC389537D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C190A093-B95F-414E-9F9F-9B5AE0993897}"
+	ProjectSection(SolutionItems) = preProject
+		Client.cs = Client.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

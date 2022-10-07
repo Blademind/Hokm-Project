@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace Hokm
 {
     public partial class Game : Form
     {
         private Dictionary<Card, PictureBox> dict = new Dictionary<Card, PictureBox>();
-
         public Game()
         {
             InitializeComponent();
