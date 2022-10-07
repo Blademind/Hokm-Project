@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Collections.Generic
 
 namespace Hokm
 {
@@ -57,5 +58,11 @@ namespace Hokm
 				Console.WriteLine(Encoding.ASCII.GetString(data));
 			}
 		}
+
+		public void MessageParser()
+        {
+			/* Parsing the starting message from the server */
+        }
+
 	}
 }
