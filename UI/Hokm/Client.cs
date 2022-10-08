@@ -88,11 +88,13 @@ namespace Hokm
 
 				if(new_msg.Length != 0)
 					Console.WriteLine(new_msg);
+
                 if (msg.Contains("played_suit:"))
                 {
                     Console.WriteLine("Its our turn");
                     PlayTurn(msg);
                 }
+
                 if (new_msg.Contains("The ruler is: ")){
 
 					if (clientId == ruler) {
