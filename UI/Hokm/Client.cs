@@ -21,7 +21,7 @@ namespace Hokm
         public string[] strong_suits;
 
 
-        public List<List<string>> deck { get; set; }
+        public List<string> deck = new List<string>();
 		public int ruler { get; set; }
 		public int clientId { get; set; }
 
@@ -85,9 +85,15 @@ namespace Hokm
 				string new_msg = this.msg;
 				Console.WriteLine("raw_msg: "+ new_msg);
 				new_msg = GameMessageParser(new_msg);
+
 				if(new_msg.Length != 0)
 					Console.WriteLine(new_msg);
-				if (new_msg.Contains("The ruler is: ")){
+                if (msg.Contains("played_suit:"))
+                {
+                    Console.WriteLine("Its our turn");
+                    SendCard();
+                }
+                if (new_msg.Contains("The ruler is: ")){
 
 					if (clientId == ruler) {
                         Console.WriteLine("We are the rulers");

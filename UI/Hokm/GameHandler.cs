@@ -1,33 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 using System.Net;
 using System.Text;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Hokm
 {
     public partial class Client
     {
+        public string[] cardShapeSuit;
 
         public dynamic GameMessageParser(string msg)
         {
             if (Char.IsUpper(msg[0])) // card deck
             {
-                deck = new List<List<string>>();
                 string[] cards = msg.Split("|");
-
-                foreach (string card in cards)
+                if (cards.Length == 14)
                 {
-                    string[] cardShapeSuit = card.Split("*");
-                    List<string> shapeSuit = new List<string>();
-                    foreach (string c in cardShapeSuit)
+                    cards = msg.Split(",");
+                    cards = cards[0].Split("|");
+                    foreach (string card in cards[5..13])
                     {
-                        shapeSuit.Add(c);
+                        deck.Add(card);
                     }
-                    deck.Add(shapeSuit);
+                    //int count = 0;
+                    //foreach (string c in deck)
+                    //{
+                    //    Console.WriteLine(count);
+                    //    count++;
+                    //    Console.WriteLine(c);
+                    //}
+                }
+                else
+                {
+                    foreach (string card in cards)
+                    {
+                        deck.Add(card);
+                    }
                 }
             }
-            else // ruler or client_id
+
+            if (msg.Split(":").Length > 0)
             {
                 string[] splitMessage = msg.Split(":");
                 if (splitMessage[0] == "ruler")
@@ -44,7 +60,6 @@ namespace Hokm
                     return "Your client ID is: " + clientId;
                 }
             }
-
             return "";
 
         }
@@ -58,8 +73,12 @@ namespace Hokm
 		}
 		public void SendCard()
 		{
-			/* create a card and send
-			 * includes SetSuit */
+            /* create a card and send */
+            Random r = new Random();
+            string msg_to_send = "play_card:" + deck[r.Next(0, deck.Count)];
+            byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
+            client_sock.Send(buffer);
+
 		}
         public void SendStrongSuit()
         {
