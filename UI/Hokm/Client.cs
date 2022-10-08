@@ -4,32 +4,32 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Hokm
 {
-	public class Client
+	public partial class Client
 	{
-		private Socket client_sock;
-		private string[] ip;
-		private IPEndPoint ip_port;
-		private IPEndPoint server_ip_port;
-		private Byte[] buf;
-		private int rec;
-		private int msg_size;
-		private string msg;
-		private string msg_frag;
-		private int port; // temp to delete
+        public Socket client_sock;
+        public IPEndPoint ip_port;
+        public IPEndPoint server_ip_port;
+        public Byte[] buf;
+        public int rec;
+        public int msg_size;
+        public string msg;
+        public string msg_frag;
+        public string[] strong_suits;
 
-		public List<List<string>> deck { get; set; }
-		public string ruler { get; set; }
-		public string clientId { get; set; }
+
+        public List<List<string>> deck { get; set; }
+		public int ruler { get; set; }
+		public int clientId { get; set; }
 
 		public Client(IPAddress ip, int port)
 		{
-			this.port = port; // to delete
 			this.client_sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.buf = new byte[8];
-			this.server_ip_port = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 55555);
+			this.server_ip_port = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
 			try
 			{
 				this.ip_port = new IPEndPoint(ip, port);
@@ -83,38 +83,20 @@ namespace Hokm
 					this.msg += this.msg_frag;
 				}
 				string new_msg = this.msg;
-				MessageParser(new_msg);
+				Console.WriteLine("raw_msg: "+ new_msg);
+				new_msg = GameMessageParser(new_msg);
+				if(new_msg.Length != 0)
+					Console.WriteLine(new_msg);
+				if (new_msg.Contains("The ruler is: ")){
+
+					if (clientId == ruler) {
+                        Console.WriteLine("We are the rulers");
+						SendStrongSuit();
+					}
+                }
 				this.buf = new byte[8];
 			}
 		}
 
-		public void MessageParser(string msg)
-        {
-            if (Char.IsUpper(msg[0])) // card deck
-            {
-                deck = new List<List<string>>();
-                string[] cards = msg.Split("|");
-
-                foreach (string card in cards)
-                {
-					string[] cardShapeSuit = card.Split("*");
-					List<string> shapeSuit = new List<string>();
-					foreach (string c in cardShapeSuit)
-                    {
-						shapeSuit.Add(c);
-                    }
-					deck.Add(shapeSuit);
-                }
-            }
-            else // ruler or client_id
-            {
-				string[] splitMessage = msg.Split(":");
-				if (splitMessage[0] == "ruler")
-					ruler = splitMessage[1];
-
-				else if (splitMessage[0] == "client_id")
-					clientId = splitMessage[1];
-            }
-        }
 	}
 }
