@@ -12,7 +12,7 @@ namespace Hokm
     public partial class Client
     {
         public string[] cardShapeSuit;
-        public bool first;
+        public string strongSuit;
 
         public dynamic GameMessageParser(string msg)
         {
@@ -22,6 +22,8 @@ namespace Hokm
                 if (cards.Length == 14)
                 {
                     cards = msg.Split(",");
+                    strongSuit = cards[2].Split(":")[1];
+
                     cards = cards[0].Split("|");
                     foreach (string card in cards[5..13])
                     {
@@ -70,16 +72,24 @@ namespace Hokm
 		}
 		public void PlayTurn(string played)
 		{
+            Console.WriteLine(strongSuit);
             /* Algorithmic function to play the turns */
             string playedSuit = played.Split(",")[0];
             string playedCards = played.Split(",")[1];
 
             // first turn
             if (playedSuit.Split(":")[1] == "")
-            { 
+            {
+                // parsing through deck checking for ace in non strong suit
+                foreach(string card in deck)
+                {
+                    if (card.Split("*")[1] == "rank_A" && card.Split("*")[0] != strongSuit)
+                    {
 
+                    }
+                }
             }
-            
+
 		}
 		public void SendCard()
 		{
