@@ -12,6 +12,7 @@ namespace Hokm
     public partial class Client
     {
         public string[] cardShapeSuit;
+        public bool first;
 
         public dynamic GameMessageParser(string msg)
         {
@@ -67,13 +68,22 @@ namespace Hokm
 		{
 			/* Runs the game loop */
 		}
-		public void PlayTurn()
+		public void PlayTurn(string played)
 		{
-			/* main algorythmics function */
+            /* Algorithmic function to play the turns */
+            string playedSuit = played.Split(",")[0];
+            string playedCards = played.Split(",")[1];
+
+            // first turn
+            if (playedSuit.Split(":")[1] == "")
+            { 
+
+            }
+            
 		}
 		public void SendCard()
 		{
-            /* create a card and send */
+            /* create a card and send to server */
             Random r = new Random();
             string msg_to_send = "play_card:" + deck[r.Next(0, deck.Count)];
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);

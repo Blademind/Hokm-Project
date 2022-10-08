@@ -29,7 +29,7 @@ namespace Hokm
 		{
 			this.client_sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.buf = new byte[8];
-			this.server_ip_port = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
+			this.server_ip_port = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 55555);
 			try
 			{
 				this.ip_port = new IPEndPoint(ip, port);
@@ -91,7 +91,7 @@ namespace Hokm
                 if (msg.Contains("played_suit:"))
                 {
                     Console.WriteLine("Its our turn");
-                    SendCard();
+                    PlayTurn(msg);
                 }
                 if (new_msg.Contains("The ruler is: ")){
 
