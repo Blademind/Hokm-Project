@@ -13,6 +13,7 @@ namespace Hokm
     {
         public string[] cardShapeSuit;
         public string strongSuit;
+        public string[] ranks = { "rank_2", "rank_3", "rank_4", "rank_5", "rank_6", "rank_7", "rank_8", "rank_9", "rank_10", "rank_J", "rank_Q", "rank_K", "rank_A" };
 
         public dynamic GameMessageParser(string msg)
         {
@@ -63,6 +64,7 @@ namespace Hokm
                     return "Your client ID is: " + clientId;
                 }
             }
+
             return "";
 
         }
@@ -70,38 +72,71 @@ namespace Hokm
 		{
 			/* Runs the game loop */
 		}
+        public int LowestCard(string rank)
+        {
+            /* Function returns first lowest card with specified rank of the deck */
+            foreach (string card in deck)
+            {
+                if (card.Split("*")[1] == rank && card.Split("*")[0] != strongSuit)
+                {
+                    return deck.FindIndex(a => a.Contains(card));
+                }
+            }
+            return -1;
+        }
 		public void PlayTurn(string played)
 		{
-            Console.WriteLine(strongSuit);
             /* Algorithmic function to play the turns */
+
             string playedSuit = played.Split(",")[0];
             string playedCards = played.Split(",")[1];
 
             // first turn
             if (playedSuit.Split(":")[1] == "")
             {
+                bool found = false;
+
                 // parsing through deck checking for ace in non strong suit
                 foreach(string card in deck)
                 {
                     if (card.Split("*")[1] == "rank_A" && card.Split("*")[0] != strongSuit)
                     {
-
+                        SendCard(deck.FindIndex(a => a.Contains(card)));
+                        found = true;
                     }
                 }
+                if (!found) // ace not found, sending lower card
+                {
+                    int index = 0;
+                    string rank = ranks[index];
+                    while (LowestCard(rank) == -1)
+                    {
+                        index += 1;
+                        rank = ranks[index];
+                    }
+                    SendCard(LowestCard(rank));
+                }
+            }
+            else // not first turn
+            {
+                SendCard(3);
             }
 
 		}
-		public void SendCard()
+		public void SendCard(int index)
 		{
             /* create a card and send to server */
-            Random r = new Random();
-            string msg_to_send = "play_card:" + deck[r.Next(0, deck.Count)];
+
+            // Random r = new Random();
+            string msg_to_send = "play_card:" + deck[index];
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
             client_sock.Send(buffer);
 
 		}
         public void SendStrongSuit()
         {
+            /* Function sends strong suit to server if ruler */
+
             strong_suits = new string[4] { "SPADES", "CLUBS", "DIAMONDS", "HEARTS" };
             Random rand = new Random();
             Console.WriteLine("Sending strong suit...");
