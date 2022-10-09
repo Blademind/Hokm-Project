@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Transactions;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Hokm
@@ -13,6 +16,7 @@ namespace Hokm
     {
         public string[] cardShapeSuit;
         public string strongSuit;
+        public List<string> usedCards = new List<string>();
         public string[] ranks = { "rank_2", "rank_3", "rank_4", "rank_5", "rank_6", "rank_7", "rank_8", "rank_9", "rank_10", "rank_J", "rank_Q", "rank_K", "rank_A" };
 
         public dynamic GameMessageParser(string msg)
@@ -97,7 +101,7 @@ namespace Hokm
                 bool found = false;
 
                 // parsing through deck checking for ace in non strong suit
-                foreach(string card in deck)
+                foreach(string card in deck.ToArray())
                 {
                     if (card.Split("*")[1] == "rank_A" && card.Split("*")[0] != strongSuit)
                     {
@@ -109,26 +113,104 @@ namespace Hokm
                 {
                     int index = 0;
                     string rank = ranks[index];
-                    while (LowestCard(rank) == -1)
+                    while (LowestCard(rank) == -1 && index<=12)
                     {
-                        index += 1;
                         rank = ranks[index];
+                        index += 1;
+
                     }
                     SendCard(LowestCard(rank));
                 }
             }
             else // not first turn
             {
-                SendCard(3);
+                bool found = false;
+                string suit = playedSuit.Split(":")[1];
+                foreach (string card in deck.ToArray())
+                {
+                    if (card.Split("*")[1] == "rank_A" && card.Split("*")[0] != strongSuit && card.Split("*")[0] == suit)
+                    {
+                        SendCard(deck.FindIndex(a => a.Contains(card)));
+                        found = true;
+                    }
+                }
+                if (!found) // ace not found, sending lower card
+                {
+                    List<string> availableSuits = new List<string>() {"DIAMONDS", "SPADES", "CLUBS", "HEARTS"};
+                    availableSuits.Remove(suit);
+                    int index = 0;
+                    string rank = ranks[index];
+                    while (FindSuit(suit, rank) == -1 && index <= 12)
+                    {
+                        rank = ranks[index];
+                        index += 1;
+                    }
+                    if(index == 13) // card not found
+                    {
+                        suit = strongSuit;
+                        availableSuits.Remove(suit);
+                        index = 0;
+                        rank = ranks[index];
+                        while (FindSuit(suit, rank) == -1 && index <= 12)
+                        {
+                            rank = ranks[index];
+                            index += 1;
+                        }
+                        if(index == 13) // card not found
+                        {
+                            suit = availableSuits[0];
+                            availableSuits.Remove(availableSuits[0]);
+                            index = 0;
+                            rank = ranks[index];
+                            while (FindSuit(suit, rank) == -1 && index <= 12)
+                            {
+                                rank = ranks[index];
+                                index += 1;
+                            }
+                            if(index == 13) // card not found
+                            {
+                                suit = availableSuits[0];
+                                availableSuits.Remove(availableSuits[0]);
+                                index = 0;
+                                rank = ranks[index];
+                                while (FindSuit(suit, rank) == -1 && index <= 12)
+                                {
+                                    rank = ranks[index];
+                                    index += 1;
+                                }
+                                SendCard(FindSuit(suit, rank));
+                            }
+                            else  // a card was found
+                                SendCard(FindSuit(suit, rank));
+                         }
+                        else
+                            SendCard(FindSuit(suit, rank));
+
+                    }
+                    else 
+                        SendCard(FindSuit(suit, rank));
+                }
             }
 
 		}
+        public int FindSuit(string suit, string rank)
+        {
+            foreach (string card in deck)
+            {
+                if (card.Split("*")[0] == suit && rank == card.Split("*")[1])
+                {
+                    return deck.FindIndex(a => a.Contains(card));
+                }
+            }
+            return -1;
+        }
 		public void SendCard(int index)
 		{
             /* create a card and send to server */
 
             // Random r = new Random();
             string msg_to_send = "play_card:" + deck[index];
+            deck.Remove(deck[index]);
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
             client_sock.Send(buffer);
 
