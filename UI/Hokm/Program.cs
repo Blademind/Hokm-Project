@@ -17,7 +17,6 @@ namespace Hokm
         [STAThread]
         static void Main()
         {
-            Client cli0 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 50000);
             Client cli1 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 1234);
             Client cli2 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 1235);
             Client cli3 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 1236);
