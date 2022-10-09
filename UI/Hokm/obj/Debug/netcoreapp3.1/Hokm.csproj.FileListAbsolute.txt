@@ -32,3 +32,21 @@ C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.
 C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
 C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
 C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Game.resources
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Game.resources
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources

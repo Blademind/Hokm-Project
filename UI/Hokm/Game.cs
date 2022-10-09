@@ -14,7 +14,7 @@ namespace Hokm
             Random rand = new Random();
             label1.Text = "Hokm: " + list[rand.Next(0, 5)];
 
-            string dir = @"C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\Cards";
+            string dir = @"D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\Cards";
             string[] files = Directory.GetFiles(dir, "*.png");
             string name = "";
 
