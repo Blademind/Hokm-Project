@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Doron\\עבודות יב\\ערן\\HOKM\\Hokm-Project\\UI\\Hokm\\Hokm.csproj": {}
+    "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj": {}
   },
   "projects": {
-    "D:\\Doron\\עבודות יב\\ערן\\HOKM\\Hokm-Project\\UI\\Hokm\\Hokm.csproj": {
+    "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Doron\\עבודות יב\\ערן\\HOKM\\Hokm-Project\\UI\\Hokm\\Hokm.csproj",
+        "projectUniqueName": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj",
         "projectName": "Hokm",
-        "projectPath": "D:\\Doron\\עבודות יב\\ערן\\HOKM\\Hokm-Project\\UI\\Hokm\\Hokm.csproj",
+        "projectPath": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Doron\\עבודות יב\\ערן\\HOKM\\Hokm-Project\\UI\\Hokm\\obj\\",
+        "outputPath": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
