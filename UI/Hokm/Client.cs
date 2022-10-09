@@ -30,6 +30,10 @@ namespace Hokm
 			this.client_sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.buf = new byte[8];
 			this.server_ip_port = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
+			for (int i = 0; i < 4; i++)
+			{
+				idCard[i] = new List<string>();
+			}
 			try
 			{
 				this.ip_port = new IPEndPoint(ip, port);
@@ -88,7 +92,6 @@ namespace Hokm
 
 				if(new_msg.Length != 0)
 					Console.WriteLine(new_msg);
-
                 if (msg.Contains("played_suit:"))
                 {
                     Console.WriteLine("Its our turn");
@@ -96,6 +99,16 @@ namespace Hokm
                 }
 				if(msg == "GAME_OVER")
 				{
+					foreach (var card in idCard)
+					{
+						Console.Write("[" + card.Key + ": ");
+
+                        foreach (var card2 in card.Value)
+						{
+							Console.Write(card2+ ", ");
+						}
+						Console.Write("] ");
+					}
 					break;
 				}
                 if (new_msg.Contains("The ruler is: ")){
