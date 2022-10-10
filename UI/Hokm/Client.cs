@@ -10,15 +10,15 @@ namespace Hokm
 {
 	public partial class Client
 	{
-        public Socket client_sock;
-        public IPEndPoint ip_port;
-        public IPEndPoint server_ip_port;
+        public Socket clientSock;
+        public IPEndPoint ipPort;
+        public IPEndPoint serverIpPort;
         public Byte[] buf;
         public int rec;
-        public int msg_size;
+        public int msgSize;
         public string msg;
-        public string msg_frag;
-        public string[] strong_suits;
+        public string msgFrag;
+        public string[] strongSuits;
 
 
         public List<string> deck = new List<string>();
@@ -27,16 +27,16 @@ namespace Hokm
 
 		public Client(IPAddress ip, int port)
 		{
-			this.client_sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.buf = new byte[8];
-			this.server_ip_port = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
+			this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 55555);
 			for (int i = 0; i < 4; i++)
 			{
 				idCard[i] = new List<string>();
 			}
 			try
 			{
-				this.ip_port = new IPEndPoint(ip, port);
+				this.ipPort = new IPEndPoint(ip, port);
 			}
 			catch (Exception)
 			{
@@ -49,7 +49,7 @@ namespace Hokm
 		{
 			try
 			{
-				client_sock.Connect(this.server_ip_port);
+				clientSock.Connect(this.serverIpPort);
 				Console.WriteLine("connected to server");
 				Thread th = new Thread(new ThreadStart(Listen));
 				th.Start();
@@ -64,27 +64,27 @@ namespace Hokm
 		{
 			while (true)
 			{
-				this.rec = this.client_sock.Receive(this.buf);
+				this.rec = this.clientSock.Receive(this.buf);
 				byte[] data = new byte[this.rec];
 				Array.Copy(this.buf, data, this.rec);
 				this.msg = "";
-				this.msg_size = Int32.Parse(Encoding.ASCII.GetString(data));
-				while (this.msg.Length < this.msg_size)
+				this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data));
+				while (this.msg.Length < this.msgSize)
 				{
-					this.buf = new byte[this.msg_size - msg.Length];
+					this.buf = new byte[this.msgSize - msg.Length];
 					try
 					{
-						this.rec = this.client_sock.Receive(this.buf);
+						this.rec = this.clientSock.Receive(this.buf);
 						data = new byte[this.rec];
 						Array.Copy(this.buf, data, this.rec);
-						this.msg_frag = Encoding.ASCII.GetString(data);
+						this.msgFrag = Encoding.ASCII.GetString(data);
 					}
 					catch
 					{
 						Console.WriteLine("Error");
 						break;
 					}
-					this.msg += this.msg_frag;
+					this.msg += this.msgFrag;
 				}
 				string new_msg = this.msg;
 				Console.WriteLine("raw_msg: "+ new_msg);
@@ -115,7 +115,6 @@ namespace Hokm
 
 					if (clientId == ruler) {
                         Console.WriteLine("We are the rulers");
-						SendStrongSuit();
 					}
                 }
 				this.buf = new byte[8];

@@ -20,11 +20,17 @@ namespace Hokm
         public List<string> usedCards = new List<string>();
         public string[] ranks = { "rank_2", "rank_3", "rank_4", "rank_5", "rank_6", "rank_7", "rank_8", "rank_9", "rank_10", "rank_J", "rank_Q", "rank_K", "rank_A" };
         public Dictionary<int, List<string>> idCard = new Dictionary<int, List<string>>() {  };
+        public string[] startingDeck;
         public dynamic GameMessageParser(string msg)
         {
             if (Char.IsUpper(msg[0])) // card deck
             {
                 string[] cards = msg.Split("|");
+                if (cards.Length == 5 && clientId == ruler) // starting deck for ruler
+                {
+                    startingDeck = cards;
+                    SendStrongSuit();
+                }
                 if (cards.Length == 14)
                 {
                     cards = msg.Split(",");
@@ -98,7 +104,6 @@ namespace Hokm
             }
             return -1;
         }
-
 		public void PlayTurn(string played)
 		{
             /* Algorithmic function to play the turns */
@@ -246,7 +251,7 @@ namespace Hokm
                                 }
                             }
                         }
-                        else if(flag)
+                        else if (flag)
                         {
                             Console.WriteLine("3: " + deck[CardByRank(rank)]);
                             SendCard(CardByRank(rank));
@@ -352,21 +357,81 @@ namespace Hokm
             string msg_to_send = "play_card:" + deck[index];
             deck.Remove(deck[index]);
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
-            client_sock.Send(buffer);
+            clientSock.Send(buffer);
 
 		}
         public void SendStrongSuit()
         {
             /* Function sends strong suit to server if ruler */
 
-            strong_suits = new string[4] { "SPADES", "CLUBS", "DIAMONDS", "HEARTS" };
-            Random rand = new Random();
+            strongSuits = new string[4] { "SPADES", "CLUBS", "DIAMONDS", "HEARTS" };
+            List<string> startingDeckSuits = new List<string>();
+            List<string> compareDeck = new List<string>();
+            int sendingIndex = 0;
+
+            // Adding suits
+            foreach(string card in startingDeck)
+            {
+                startingDeckSuits.Add(card.Split("*")[0]);
+            }
+            Dictionary<string, int> s = startingDeckSuits.GroupBy(p => p).OrderByDescending(r => r.Count()).ToDictionary(q => q.Key, q => q.Count());
+
+            // Spposed to the the biggest value
+            int MaxValue = s.First().Value;
+            string key = s.First().Key;
+            bool found = false;
+            foreach(var item in s)
+            {
+                // If there are suits that have the same number of cards in the deck
+                if (item.Value == MaxValue)
+                {
+                    found = true;
+                    foreach(string card in startingDeck)
+                    {
+                        // Adding the cards that have the same amound of suits in the deck
+                        if (card.Split("*")[0] == key || card.Split("*")[0] == item.Key)
+                        {
+                            compareDeck.Add(card);
+                            break;
+                        }
+                    }
+                } 
+            }
+
+            // There is only one suit with more cards --> sending first index of startingDeck dictionary
+            if (!found)
+            {
+                sendingIndex = Array.IndexOf(strongSuits, key);
+            }
+
+            // Now, checking or highest card and sending it's suit as highest index
+            else 
+            {
+                List<int> indexes = new List<int>();
+                foreach(string card in compareDeck)
+                {
+                    indexes.Add(Array.IndexOf(ranks, card.Split("*")[1]));
+                }
+
+                // The index of the maximum rank in indexes will be the same index as in compareDeck
+                var maxIndex = indexes.IndexOf(indexes.Max());
+                for (int i = 0; i < compareDeck.Count(); i++)
+                {
+                    if(i == maxIndex)
+                    {
+                        sendingIndex = Array.IndexOf(strongSuits, compareDeck[i].Split("*")[0]);
+                    }
+                }
+            }
+
+            // Sending strong suit
             Console.WriteLine("Sending strong suit...");
-            Console.WriteLine("set_strong:" + strong_suits[rand.Next(0, 4)]);
-            string msg_to_send = "set_strong:" + strong_suits[rand.Next(0, 4)];
+            Console.WriteLine("set_strong:" + strongSuits[sendingIndex]);
+            string msg_to_send = "set_strong:" + strongSuits[sendingIndex];
             Console.WriteLine(msg_to_send.Length.ToString("D8") + msg_to_send);
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8")+msg_to_send);
-            client_sock.Send(buffer);
+            clientSock.Send(buffer);
+
         }
 		public List<List<string>> GetDeck()
         {
