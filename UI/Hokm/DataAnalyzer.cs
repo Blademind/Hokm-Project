@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Text;
+
+namespace Hokm
+{
+    class DataAnalyzer
+    {
+        private string startData;
+        private string clientID;
+        private string rulerID;
+        public DataAnalyzer(string clientID,string rulerID, string startData)
+        {
+            this.clientID = clientID;
+            this.rulerID = rulerID;
+            this.startData = startData;
+        }
+
+        public string ClearString(string data)
+        {
+            List<string> charsToRemove = new List<string>() { "[", "]", " "};
+            foreach (var c in charsToRemove)
+            {
+                data = data.Replace(c, string.Empty);
+            }
+            return data.ToLower();
+        }
+
+        public string GetClientID()
+        {
+            return this.clientID;
+        }
+
+        public string GetRuler()
+        {
+            return this.rulerID;
+        }
+
+        public string GetStrong()
+        {
+            List<string> list = new List<string>() { "♠", "♣", "♦", "♥️" };
+            int from = this.startData.IndexOf("strong:") + "strong:".Length;
+            string strng = ClearString(this.startData.Substring(from));
+
+            switch (strng)
+            {
+                case "spades":
+                    return list[0];
+                case "clubs":
+                    return list[1];
+                case "diamonds":
+                    return list[2];
+                case "hearts":
+                    return list[3];
+            }
+            return strng;
+        }
+
+        public string[] GetTeams()
+        {
+            int pFrom = this.startData.IndexOf(",teams:") + ",teams:".Length;
+            int pTo = this.startData.LastIndexOf(",strong");
+
+            string teamsString = ClearString(this.startData.Substring(pFrom, pTo - pFrom));
+
+            string[] teams = teamsString.Split('|');
+
+            return teams;
+        }
+
+
+    }
+}
