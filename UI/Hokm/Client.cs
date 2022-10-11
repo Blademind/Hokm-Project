@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using System.Linq;
 
 namespace Hokm
 {
@@ -69,7 +71,7 @@ namespace Hokm
 				byte[] data = new byte[this.rec];
 				Array.Copy(this.buf, data, this.rec);
 				this.msg = "";
-				this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data));
+				this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data));  // the message's size
 				while (this.msg.Length < this.msgSize)
 				{
 					this.buf = new byte[this.msgSize - msg.Length];
@@ -93,27 +95,28 @@ namespace Hokm
 
 				if(new_msg.Length != 0)
 					Console.WriteLine(new_msg);
+
+				// summary has been sent, it's our turn
                 if (msg.Contains("played_suit:"))
                 {
                     Console.WriteLine("Its our turn");
                     PlayTurn(msg);
                 }
+
+				// game has ended
 				if(msg == "GAME_OVER")
 				{
-					foreach (var card in idCard)
+                    // print all the cards played during the game
+                    foreach (var card in idCard)
 					{
 						Console.Write("[" + card.Key + ": ");
-
-                        foreach (var card2 in card.Value)
-						{
-							Console.Write(card2+ ", ");
-						}
+						card.Value.ForEach(card => Console.Write(card + ", "));  
 						Console.Write("] ");
 					}
 					break;
 				}
+				// checks whether we are the rulers
                 if (new_msg.Contains("The ruler is: ")){
-
 					if (clientId == ruler) {
                         Console.WriteLine("We are the rulers");
 					}
