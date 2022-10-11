@@ -51,8 +51,9 @@ namespace Hokm
 			{
 				clientSock.Connect(this.serverIpPort);
 				Console.WriteLine("connected to server");
-				Thread th = new Thread(new ThreadStart(Listen));
-				th.Start();
+				Listen();
+				//Thread th = new Thread(new ThreadStart(Listen));
+				//th.Start();
 			}
 			catch (SocketException)
 			{
