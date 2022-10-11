@@ -88,10 +88,6 @@ namespace Hokm
             return "";
 
         }
-        public void GameLoop()
-        {
-            /* Runs the game loop */
-        }
         public int CardByRank(string rank)
         {
             /* Function returns first lowest card with specified rank of the deck */
@@ -486,7 +482,10 @@ namespace Hokm
         }
         public void SendCard(int index)
         {
-            /* create a card and send to server */
+            ///<summary>
+            /// Functions sends card to server within the deck list
+            /// param index --> the index from the deck list
+            ///</summary>
 
             // Random r = new Random();
             string msg_to_send = "play_card:" + deck[index];
@@ -498,7 +497,9 @@ namespace Hokm
         }
         public void SendStrongSuit()
         {
-            /* Function sends strong suit to server if ruler */
+            ///<summary>
+            /// Function sends strong suit to server if chosen as ruler 
+            ///</summary> 
 
             strongSuits = new string[4] { "SPADES", "CLUBS", "DIAMONDS", "HEARTS" };
             List<string> startingDeckSuits = new List<string>();
