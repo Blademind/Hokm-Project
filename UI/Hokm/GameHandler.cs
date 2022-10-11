@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -95,12 +96,25 @@ namespace Hokm
         public int CardByRank(string rank)
         {
             /* Function returns first lowest card with specified rank of the deck */
-            foreach (string card in deck)
+            bool haveStrong = true;
+            foreach (var card in deck)
             {
-                if (card.Split("*")[1] == rank && card.Split("*")[0] != strongSuit)
+                if (card.Split("*")[0] != strongSuit)
+                    haveStrong = false;
+            }
+            if (haveStrong)
+            {
+                deck = (List<string>)deck.OrderBy(a => Array.IndexOf(ranks, a.Split("*")[1]));
+                return 0;
+            }
+            else {
+                foreach (string card in deck)
                 {
-                    return deck.FindIndex(a => a.Contains(card));
-                }
+                    if (card.Split("*")[1] == rank && card.Split("*")[0] != strongSuit)
+                    {
+                        return deck.FindIndex(a => a.Contains(card));
+                    }
+                } 
             }
             return -1;
         }
@@ -115,26 +129,22 @@ namespace Hokm
             if (playedSuit == "")
             {
                 bool found = false;
-
                 // parsing through deck checking for ace in non strong suit
-                foreach(string card in deck.ToArray())
+                index = 12;
+                rank = ranks[index];
+                int highestPossible = CardByRank(rank);
+                while (highestPossible == -1 && index >= 0)
                 {
-                    if (card.Split("*")[1] == "rank_A" && card.Split("*")[0] != strongSuit)
-                    {
-                        SendCard(deck.FindIndex(a => a.Contains(card)));
-                        found = true;
-                    }
-                }
-                if (!found) // ace not found, sending lower card
-                {
-                    while (CardByRank(rank) == -1 && index<=12)
-                    {
-                        rank = ranks[index];
-                        index += 1;
+                    rank = ranks[index];
 
-                    }
-                    SendCard(CardByRank(rank));
+                    index--;
+                    highestPossible = CardByRank(rank);
                 }
+                if(highestPossible != -1)
+                {
+                    SendCard(highestPossible);
+                }
+
             }
             else // not first turn
             {
@@ -151,35 +161,42 @@ namespace Hokm
                 if (!found) // ace not found, sending lower card
                 {
                     List<string> availableSuits = new List<string>() { "DIAMONDS", "SPADES", "CLUBS", "HEARTS" };
+                    int cardToSend;
                     if (playedCards.Count(s => s == "") == 1) // 4th player
                     {
+                        bool flag = false;
                         suit = playedSuit;
                         index = 12;
-                        while(CardByRank(rank) == -1 && index >= 0) // find highest rank possible
+                        int size;
+                        List<int> candidates = new List<int>();
+                        cardToSend = FindSuit(suit,rank);                        
+                        while(cardToSend == -1 && index >= 0) // find highest rank possible
                         {
                             rank = ranks[index];
                             index--;
+                            cardToSend = FindSuit(suit, rank);
                         }
-                        int size = Array.IndexOf(ranks, deck[CardByRank(rank)].Split("*")[1]);
-                        bool flag = true;
-                        foreach (string card in playedCards)
+                        candidates.Add(cardToSend);
+
+                        // is any card in played cards bigger than my biggest card in the played suit?
+                        if (cardToSend != -1)
                         {
-                            if (card != "")
+                            size = Array.IndexOf(ranks, deck[cardToSend].Split("*")[1]);
+                            flag = true;
+                            foreach (string card in playedCards)
                             {
-                                if(FindSuit(rank, suit) != -1)
+                                if (card != "")
                                 {
-                                    Console.WriteLine(playedSuit + ", " + deck[FindSuit(rank, suit)].Split("*")[0]);
-                                    if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == deck[FindSuit(rank, suit)].Split("*")[0])
+                                    Console.WriteLine(playedSuit + ", " + deck[cardToSend].Split("*")[0]);
+                                    if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == deck[cardToSend].Split("*")[0])
                                     {
-                                        flag = false; break;
+                                        flag = false; // flag false if any card is bigger than my biggest
+                                        break;
                                     }
-                                }
-                                else {
-                                    break;
                                 }
                             }
                         }
-                        if (FindSuit(suit, rank) == -1 || !flag) // card not found
+                        if (cardToSend == -1 || !flag) // card not found
                         {
                             bool temp_flag = true;
                             suit = playedSuit;
@@ -189,138 +206,163 @@ namespace Hokm
                                 flag = true;
                                 index = 0;
                                 rank = ranks[index];
-                                while (FindSuit(suit, rank) == -1 && index <= 12)
+                                cardToSend = FindSuit(suit, rank);
+                                while (cardToSend == -1 && index <= 12)
                                 {
                                     rank = ranks[index];
                                     index += 1;
+                                    cardToSend = FindSuit(suit, rank);
                                 }
-                                if(FindSuit(suit, rank) != -1)
+                                if (cardToSend != -1)
                                 {
                                     flag = false;
                                     temp_flag = false;
-                                    Console.WriteLine("1: " + deck[FindSuit(suit, rank)]);
-                                    SendCard(FindSuit(suit, rank));
+                                    Console.WriteLine("1: " + deck[cardToSend]);
+                                    SendCard(cardToSend);
                                 }
                             }
-                            if (flag || FindSuit(suit,rank) == -1 && temp_flag)
+                            if (flag || cardToSend == -1 && temp_flag)
                             {
                                 suit = strongSuit;
                                 availableSuits.Remove(suit);
                                 index = 0;
                                 rank = ranks[index];
-                                while (FindSuit(suit, rank) == -1 && index <= 12)
+                                cardToSend = FindSuit(suit, rank);
+                                while (cardToSend == -1 && index <= 12)
                                 {
                                     rank = ranks[index];
                                     index += 1;
+                                    cardToSend = FindSuit(suit, rank);
+
                                 }
-                                if (FindSuit(suit, rank) == -1) // card not found
+                                if (cardToSend == -1) // card not found
                                 {
                                     suit = availableSuits[0];
                                     availableSuits.Remove(availableSuits[0]);
                                     index = 0;
                                     rank = ranks[index];
-                                    while (FindSuit(suit, rank) == -1 && index <= 12)
+                                    cardToSend = FindSuit(suit, rank);
+                                    while (cardToSend == -1 && index <= 12)
                                     {
                                         rank = ranks[index];
                                         index += 1;
+                                        cardToSend = FindSuit(suit, rank);
                                     }
-                                    if (FindSuit(suit, rank) == -1) // card not found
+                                    if (cardToSend == -1) // card not found
                                     {
                                         suit = availableSuits[0];
                                         availableSuits.Remove(availableSuits[0]);
                                         index = 0;
                                         rank = ranks[index];
-                                        while (FindSuit(suit, rank) == -1 && index <= 12)
+                                        cardToSend = FindSuit(suit, rank);
+                                        while (cardToSend == -1 && index <= 12)
                                         {
-                                            rank = ranks[index];
                                             index += 1;
+                                            rank = ranks[index];
+
+                                            cardToSend = FindSuit(suit, rank);
                                         }
-                                        Console.WriteLine("4: "+deck[FindSuit(suit, rank)]);
-                                        SendCard(FindSuit(suit, rank));
+                                        Console.WriteLine("4: "+deck[cardToSend]);
+                                        SendCard(cardToSend);
                                     }
                                     else  // a card was found
                                     {
-                                        Console.WriteLine(deck[FindSuit(suit, rank)]);
-                                        SendCard(FindSuit(suit, rank));
+                                        Console.WriteLine(deck[cardToSend]);
+                                        SendCard(cardToSend);
                                     }
                                 }
                                 else
                                 {
-                                    Console.WriteLine("2: " + deck[FindSuit(suit, rank)]);
-                                    SendCard(FindSuit(suit, rank));
+                                    Console.WriteLine("2: " + deck[cardToSend]);
+                                    SendCard(cardToSend);
                                 }
                             }
                         }
+                        // highest which wins all others
                         else if (flag)
                         {
-                            Console.WriteLine("3: " + deck[CardByRank(rank)]);
-                            SendCard(CardByRank(rank));
+                            Console.WriteLine("3: " + deck[cardToSend]);
+                            SendCard(cardToSend);
                         }
 
                     }
-                    else
+                    else  // 2nd or 3rd in line
                     {
                         availableSuits.Remove(suit);
                         index = 0;
                         rank = ranks[index];
-                        while (FindSuit(suit, rank) == -1 && index <= 12)
+                        cardToSend = FindSuit(suit, rank);
+                        while (cardToSend == -1 && index <= 12)
                         {
                             rank = ranks[index];
                             index += 1;
+                            cardToSend = FindSuit(suit, rank);
+
                         }
-                        if (FindSuit(suit, rank) == -1) // card not found
+                        if (cardToSend == -1) // card not found
                         {
                             suit = strongSuit;
                             availableSuits.Remove(suit);
                             index = 0;
                             rank = ranks[index];
-                            while (FindSuit(suit, rank) == -1 && index <= 12)
+                            cardToSend = FindSuit(suit, rank);
+
+                            while (cardToSend == -1 && index <= 12)
                             {
                                 rank = ranks[index];
                                 index += 1;
+                                cardToSend = FindSuit(suit, rank);
                             }
-                            if (FindSuit(suit, rank) == -1) // card not found
+                            if (cardToSend == -1) // card not found
                             {
                                 suit = availableSuits[0];
                                 availableSuits.Remove(availableSuits[0]);
                                 index = 0;
                                 rank = ranks[index];
-                                while (FindSuit(suit, rank) == -1 && index <= 12)
+                                cardToSend = FindSuit(suit, rank);
+
+                                while (cardToSend == -1 && index <= 12)
                                 {
                                     rank = ranks[index];
                                     index += 1;
+                                    cardToSend = FindSuit(suit, rank);
+
                                 }
-                                if (FindSuit(suit, rank) == -1) // card not found
+                                if (cardToSend == -1) // card not found
                                 {
                                     suit = availableSuits[0];
                                     availableSuits.Remove(availableSuits[0]);
                                     index = 0;
                                     rank = ranks[index];
-                                    while (FindSuit(suit, rank) == -1 && index <= 12)
+                                    cardToSend = FindSuit(suit, rank);
+
+                                    while (cardToSend == -1 && index <= 12)
                                     {
                                         rank = ranks[index];
                                         index += 1;
+                                        cardToSend = FindSuit(suit, rank);
+
                                     }
-                                    Console.WriteLine("22: " + deck[FindSuit(suit, rank)]);
-                                    SendCard(FindSuit(suit, rank));
+                                    Console.WriteLine("22: " + deck[cardToSend]);
+                                    SendCard(cardToSend);
                                 }
                                 else  // a card was found
                                 {
                                     Console.WriteLine("44: " + deck[FindSuit(suit, rank)]);
-                                    SendCard(FindSuit(suit, rank));
+                                    SendCard(cardToSend);
                                 
                                 }
                             }
                             else
                             {
                                 Console.WriteLine("33: " + deck[FindSuit(suit, rank)]);
-                                SendCard(FindSuit(suit, rank));
+                                SendCard(cardToSend);
                             }                            
                             }
                         else
                             {
                             Console.WriteLine("11: " + deck[FindSuit(suit, rank)]);
-                            SendCard(FindSuit(suit, rank));
+                            SendCard(cardToSend);
                         }
                     }
                 }
