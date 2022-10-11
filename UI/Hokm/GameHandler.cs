@@ -132,10 +132,12 @@ namespace Hokm
             string rank = ranks[index];
             string playedSuit = played.Split(",")[0].Split(":")[1];
             string[] playedCards = played.Split(",")[1].Split(":")[1].Split("|");
+
             // first turn
             if (playedSuit == "")
             {
                 bool found = false;
+
                 // parsing through deck checking for ace in non strong suit
                 index = 12;
                 rank = ranks[index];
@@ -174,6 +176,7 @@ namespace Hokm
                 {
                     List<string> availableSuits = new List<string>() { "DIAMONDS", "SPADES", "CLUBS", "HEARTS" };
                     int cardToSend;
+                    int friendId = Math.Abs(clientId - 2);
                     //if (playedCards.Count(s => s == "") == 1) // 4th player
                     //{
                     bool flag = false;
@@ -193,42 +196,82 @@ namespace Hokm
                         cardToSend = FindSuit(suit, rank);
                     }
                     candidates.Sort();
+
                     // is any card in played cards bigger than my biggest card in the played suit?
                     if (candidates.Count != 0)
                     {
                         flag = true;
                         bool strongExists = false;
-                        foreach (string candidate in candidates)
+                        if (playedCards.Count(s => s == "") == 1)  // 4th player in line
                         {
-                            size = Array.IndexOf(ranks, candidate.Split("*")[1]);
-                            foreach (string card in playedCards)
+                            foreach (string candidate in candidates)
                             {
-                                if (card != "")
+                                size = Array.IndexOf(ranks, candidate.Split("*")[1]);
+                                foreach (string card in playedCards)
                                 {
-                                    if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
+                                    if (card != "")
                                     {
-                                        flag = false; // flag false if any card is bigger than my biggest
-                                        break;
-                                    }
-                                    else if (card.Split("*")[0] == strongSuit && playedSuit != strongSuit)
-                                    {
-                                        if (!IsExists(strongSuit))
+                                        if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
                                         {
-                                            strongExists = true;
-                                            flag = false;
+                                            flag = false; // flag false if any card is bigger than my biggest
                                             break;
+                                        }
+                                        else if (card.Split("*")[0] == strongSuit && playedSuit != strongSuit)
+                                        {
+                                            if (!IsExists(strongSuit))
+                                            {
+                                                strongExists = true;
+                                                flag = false;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
+                                if (flag)
+                                {
+                                    cardToSend = deck.IndexOf(candidate);
+                                    break;
+                                }
+                                else if (strongExists)
+                                {
+                                    break;
+                                }
                             }
-                            if (flag)
+                        }
+                        else  // 2nd or 3rd in line
+                        {
+                            foreach (string candidate in candidates)
                             {
-                                cardToSend = deck.IndexOf(candidate);
-                                break;
-                            }
-                            else if (strongExists)
-                            {
-                                break;
+                                size = Array.IndexOf(ranks, candidate.Split("*")[1]);
+                                foreach (string card in playedCards)
+                                {
+                                    if (card != "")
+                                    {
+                                        if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
+                                        {
+                                            flag = false; // flag false if any card is bigger than my biggest
+                                            break;
+                                        }
+                                        else if (card.Split("*")[0] == strongSuit && playedSuit != strongSuit)
+                                        {
+                                            if (!IsExists(strongSuit))
+                                            {
+                                                strongExists = true;
+                                                flag = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (flag)
+                                {
+                                    cardToSend = deck.IndexOf(candidate);
+                                    break;
+                                }
+                                else if (strongExists)
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
@@ -308,7 +351,7 @@ namespace Hokm
                                 {
                                     deck.ForEach(x => Console.Write(x + ", "));
                                     Console.WriteLine();
-                                    Console.WriteLine(deck[cardToSend]);
+                                    Console.WriteLine("5: " + deck[cardToSend]);
                                     SendCard(cardToSend);
                                 }
                             }
@@ -413,6 +456,11 @@ namespace Hokm
                 }
             }
 
+        }
+        // does the given id win?
+        public bool Wins(int id)
+        {
+            return false;
         }
         public bool IsExists(string suit)
         {
