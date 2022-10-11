@@ -168,31 +168,41 @@ namespace Hokm
                         suit = playedSuit;
                         index = 12;
                         int size;
-                        List<int> candidates = new List<int>();
-                        cardToSend = FindSuit(suit,rank);                        
-                        while(cardToSend == -1 && index >= 0) // find highest rank possible
+                        List<string> candidates = new List<string>();
+                        cardToSend = FindSuit(suit,rank);
+                        while (index >= 0) // find highest rank possible
                         {
+                            if (cardToSend != -1)
+                            {
+                                candidates.Add(deck[cardToSend]);
+                            }
                             rank = ranks[index];
                             index--;
                             cardToSend = FindSuit(suit, rank);
                         }
-                        candidates.Add(cardToSend);
-
+                        candidates.Sort();
                         // is any card in played cards bigger than my biggest card in the played suit?
-                        if (cardToSend != -1)
+                        if (candidates.Count != 0)
                         {
-                            size = Array.IndexOf(ranks, deck[cardToSend].Split("*")[1]);
                             flag = true;
-                            foreach (string card in playedCards)
+                            foreach (string candidate in candidates)
                             {
-                                if (card != "")
+                                size = Array.IndexOf(ranks, candidate.Split("*")[1]);
+                                foreach (string card in playedCards)
                                 {
-                                    Console.WriteLine(playedSuit + ", " + deck[cardToSend].Split("*")[0]);
-                                    if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == deck[cardToSend].Split("*")[0])
+                                    if (card != "")
                                     {
-                                        flag = false; // flag false if any card is bigger than my biggest
-                                        break;
+                                        if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
+                                        {
+                                            flag = false; // flag false if any card is bigger than my biggest
+                                            break;
+                                        }
                                     }
+                                }
+                                if (flag)
+                                {
+                                    cardToSend = deck.IndexOf(candidate);
+                                    break;
                                 }
                             }
                         }
