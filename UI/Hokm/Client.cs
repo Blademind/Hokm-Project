@@ -162,8 +162,8 @@ namespace Hokm
             {
                 if (ex is System.FormatException || ex is SocketException)
                 {
-                    MessageBox.Show("Server is not responding, please make sure the server is running or try again later.");
                     Environment.Exit(0);
+                    MessageBox.Show("Server is not responding, please make sure the server is running or try again later.");
                     return;
                 }
             }

@@ -132,7 +132,7 @@ namespace Hokm
             /// <param name="played"> information about cards played before out turn </param>
             /// <return> None </return>
             ///</summary>
-            
+
             // If we have only one card in the deck, send it
             if (deck.Count == 1)
             {
@@ -181,7 +181,7 @@ namespace Hokm
                     {
                         deck.ForEach(x => Console.Write(x + ", "));
                         Console.WriteLine();
-                        Console.WriteLine("011: "+deck[deck.FindIndex(a => a.Contains(card))]);
+                        Console.WriteLine("011: " + deck[deck.FindIndex(a => a.Contains(card))]);
                         SendCard(deck.FindIndex(a => a.Contains(card)));
                         found = true;
                     }
@@ -241,7 +241,7 @@ namespace Hokm
                                 {
                                     if (card != "")
                                     {
-                                        if(Wins(Array.IndexOf(playedCards,card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
+                                        if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
                                         {
                                             friendWins = true;
                                             flag = false;
@@ -354,17 +354,108 @@ namespace Hokm
                         }
                         if (flag || cardToSend == -1 && temp_flag)
                         {
-                            suit = strongSuit;
+                            flag = false;
                             availableSuits.Remove(suit);
-                            index = 0;
+                            suit = strongSuit;
+                            index = 12;
                             rank = ranks[index];
+                            candidates = new List<string>();
                             cardToSend = FindSuit(suit, rank);
-                            while (cardToSend == -1 && index <= 12)
+                            while (index >= 0) // find highest ranks candidates
                             {
+                                if (cardToSend != -1)
+                                {
+                                    candidates.Add(deck[cardToSend]);
+                                }
                                 rank = ranks[index];
-                                index += 1;
+                                index--;
                                 cardToSend = FindSuit(suit, rank);
+                            }
+                            candidates.Sort();
 
+                            // is any card in played cards bigger than my biggest card in the played suit?
+                            if (candidates.Count != 0)
+                            {
+                                flag = true;
+                                bool friendWins = false;
+                                if (playedCards.Count(s => s == "") == 1)  // 4th player in line
+                                {
+                                    foreach (string candidate in candidates)
+                                    {
+                                        size = Array.IndexOf(ranks, candidate.Split("*")[1]);
+                                        foreach (string card in playedCards)
+                                        {
+                                            if (card != "")
+                                            {
+                                                if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
+                                                {
+                                                    friendWins = true;
+                                                    flag = false;
+                                                    break;
+                                                }
+                                                else if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
+                                                {
+                                                    flag = false; // flag false if any card is bigger than my biggest
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (flag)
+                                        {
+                                            cardToSend = deck.IndexOf(candidate);
+                                            break;
+                                        }
+                                        else if (friendWins)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                else  // 2nd or 3rd in line
+                                {
+                                    foreach (string candidate in candidates)
+                                    {
+                                        size = Array.IndexOf(ranks, candidate.Split("*")[1]);
+                                        foreach (string card in playedCards)
+                                        {
+                                            if (card != "")
+                                            {
+                                                if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId && card.Split("*")[1] == "rank_A")
+                                                {
+                                                    friendWins = true;
+                                                    flag = false;
+                                                    break;
+                                                }
+                                                else if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
+                                                {
+                                                    flag = false; // flag false if any card is bigger than my biggest
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (flag)
+                                        {
+                                            cardToSend = deck.IndexOf(candidate);
+                                            break;
+                                        }
+                                        else if (friendWins)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (cardToSend == -1)
+                                {
+                                    index = 0;
+                                    rank = ranks[index];
+                                    cardToSend = FindSuit(suit, rank);
+                                    while (cardToSend == -1 && index <= 12)
+                                    {
+                                        rank = ranks[index];
+                                        index += 1;
+                                        cardToSend = FindSuit(suit, rank);
+                                    }
+                                }
                             }
                             if (cardToSend == -1) // card not found
                             {
@@ -527,7 +618,7 @@ namespace Hokm
                     }
                     else if (card.Split("*")[0] == strongSuit && playedCards[id].Split("*")[0] == strongSuit)
                     {
-                        if(Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
+                        if (Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
                         {
                             max = false;
                             break;
@@ -544,7 +635,7 @@ namespace Hokm
             /// <param name="suit"> a specified suit </param>
             /// <return> true if card with suit exists (as bool) </return>
             ///</summary>
-            
+
             foreach (string card in deck)
             {
                 if (card.Split("*")[0] == suit)
