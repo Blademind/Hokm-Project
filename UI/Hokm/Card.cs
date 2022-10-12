@@ -18,13 +18,21 @@ namespace Hokm
 
         public Card(string shape, string value, bool back=false)
         {
+            this.value = value.ToLower();
+            this.value = this.value.Replace("rank_j", "jack");
+            this.value = this.value.Replace("rank_q", "queen");
+            this.value = this.value.Replace("rank_k", "king");
+            this.value = this.value.Replace("rank_a", "ace");
+            this.value = this.value.Replace("rank_", "");
+
+
             this.shape = shape;
-            this.value = value;
             this.x = 100;
             this.y = 160;
 
             if (!back)
             {
+                Console.WriteLine(this.value + "_of_" + this.shape);
                 this.bmp = (Bitmap)Resources.ResourceManager.GetObject(this.value + "_of_" + this.shape);
             }
             else

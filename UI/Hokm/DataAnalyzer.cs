@@ -10,12 +10,38 @@ namespace Hokm
         private string startData;
         private string clientID;
         private string rulerID;
+        private string[] players;
         public DataAnalyzer(string clientID,string rulerID, string startData)
         {
             this.clientID = clientID;
             this.rulerID = rulerID;
             this.startData = startData;
+            this.players = new string[3];
+            SetRealOtherID();
         }
+
+        public DataAnalyzer()
+        {
+            this.players = new string[3];
+        }
+
+
+        public void SetClientID(string clientID)
+        {
+            this.clientID = clientID;
+        }
+        public void SetRulerID(string rulerID)
+        {
+            this.rulerID = rulerID;
+        }
+
+        public void SetStartData(string startData)
+        {
+            this.startData = startData;
+            SetRealOtherID();
+        }
+
+
 
         public string ClearString(string data)
         {
@@ -68,7 +94,45 @@ namespace Hokm
 
             return teams;
         }
+    
+        public void SetRealOtherID()
+        {
+            string[] teams = GetTeams();
+            if (teams[0].Contains(GetClientID()))
+            {
 
+                this.players[1] = teams[0].Replace(GetClientID(), "").Replace("+", "");
+
+                this.players[2] = teams[1].Split("+")[0];
+                this.players[0] = teams[1].Split("+")[1];
+            }
+            else
+            {
+                this.players[1] = teams[1].Replace(GetClientID(), "").Replace("+", "");
+
+                this.players[2] = teams[0].Split("+")[0];
+                this.players[0] = teams[0].Split("+")[1];
+            }
+
+        }
+
+        public int GetRealPlayerID(string fakeID)
+        {
+            Console.WriteLine(this.players);
+            for (int i = 0; i < this.players.Length; i++)
+            {
+                if (this.players[i] == fakeID)
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        public string GetFakeID(int realID)
+        {
+            return this.players[realID];
+        }
 
     }
 }

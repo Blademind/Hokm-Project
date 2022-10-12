@@ -14,6 +14,7 @@ using System.Threading;
 using System.Windows.Forms;
 using static System.Reflection.Metadata.BlobBuilder;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Hokm
 {
@@ -24,15 +25,20 @@ namespace Hokm
         private Card[] pDeck1 = new Card[13];
         private Card[] pDeck2 = new Card[13];
         private Card[][] playerDecks = new Card[3][];
-        
+        private PictureBox[] activeCards = new PictureBox[5];
+        private bool firstTime = true;
+        private DataAnalyzer dA = new DataAnalyzer();
+
         // 
 
-        public PictureBox CardInitializer(Card c, int x, int y, bool rotate=false)
+        private PictureBox CardInitializer(Card c, int x, int y, bool rot=false)
         {
             Random rnd = new Random();
             PictureBox cardBox = new PictureBox();
-            if (rotate)
+            if (this.firstTime && rot)
+            {
                 c.RotateBMP();
+            }
             cardBox.Size = new Size(c.x, c.y);
             cardBox.Location = new Point(x + rnd.Next(-3, 3), y + rnd.Next(-3, 3));
 
@@ -48,7 +54,7 @@ namespace Hokm
         }
 
         // Game setup
-        public void SetStartingDeck(string data)
+        private void SetStartingDeck(string data)
         {
             int pFrom = 0;
             int pTo = data.LastIndexOf(",teams");
@@ -56,16 +62,17 @@ namespace Hokm
             string cardsString = data.Substring(pFrom, pTo - pFrom);
 
             string[] cards = cardsString.Split('|');
-
+            Array.Sort(cards, StringComparer.InvariantCulture);
 
             for (int i = 0; i < cards.Length; i++)
             {
                 string[] cardInfo = cards[i].Split('*');
+
                 this.deck[i] = new Card(cardInfo[0], cardInfo[1]);
             }
         }
 
-        public void SetOthersStartingDeck()
+        private void SetOthersStartingDeck()
         {
             for (int i = 0; i < pDeck0.Length; i++)
             {
@@ -76,7 +83,7 @@ namespace Hokm
             }
         }
 
-        public void StartingDeckVisuals()
+        private void StartingDeckVisuals()
         {
             int[] length = { 780, 240, 677 };
             int jump = (length[0] - length[1]) / this.deck.Length;
@@ -89,7 +96,7 @@ namespace Hokm
             }
         }
 
-        public void OthersStartingDeckVisuals(int player)
+        private void OthersStartingDeckVisuals(int player)
         {
             int[,] lengthAll = {
                 {55, 55, 200, 770},
@@ -129,17 +136,36 @@ namespace Hokm
             }
         }
 
+
+        private void ShowPanels(Control cc, bool show=true)
+        {
+            cc.Visible = show;
+            foreach (Control c in cc.Controls)
+            {
+                c.Visible = show;
+            }
+        }
+
         public void StartInitializer(string clientID, string rulerID, string startData)
         {
-            DataAnalyzer dA = new DataAnalyzer(clientID, rulerID, startData);
 
             this.playerDecks[0] = this.pDeck0;
             this.playerDecks[1] = this.pDeck1;
             this.playerDecks[2] = this.pDeck2;
 
+            dA.SetClientID(clientID);
+            dA.SetRulerID(rulerID);
+            dA.SetStartData(startData);
 
-            // Set hokm
-            info_text.Text = "Hokm: " + dA.GetStrong();
+            // Set hokm+hakem
+            info_text.Text = info_text.Text.Replace("hokm_card", dA.GetStrong());
+            info_text.Text = info_text.Text.Replace("ruler_id", dA.GetRuler());
+
+            // Set IDs on screen
+            this.p_id_0.Text = dA.GetClientID();
+            this.p_id_1.Text = dA.GetFakeID(1);
+            this.p_id_2.Text = dA.GetFakeID(0);
+            this.p_id_3.Text = dA.GetFakeID(2);
 
             // Set teams
             string[] teams = dA.GetTeams();
@@ -156,6 +182,10 @@ namespace Hokm
             OthersStartingDeckVisuals(1);
             OthersStartingDeckVisuals(2);
             OthersStartingDeckVisuals(0);
+            this.firstTime = false;
+
+            ShowPanels(this.ending_panel, false);
+            ShowPanels(this.winning_panel, false);
 
         }
 
@@ -164,10 +194,10 @@ namespace Hokm
         ///////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////
 
-        // Actions
+        // Play Actions
         // Me
 
-        public void UpdateMyDeck(string played)
+        private void UpdateMyDeck(string played)
         {
             string[] cardInfo = played.Split('*');
             Card remove = new Card(cardInfo[0], cardInfo[1]);
@@ -175,24 +205,23 @@ namespace Hokm
             int j = 0;
             for (int i = 0; i < this.deck.Length; i++)
             {
-
                 if (this.deck[i].ToString() != remove.ToString())
                 {
                     l[j] = this.deck[i];
-                    Console.WriteLine(j);
                     j++;
                 }
             }
-            Console.WriteLine(this.deck);
+            this.deck = l;
         }
 
-        public void MyCardToMiddle(string played)
+        private void MyCardToMiddle(string played)
         {
             string[] cardInfo = played.Split('*');
             Card p = new Card(cardInfo[0], cardInfo[1]);
             
 
             this.Controls[p.ToString()].Location = new Point(530, 470);
+            this.activeCards[0] = (PictureBox)this.Controls[p.ToString()];
         }
 
         public void PlayCard(string played)
@@ -202,7 +231,7 @@ namespace Hokm
         }
 
         // Others
-        public int UpdateOthersDeck(string played, int player)
+        private int UpdateOthersDeck(string played, int player)
         {
             Card[] l = new Card[this.playerDecks[player].Length-1];
             int j = 0;
@@ -214,39 +243,50 @@ namespace Hokm
                 if (i != k)
                 {
                     l[j] = this.playerDecks[player][i];
-                    Console.WriteLine(j);
                     j++;
                 }
             }
+            this.playerDecks[player] = l;
             Console.WriteLine(this.playerDecks[player]);
             return k;
         }
 
-        public void UpdateCardTexture(PictureBox p, string played)
+        private void UpdateCardTexture(PictureBox p, string played)
         {
             string[] cardInfo = played.Split('*');
-            p.Image = (Bitmap)Resources.ResourceManager.GetObject(cardInfo[1] + "_of_" + cardInfo[0]);
+            Card c = new Card(cardInfo[0], cardInfo[1]);
+            p.Image = (Bitmap)Resources.ResourceManager.GetObject(c.value + "_of_" + c.shape);
             p.Size = new Size(100, 160);
         }
 
-        public void OthersCardToMiddle(string played, int player, int k)
+        private void OthersCardToMiddle(string played, int player, int k)
         {
-            string n = player.ToString() + "EP" + k.ToString();
-            PictureBox p = (PictureBox)this.Controls[n];
+            PictureBox p = null;
+            string n = "";
+            int d = 0;
+            while (p == null)
+            {
+
+                n = player.ToString() + "EP" + k.ToString();
+                p = (PictureBox)this.Controls[n];
+                d++;
+                k = d;
+            }
             if (player == 0)
-                p.Location = new System.Drawing.Point(400, 350);
+                p.Location = new System.Drawing.Point(403, 350);
             else if (player == 1)
                 p.Location = new System.Drawing.Point(530, 230);
             else
                 p.Location = new System.Drawing.Point(660, 350);
-
             UpdateCardTexture(p, played);
+            this.activeCards[player + 1] = (PictureBox)this.Controls[n];
+
 
         }
 
-
         public void PlayOtherCard(string played, int player)
         {
+            player = dA.GetRealPlayerID(player.ToString());
             int k = UpdateOthersDeck(played, player);
             OthersCardToMiddle(played, player, k);
         }
@@ -256,7 +296,101 @@ namespace Hokm
         ///////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////
 
+        // Round Over
+
+        private void RemoveMiddleCards()
+        {
+            var t = new Timer();
+            for (int i = 0; i < this.activeCards.Length; i++)
+            {
+                this.Controls.Remove(activeCards[i]);
+            }
+            t.Start();
+            
+        }
+
+        private void RefreshCards()
+        {
+            foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
+            {
+                this.Controls.Remove(p);
+                p.Dispose();
+            }
+            //Visuals
+            StartingDeckVisuals();
+
+            //Others
+            OthersStartingDeckVisuals(1);
+            OthersStartingDeckVisuals(2);
+            OthersStartingDeckVisuals(0);
+        }
+
+        public void RoundEnding(string winner, string score)
+        {
+
+            this.winner_label.Text = "Winner: " + winner;
+            this.round_title.Text = "End of Round: " + 1;
+            ShowPanels(this.winning_panel);
+            RemoveMiddleCards();
+            var t = new Timer();
+            t.Interval = 2000; // will tick in 2 seconds
+            t.Tick += (s, e) =>
+            {
+                ShowPanels(this.winning_panel, false);
+            };
+            t.Start();
+            
+            //RefreshCards();
+            this.score_text.Text = score;
+
+
+
+        }
+
+        // Game Over
+
+        private void RemoveAllCards()
+        {
+            foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
+            {
+                this.Controls.Remove(p);
+                p.Dispose();
+            }
+        }
+
+        private void EndingScreen(string winner, string score)
+        {
+            this.ending_panel.Visible = true;
+            foreach(Control c in this.ending_panel.Controls)
+            {
+                c.Visible = true;
+            }
+        }
+
+        public void GameOver(string gWinner, string score)
+        {
+            RemoveAllCards();
+            EndingScreen(gWinner, "score");
+            // exit button
+
+        }
+        
         #region TRASH
+
+        //                                                                                      .     
+        ///////***************************///////////                                ||           \
+        ///////////////////////////////////////////////////////////////////////////////          /
+        ///// *********           **********           **********      //////////////##            |///////>
+        ///////////////////////////////////////////////////////////////////////////////           \
+        /////////////////////////////////------------///                                        /
+        ////   \\(     //////////
+        ////   \\(     ///////                                                                       
+        ////   \(      /////
+        ////   \((     ////
+        ////     \\\(  ///
+        ////          //
+        ///////////////
+         ////////////
 
         public void EnemiesCardToMiddle(string played, int enemy)
         {
@@ -293,12 +427,7 @@ namespace Hokm
                     if (this.deck[i].ToString() != remove.ToString())
                     {
                         l[j] = this.deck[i];
-                        Console.WriteLine(j);
                         j++;
-                    }
-                    else
-                    {
-                        Console.WriteLine("FOUND!!!!!!!!!!!!!!!!!");
                     }
                 }
                 this.deck = l.Where(c => c != null).ToArray(); ;
@@ -405,65 +534,61 @@ namespace Hokm
         }
 #endregion
 
-
-        public GameClient()
+        public GameClient(string startData=null)
         {
             InitializeComponent();
 
-            string startData = "clubs*2|diamonds*2|spades*3|hearts*4|spades*ace|clubs*jack|hearts*7|spades*8|diamonds*9" +
-                "|clubs*king|clubs*ace|spades*2|hearts*8,teams:[1+3]|[2+4],strong:hearts";
+            if (startData == null)
+                 startData = "clubs*rank_2|diamonds*rank_2|spades*rank_3|hearts*rank_4|" +
+                    "spades*rank_A|clubs*rank_J|hearts*rank_7|spades*rank_8|diamonds*rank_9" +
+                    "|clubs*rank_K|clubs*rank_A|spades*rank_2|hearts*rank_8,teams:[1+3]|[2+4],strong:hearts";
 
-
-            StartInitializer("1", "2", startData);
+            StartInitializer("4", "1", startData);
 
             // GAME
-            PlayCard("clubs*king");
+            PlayCard("clubs*rank_K");
 
-            PlayOtherCard("clubs*2", 0);
-            PlayOtherCard("spades*3", 1);
-            PlayOtherCard("hearts*4", 2);
-
-            /*
-            //Visual
-            UpdateMyCards("None");
+            PlayOtherCard("clubs*rank_4", 3);
+            PlayOtherCard("spades*rank_3", 2);
+            PlayOtherCard("hearts*rank_2", 1);
+        }
 
 
-            //Thread.Sleep(4000);
 
-            //
-            UpdateEnemiesCardsVisuals(0);
-            UpdateEnemiesCardsVisuals(1);
-            UpdateEnemiesCardsVisuals(2);
+        // Tests
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RoundEnding("1", "2");
+        }
 
-            Console.WriteLine("========");
-            UpdateMyCards("clubs*king");
-            Console.WriteLine("========");
-            UpdateMyCards("clubs*ace");
+        private void GameClient_Load(object sender, EventArgs e)
+        {
 
-            EnemiesCardToMiddle("a", 0);
-            EnemiesCardToMiddle("a", 1);
-            EnemiesCardToMiddle("a", 2);
+        }
 
-            
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PlayCard("spades*rank_8");
+            PlayOtherCard("clubs*rank_2", 3);
+            PlayOtherCard("spades*rank_2", 2);
+            PlayOtherCard("hearts*rank_2", 1);
 
-            */
+        }
 
-            /*
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Enter VALuE: ");
+            string x = Console.ReadLine();
+            PlayCard(x);
+            PlayOtherCard("clubs*rank_3", 3);
+            PlayOtherCard("spades*rank_3", 2);
+            PlayOtherCard("hearts*rank_3", 1);
 
-            string dir = @"D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\Cards";
-            string[] files = Directory.GetFiles(dir, "*.png");
-            string name = "";
+        }
 
-
-            
-            foreach (var file in files)
-            {
-                name = file.Substring(file.LastIndexOf('\\') + 1);
-                name = name.Substring(0, name.Length - 4);
-                string[] cardShapeValue = name.Split("_");
-                Card card = new Card(cardShapeValue[2], cardShapeValue[0]);
-                Console.WriteLine(card);
-            }*/
+        private void button4_Click(object sender, EventArgs e)
+        {
+            GameOver("2+4", "7");
         }
     }
 }
