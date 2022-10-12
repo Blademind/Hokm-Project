@@ -34,11 +34,12 @@ namespace Hokm
 			/// <summary>
 			/// Function initiates client socket in order to connect with the server and 
 			/// get starting information about the game
-			/// param ip --> the ip to connect to
-			/// param port --> the port in which we are connecting
-		    /// </summary>
+			/// <param name="ip"> the ip to connect to </param> 
+			/// <param name="port"> the port in which we are connecting </param>
+			/// <return> None </return>
+			/// </summary>
 
-		   this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			this.buf = new byte[8];
 			this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 55555);
 			for (int i = 0; i < 4; i++)
@@ -62,7 +63,9 @@ namespace Hokm
 			/// <summary>
 			/// Function initiates client socket in order to connect with the server and 
 			/// get starting information about the game
+			/// <return> None </return>
 			/// </summary>
+
 			try
 			{
 				clientSock.Connect(this.serverIpPort);
@@ -80,6 +83,7 @@ namespace Hokm
 		{
             ///<summary>
             /// Function takes care of listening to the server and receiving important information about game state
+			/// <return> None </return>
             ///</summary>
             ///
 
