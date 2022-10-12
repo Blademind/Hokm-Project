@@ -11,11 +11,15 @@ using System.Text;
 using System.Transactions;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using static Hokm.HelperFunctions;
 
 namespace Hokm
 {
     public partial class Client
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string[] cardShapeSuit;
         public string strongSuit;
         public List<string> usedCards = new List<string>();
@@ -41,6 +45,7 @@ namespace Hokm
                     {
                         deck.Add(card);
                     }
+                    //Dictionary<string, int> s = HelperFunctions.MakeCounter(deck);
                     //int count = 0;
                     //foreach (string c in deck)
                     //{
@@ -90,7 +95,13 @@ namespace Hokm
         }
         public int CardByRank(string rank)
         {
-            /* Function returns first lowest card with specified rank of the deck */
+            ///<summary>
+            /// Functions find the index in the deck of a card that has the specified rank
+            /// <param name="rank"> a specified suit </param>
+            /// <return> the index in the deck of a card that has the specified rank (as int) </return>
+            ///</summary>
+            ///
+
             bool haveStrong = true;
             foreach (var card in deck)
             {
@@ -116,14 +127,21 @@ namespace Hokm
         }
         public void PlayTurn(string played)
         {
-            /* Algorithmic function to play the turns */
-            if(deck.Count == 1)
+            ///<summary>
+            /// Functions chooses what to card as going through a complex algorithm
+            /// <param name="played"> information about cards played before out turn </param>
+            /// <return> None </return>
+            ///</summary>
+            
+            // If we have only one card in the deck, send it
+            if (deck.Count == 1)
             {
                 deck.ForEach(x => Console.Write(x + ", "));
                 Console.WriteLine();
                 SendCard(0);
                 return;
             }
+
             int index = 0;
             string rank = ranks[index];
             string playedSuit = played.Split(",")[0].Split(":")[1];
@@ -460,6 +478,12 @@ namespace Hokm
         }
         public bool IsExists(string suit)
         {
+            ///<summary>
+            /// Functions checks if a card of a specified suit exists
+            /// <param name="suit"> a specified suit </param>
+            /// <return> true if card with suit exists (as bool) </return>
+            ///</summary>
+            
             foreach (string card in deck)
             {
                 if (card.Split("*")[0] == suit)
@@ -471,6 +495,12 @@ namespace Hokm
         }
         public int FindSuit(string suit, string rank) // finds rank in suit
         {
+            ///<summary>
+            /// Fucntion finds a card in the current deck with the specified suit and rank
+            /// <param name="suit"> a specified suit </param>
+            /// <param name="rank"> a specified rank </param>
+            ///</summary>
+            ///
             foreach (string card in deck)
             {
                 if (card.Split("*")[0] == suit && rank == card.Split("*")[1])
@@ -484,7 +514,8 @@ namespace Hokm
         {
             ///<summary>
             /// Functions sends card to server within the deck list
-            /// param index --> the index from the deck list
+            /// <param name="index"> the index from the deck list </param>
+            /// <return> None </return>
             ///</summary>
 
             // Random r = new Random();
@@ -498,7 +529,8 @@ namespace Hokm
         public void SendStrongSuit()
         {
             ///<summary>
-            /// Function sends strong suit to server if chosen as ruler 
+            /// Function sends strong suit to server if chosen as ruler
+            /// <return> None </return>
             ///</summary> 
 
             strongSuits = new string[4] { "SPADES", "CLUBS", "DIAMONDS", "HEARTS" };
