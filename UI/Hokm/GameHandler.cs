@@ -189,8 +189,23 @@ namespace Hokm
                 if (!found) // ace not found, sending lower card
                 {
                     List<string> availableSuits = new List<string>() { "DIAMONDS", "SPADES", "CLUBS", "HEARTS" };
-                    int cardToSend;
-                    int friendId = Math.Abs(clientId - 2);
+                    int cardToSend; int friendId = 0;
+                    switch (clientId)
+                    {
+                        case 1:
+                            friendId = 2;
+                            break;
+                        case 2:
+                            friendId = 1;
+                            break;
+                        case 3:
+                            friendId = 4;
+                            break;
+                        case 4:
+                            friendId = 3;
+                            break;
+                    }
+
                     //if (playedCards.Count(s => s == "") == 1) // 4th player
                     //{
                     bool flag = false;
@@ -215,6 +230,7 @@ namespace Hokm
                     if (candidates.Count != 0)
                     {
                         flag = true;
+                        bool friendWins = false;
                         bool strongExists = false;
                         if (playedCards.Count(s => s == "") == 1)  // 4th player in line
                         {
@@ -225,7 +241,13 @@ namespace Hokm
                                 {
                                     if (card != "")
                                     {
-                                        if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
+                                        if(Wins(Array.IndexOf(playedCards,card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
+                                        {
+                                            friendWins = true;
+                                            flag = false;
+                                            break;
+                                        }
+                                        else if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
                                         {
                                             flag = false; // flag false if any card is bigger than my biggest
                                             break;
@@ -244,6 +266,10 @@ namespace Hokm
                                 if (flag)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
+                                    break;
+                                }
+                                else if (friendWins)
+                                {
                                     break;
                                 }
                                 else if (strongExists)
@@ -261,7 +287,13 @@ namespace Hokm
                                 {
                                     if (card != "")
                                     {
-                                        if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
+                                        if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId && card.Split("*")[1] == "rank_A")
+                                        {
+                                            friendWins = true;
+                                            flag = false;
+                                            break;
+                                        }
+                                        else if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
                                         {
                                             flag = false; // flag false if any card is bigger than my biggest
                                             break;
@@ -280,6 +312,10 @@ namespace Hokm
                                 if (flag)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
+                                    break;
+                                }
+                                else if (friendWins)
+                                {
                                     break;
                                 }
                                 else if (strongExists)
@@ -471,10 +507,35 @@ namespace Hokm
             }
 
         }
-        // does the given id win?
-        public bool Wins(int id)
+        public bool Wins(int id, string[] playedCards)
         {
-            return false;
+            ///<summary>
+            /// Checks if the given id wins
+            /// <param name="id"> player's id</param>
+            /// <param name="playedCards"> recently played cards</param>
+            /// <return> true if given id has the highest cards</return>
+            ///</summary>
+            bool max = true;
+            foreach (string card in playedCards)
+            {
+                if (card != "")
+                {
+                    if (Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
+                    {
+                        max = false;
+                        break;
+                    }
+                    else if (card.Split("*")[0] == strongSuit && playedCards[id].Split("*")[0] == strongSuit)
+                    {
+                        if(Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
+                        {
+                            max = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            return max;
         }
         public bool IsExists(string suit)
         {
