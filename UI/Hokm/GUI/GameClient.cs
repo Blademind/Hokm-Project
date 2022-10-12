@@ -26,9 +26,9 @@ namespace Hokm
         private Card[] pDeck2 = new Card[13];
         private Card[][] playerDecks = new Card[3][];
         private PictureBox[] activeCards = new PictureBox[5];
-        private bool firstTime = true;
         private DataAnalyzer dA = new DataAnalyzer();
-
+        private int roundN = 0;
+        private bool firstTime = true;
         // 
 
         private PictureBox CardInitializer(Card c, int x, int y, bool rot=false)
@@ -136,7 +136,6 @@ namespace Hokm
             }
         }
 
-
         private void ShowPanels(Control cc, bool show=true)
         {
             cc.Visible = show;
@@ -169,7 +168,7 @@ namespace Hokm
 
             // Set teams
             string[] teams = dA.GetTeams();
-            score_text.Text = teams[0] + "\n" + teams[1];
+            score_text.Text = teams[0] + ": 0" + "\n" + teams[1] + ": 0";
 
             //Set decks
             SetStartingDeck(dA.ClearString(startData));
@@ -190,8 +189,6 @@ namespace Hokm
         }
 
 
-        ///////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////
 
         // Play Actions
@@ -293,8 +290,6 @@ namespace Hokm
 
 
         ///////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////
 
         // Round Over
 
@@ -325,26 +320,38 @@ namespace Hokm
             OthersStartingDeckVisuals(0);
         }
 
-        public void RoundEnding(string winner, string score)
+        private void EditScorePanel(string winner)
         {
+            string[] t = this.score_text.Text.Split("\n");
+            if (t[0].Contains(winner))
+            {
+                string s1 = t[0].Split(": ")[0];
+                string s2 = t[0].Split(": ")[1];
+                this.score_text.Text = this.score_text.Text.Replace(t[0], s1+": " + (int.Parse(s2) + 1).ToString());
+            }
+            else
+            {
+                string s1 = t[1].Split(": ")[0];
+                string s2 = t[1].Split(": ")[1];
+                this.score_text.Text = this.score_text.Text.Replace(t[1], s1+ ": " + (int.Parse(s2) + 1).ToString());
+            }
+        }
 
+        public void RoundEnding(string winner)
+        {
+            this.roundN++;
             this.winner_label.Text = "Winner: " + winner;
-            this.round_title.Text = "End of Round: " + 1;
+            this.round_title.Text = "End of Round: " + this.roundN.ToString();
+            EditScorePanel(winner);
             ShowPanels(this.winning_panel);
             RemoveMiddleCards();
             var t = new Timer();
-            t.Interval = 2000; // will tick in 2 seconds
+            t.Interval = 2400; // will tick in 2.4 seconds
             t.Tick += (s, e) =>
             {
                 ShowPanels(this.winning_panel, false);
             };
             t.Start();
-            
-            //RefreshCards();
-            this.score_text.Text = score;
-
-
-
         }
 
         // Game Over
@@ -534,7 +541,7 @@ namespace Hokm
         }
 #endregion
 
-        public GameClient(string startData=null)
+        public GameClient(string startData=null, string clientID=null, string ruler=null)
         {
             InitializeComponent();
 
@@ -542,23 +549,18 @@ namespace Hokm
                  startData = "clubs*rank_2|diamonds*rank_2|spades*rank_3|hearts*rank_4|" +
                     "spades*rank_A|clubs*rank_J|hearts*rank_7|spades*rank_8|diamonds*rank_9" +
                     "|clubs*rank_K|clubs*rank_A|spades*rank_2|hearts*rank_8,teams:[1+3]|[2+4],strong:hearts";
+            if (clientID == null)
+                clientID = "4";
+            if (ruler == null)
+                ruler = "1";
+            StartInitializer(clientID, ruler, startData);
 
-            StartInitializer("4", "1", startData);
-
-            // GAME
-            PlayCard("clubs*rank_K");
-
-            PlayOtherCard("clubs*rank_4", 3);
-            PlayOtherCard("spades*rank_3", 2);
-            PlayOtherCard("hearts*rank_2", 1);
         }
-
-
 
         // Tests
         private void button1_Click(object sender, EventArgs e)
         {
-            RoundEnding("1", "2");
+            RoundEnding("1");
         }
 
         private void GameClient_Load(object sender, EventArgs e)

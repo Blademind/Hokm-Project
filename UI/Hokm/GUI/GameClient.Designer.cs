@@ -101,7 +101,7 @@ namespace Hokm
             this.score_text.Location = new System.Drawing.Point(19, 39);
             this.score_text.Name = "score_text";
             this.score_text.Size = new System.Drawing.Size(0, 37);
-            this.score_text.TabIndex = 0;
+            this.score_text.Text = "4+2: p1 \n3+1: p2";
             this.score_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // scores_title
