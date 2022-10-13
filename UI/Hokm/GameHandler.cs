@@ -317,7 +317,9 @@ namespace Hokm
                                         putCards.Add(card);
                                 }
                             }
+
                             putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+
                             foreach (string candidate in candidates)
                             {
 
@@ -359,8 +361,26 @@ namespace Hokm
 
                                                 }
                                             }
+
                                             if (winningCardExists)
-                                                break;
+                                            {
+                                                List<string> plainCards = new List<string>();
+                                                int plainIndex = 0;
+                                                for (int i = 0; i < playedCards.Length; i++)
+                                                {
+                                                    if (playedCards[i] != "")
+                                                    {
+                                                        plainCards.Add(playedCards[i]);
+                                                    }
+                                                }
+                                                //List<string> descendingRanks = playedCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+                                                List<string> descendingRanks = plainCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+                                                if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < cardToSend)
+                                                    break;
+                                                else
+                                                    winningCardExists = false;
+                                            }
+
                                             // 2 levels above highest playing card
                                             if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
                                             {
@@ -448,8 +468,8 @@ namespace Hokm
                         if (flag || cardToSend == -1 && temp_flag)
                         {
                             flag = false;
-                            availableSuits.Remove(suit);
                             suit = strongSuit;
+                            availableSuits.Remove(suit);
                             index = 12;
                             rank = ranks[index];
                             candidates = new List<string>();
@@ -574,8 +594,21 @@ namespace Hokm
                                                     }
                                                     if (winningCardExists)
                                                     {
-                                                        Console.WriteLine("FOUND WINNING STRONG CARD");
-                                                        break;
+                                                        List<string> plainCards = new List<string>();
+                                                        int plainIndex = 0;
+                                                        for (int i = 0; i < playedCards.Length; i++)
+                                                        {
+                                                            if (playedCards[i] != "")
+                                                            {
+                                                                plainCards.Add(playedCards[i]);
+                                                            }
+                                                        }
+                                                        //List<string> descendingRanks = playedCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+                                                        List<string> descendingRanks = plainCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+                                                        if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < cardToSend)
+                                                            break;
+                                                        else
+                                                            winningCardExists = false;
                                                     }
                                                     // 3 levels above highest playing card
                                                     else if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
@@ -595,10 +628,13 @@ namespace Hokm
                                         }
 
                                         // TODO
-                                        if (winningCardExists || friendWins || aceFound)
+                                        if (winningCardExists)
                                         {
+                                            Console.WriteLine("FOUND WINNING STRONG CARD");  
                                             break;
                                         }
+                                        if (friendWins || aceFound)
+                                            break;
                                         if (flag)
                                         {
                                             cardToSend = deck.IndexOf(candidate);
@@ -628,12 +664,15 @@ namespace Hokm
                                 if (deck[0].Split("*")[0] == availableSuits[0])
                                 {
                                     suit = availableSuits[0];
+                                    availableSuits.Remove(availableSuits[0]);
+
                                 }
                                 else
                                 {
                                     suit = availableSuits[1];
+                                    availableSuits.Remove(availableSuits[1]);
                                 }
-                                availableSuits.Remove(availableSuits[0]);
+
                                 index = 0;
                                 rank = ranks[index];
                                 cardToSend = FindSuit(suit, rank);
@@ -660,20 +699,11 @@ namespace Hokm
                                         cardToSend = FindSuit(suit, rank);
                                     }
 
-                                    try
-                                    {
-                                        deck.ForEach(x => Console.Write(x + ", "));
-                                        Console.WriteLine();
-                                        Console.WriteLine("4: " + deck[cardToSend]);
-                                        SendCard(cardToSend);
-                                    }
-                                    // some weird issue occurred
-                                    catch
-                                    {
-                                        Console.WriteLine("there is some weird bug, sending random card");
-                                        Random r = new Random();
-                                        SendCard(r.Next(0, deck.Count));
-                                    }
+                                    deck.ForEach(x => Console.Write(x + ", "));
+                                    Console.WriteLine();
+                                    Console.WriteLine("4: " + deck[cardToSend]);
+                                    SendCard(cardToSend);
+
                                 }
 
                                 // TODO
