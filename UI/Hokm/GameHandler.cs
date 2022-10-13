@@ -317,9 +317,7 @@ namespace Hokm
                                         putCards.Add(card);
                                 }
                             }
-
                             putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-
                             foreach (string candidate in candidates)
                             {
 
@@ -343,46 +341,52 @@ namespace Hokm
                                             // TODO
                                             if (putCards.Count > 1)
                                             {
-                                                last = putCards[0];
-                                                foreach (string item in putCards.ToArray())
-                                                {
-                                                    if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
-                                                    {
-                                                        Console.WriteLine(last);
-                                                        Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
-                                                        if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
-                                                        {
-                                                            cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
-                                                            winningCardExists = true;
-                                                        }
-                                                        break;
-                                                    }
-                                                    last = item;
 
+                                                last = putCards[0];
+                                                Console.WriteLine(putCards[0].Split("*")[1]);
+                                                if (putCards[0].Split("*")[1] == "rank_A")
+                                                {
+                                                    foreach (string item in putCards.ToArray())
+                                                    {
+                                                        if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
+                                                        {
+                                                            Console.WriteLine(last);
+                                                            Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+                                                            if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
+                                                            {
+                                                                cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
+                                                                winningCardExists = true;
+                                                            }
+                                                            break;
+                                                        }
+                                                        last = item;
+
+                                                    }
                                                 }
                                             }
 
                                             if (winningCardExists)
                                             {
                                                 List<string> plainCards = new List<string>();
-                                                int plainIndex = 0;
-                                                for (int i = 0; i < playedCards.Length; i++)
-                                                {
-                                                    if (playedCards[i] != "")
+                                                foreach(string c in playedCards)
+                                                { 
+                                                    if (c != "" && c.Split("*")[0] == suit)
                                                     {
-                                                        plainCards.Add(playedCards[i]);
+                                                        plainCards.Add(c);
                                                     }
                                                 }
                                                 //List<string> descendingRanks = playedCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
                                                 List<string> descendingRanks = plainCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-                                                if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < cardToSend)
+                                                descendingRanks.ForEach(a => Console.Write(a + ", "));
+                                                Console.WriteLine();
+                                                if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < Array.IndexOf(ranks, deck[cardToSend].Split("*")[1]))
                                                     break;
                                                 else
                                                     winningCardExists = false;
                                             }
 
                                             // 2 levels above highest playing card
-                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
+                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
                                             {
                                                 // Flag false if any card is bigger than my biggest one
                                                 flag = false;
@@ -412,10 +416,7 @@ namespace Hokm
                                 }
 
                                 // TODO
-                                if (strongExists || friendWins || aceFound)
-                                {
-                                    break;
-                                }
+
                                 if (winningCardExists)
                                 {
                                     Console.WriteLine("FOUND WINNING CARD");
@@ -424,6 +425,10 @@ namespace Hokm
                                 if (flag)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
+                                    break;
+                                }
+                                if (strongExists || friendWins || aceFound)
+                                {
                                     break;
                                 }
                             }
@@ -553,6 +558,7 @@ namespace Hokm
                                         }
                                     }
                                     putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+
                                     // Scanning through candidates
                                     foreach (string candidate in candidates)
                                     {
@@ -575,27 +581,29 @@ namespace Hokm
                                                     if (putCards.Count > 1)
                                                     {
                                                         last = putCards[0];
-                                                        foreach (string item in putCards.ToArray())
+                                                        if (putCards[0].Split("*")[1] == "rank_A")
                                                         {
-                                                            if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
+                                                            foreach (string item in putCards.ToArray())
                                                             {
-                                                                Console.WriteLine(last);
-                                                                Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
-                                                                if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
+                                                                if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                                 {
-                                                                    cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
-                                                                    winningCardExists = true;
+                                                                    Console.WriteLine(last);
+                                                                    Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+                                                                    if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
+                                                                    {
+                                                                        cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
+                                                                        winningCardExists = true;
+                                                                    }
+                                                                    break;
                                                                 }
-                                                                break;
-                                                            }
-                                                            last = item;
+                                                                last = item;
 
+                                                            }
                                                         }
                                                     }
                                                     if (winningCardExists)
                                                     {
                                                         List<string> plainCards = new List<string>();
-                                                        int plainIndex = 0;
                                                         for (int i = 0; i < playedCards.Length; i++)
                                                         {
                                                             if (playedCards[i] != "")
@@ -827,10 +835,10 @@ namespace Hokm
             ///<summary>
             /// Function finds highest winning card in a given suit according to last placed cards
             /// <param name="suit"> a specified suit </param>
-            /// <return> returns all recently put cards in the correct suit by a descending order </return>
+            /// <return> returns all recently put cards in the correct suit by a descending order (as List<string>)</return>
             ///</summary> 
             List<string> putCards = new List<string>();
-
+            
             // Adds all recently put cards to a list
             foreach (var id in idCard)
             {
