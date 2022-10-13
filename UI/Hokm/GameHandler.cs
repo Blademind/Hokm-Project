@@ -67,7 +67,8 @@ namespace Hokm
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
                 {
-                    idCard[i].Add(arr[i]);
+                    if (idCard[i].IndexOf(arr[i]) == -1)
+                        idCard[i].Add(arr[i]);
                 }
             }
 
@@ -307,6 +308,12 @@ namespace Hokm
                         else
                         {
                             // Scanning through candidates
+                            foreach(string card in playedCards)
+                            {
+                                if(card != "")
+                                putCards.Add(card);
+                            }
+
                             foreach (string candidate in candidates)
                             {
 
