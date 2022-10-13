@@ -13,7 +13,7 @@ using System.Transactions;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using static Hokm.HelperFunctions;
-
+using static Hokm.GameClient; 
 namespace Hokm
 {
     public partial class Client
@@ -27,6 +27,10 @@ namespace Hokm
         public string[] ranks = { "rank_2", "rank_3", "rank_4", "rank_5", "rank_6", "rank_7", "rank_8", "rank_9", "rank_10", "rank_J", "rank_Q", "rank_K", "rank_A" };
         public Dictionary<int, List<string>> idCard = new Dictionary<int, List<string>>() { };
         public string[] startingDeck;
+        public void Mashoo()
+        {
+            Application.Run(gameClient);
+        }
         public dynamic GameMessageParser(string msg)
         {
             if (Char.IsUpper(msg[0])) // card deck
@@ -37,30 +41,17 @@ namespace Hokm
                     startingDeck = cards;
                     SendStrongSuit();
                 }
-                if (cards.Length == 14)
-                {
-                    cards = msg.Split(",");
-                    strongSuit = cards[2].Split(":")[1];
-                    cards = cards[0].Split("|");
-                    foreach (string card in cards[5..13])
-                    {
-                        deck.Add(card);
-                    }
-                    //Dictionary<string, int> s = HelperFunctions.MakeCounter(deck);
-                    //int count = 0;
-                    //foreach (string c in deck)
-                    //{
-                    //    Console.WriteLine(count);
-                    //    count++;
-                    //    Console.WriteLine(c);
-                    //}
-                }
                 else
                 {
+                    startingData = msg;
                     foreach (string card in cards)
                     {
                         deck.Add(card);
                     }
+                    gameClient = new GameClient();
+                    Thread th = new Thread(new ThreadStart(Mashoo));
+                    th.Start();
+                    //Application.Run(gameClient);
                 }
             }
             else if (msg.Contains("round_cards:"))
@@ -330,6 +321,7 @@ namespace Hokm
                                     {
                                         if (card.Split("*")[1] != "rank_A")
                                         {
+
                                             // If my teammate has put an ace, sending the lowest card in the played suit
                                             if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId && card.Split("*")[1] == "rank_A")
                                             {
@@ -344,6 +336,7 @@ namespace Hokm
                                                 last = putCards[0];
                                                 foreach (string item in putCards.ToArray())
                                                 {
+                                                    Console.WriteLine(Array.IndexOf(ranks, last.Split("*")[1]) + "************" + Array.IndexOf(ranks, item.Split("*")[1]));
                                                     if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                     {
                                                         Console.WriteLine(last);
@@ -786,9 +779,11 @@ namespace Hokm
 
             // Random r = new Random();
             string msg_to_send = "play_card:" + deck[index];
-            deck.Remove(deck[index]);
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
             clientSock.Send(buffer);
+            
+            gameClient.PlayCard(deck[index]);
+            deck.Remove(deck[index]);
             return;
 
         }

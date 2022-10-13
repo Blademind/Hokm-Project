@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
-
 namespace Hokm
 {
     class DataAnalyzer
@@ -85,6 +84,7 @@ namespace Hokm
 
         public string[] GetTeams()
         {
+            Console.WriteLine(startData);
             int pFrom = this.startData.IndexOf(",teams:") + ",teams:".Length;
             int pTo = this.startData.LastIndexOf(",strong");
 
