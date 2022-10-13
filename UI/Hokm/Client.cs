@@ -41,7 +41,7 @@ namespace Hokm
 
             this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.buf = new byte[8];
-            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 55555);
+            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();
@@ -87,8 +87,8 @@ namespace Hokm
             ///</summary>
             ///
 
-            try
-            {
+            //try
+            //{
                 while (true)
             {
                 this.rec = this.clientSock.Receive(this.buf);
@@ -156,19 +156,19 @@ namespace Hokm
                 }
                 this.buf = new byte[8];
             }
-        }
+        //}
 
 
             // Server has disconnected
-            catch (Exception ex)
-            {
-                if (ex is System.FormatException || ex is SocketException)
-                {
-                    Environment.Exit(0);
-                    MessageBox.Show("Server is not responding, please make sure the server is running or try again later.");
-                    return;
-                }
-            }
+            //catch (Exception ex)
+            //{
+            //    if (ex is System.FormatException || ex is SocketException)
+            //    {
+            //        //Environment.Exit(0);
+            //        //MessageBox.Show("Server is not responding, please make sure the server is running or try again later.");
+            //        return;
+            //    }
+            //}
         }
     }
 }
