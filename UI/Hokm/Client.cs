@@ -41,7 +41,7 @@ namespace Hokm
 
             this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.buf = new byte[8];
-            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 6 }), 55555);
+            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();

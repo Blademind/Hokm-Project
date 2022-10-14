@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "hvKrnDex+2qJnJGTCX8Nm+MHN24WhQymCJGtP07yZKPOUSOnAxxJQohG2TFYGgAs8xwReum4scQstey7THivhA==",
+  "dgSpecHash": "YKld1YBcxTeIYawn6CwmPJDARp1iUccvpZh70jTY9pxK0pvRRl9o3Y2XWT9mpTPeXKXiir21oVSweHEIElYzyQ==",
   "success": true,
-  "projectFilePath": "D:\\Cyber\\projects\\Hokm_Game\\Hokm-Project\\UI\\Hokm\\Hokm.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm\\UI\\Hokm\\Hokm.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\alonl\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.29\\microsoft.netcore.app.host.win-x64.3.1.29.nupkg.sha512",
+    "C:\\Users\\alonl\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\alonl\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\alonl\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -604,16 +604,18 @@ namespace Hokm
                                                     if (winningCardExists)
                                                     {
                                                         List<string> plainCards = new List<string>();
-                                                        for (int i = 0; i < playedCards.Length; i++)
+                                                        foreach (string c in playedCards)
                                                         {
-                                                            if (playedCards[i] != "")
+                                                            if (c != "" && c.Split("*")[0] == suit)
                                                             {
-                                                                plainCards.Add(playedCards[i]);
+                                                                plainCards.Add(c);
                                                             }
                                                         }
                                                         //List<string> descendingRanks = playedCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
                                                         List<string> descendingRanks = plainCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-                                                        if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < cardToSend)
+                                                        descendingRanks.ForEach(a => Console.Write(a + ", "));
+                                                        Console.WriteLine();
+                                                        if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < Array.IndexOf(ranks, deck[cardToSend].Split("*")[1]))
                                                             break;
                                                         else
                                                             winningCardExists = false;
@@ -669,59 +671,63 @@ namespace Hokm
                             // If card not found, send a non playing card and non strong card
                             if (cardToSend == -1)
                             {
-                                if (deck[0].Split("*")[0] == availableSuits[0])
-                                {
-                                    suit = availableSuits[0];
-                                    availableSuits.Remove(availableSuits[0]);
+                                //if (deck[0].Split("*")[0] == availableSuits[0])
+                                //{
+                                //    suit = availableSuits[0];
+                                //    availableSuits.Remove(suit);
 
-                                }
-                                else
-                                {
-                                    suit = availableSuits[1];
-                                    availableSuits.Remove(availableSuits[1]);
-                                }
+                                //}
+                                //else
+                                //{
+                                //    suit = availableSuits[1];
+                                //    availableSuits.Remove(suit);
+                                //}
 
                                 index = 0;
                                 rank = ranks[index];
-                                cardToSend = FindSuit(suit, rank);
+                                cardToSend = CardByRank(rank);
                                 while (cardToSend == -1 && index <= 12)
                                 {
                                     rank = ranks[index];
                                     index += 1;
-                                    cardToSend = FindSuit(suit, rank);
+                                    cardToSend = CardByRank(rank);
                                 }
+                                deck.ForEach(x => Console.Write(x + ", "));
+                                Console.WriteLine();
+                                Console.WriteLine("4: " + deck[cardToSend]);
+                                SendCard(cardToSend);
+                                //// If card not found, send the lowest non playing and non strong card
+                                //if (cardToSend == -1)
+                                //{
+                                //    suit = availableSuits[0];
+                                //    Console.WriteLine("Last available suit: " + suit);
+                                //    index = 0;
+                                //    rank = ranks[index];
+                                //    cardToSend = FindSuit(suit, rank);
 
-                                // If card not found, send the lowest non playing and non strong card
-                                if (cardToSend == -1)
-                                {
-                                    suit = availableSuits[0];
-                                    availableSuits.Remove(availableSuits[0]);
-                                    index = 0;
-                                    rank = ranks[index];
-                                    cardToSend = FindSuit(suit, rank);
+                                //    while (cardToSend == -1 && index <= 12)
+                                //    {
+                                //        rank = ranks[index];
+                                //        index += 1;
+                                //        cardToSend = FindSuit(suit, rank);
+                                //    }
 
-                                    while (cardToSend == -1 && index <= 12)
-                                    {
-                                        rank = ranks[index];
-                                        index += 1;
-                                        cardToSend = FindSuit(suit, rank);
-                                    }
+                                //    deck.ForEach(a => Console.Write(a + ", "));
+                                //    Console.WriteLine();
 
-                                    deck.ForEach(x => Console.Write(x + ", "));
-                                    Console.WriteLine();
-                                    Console.WriteLine("4: " + deck[cardToSend]);
-                                    SendCard(cardToSend);
+                                //    Console.WriteLine("4: " + deck[cardToSend]);
+                                //    SendCard(cardToSend);
 
-                                }
+                                //}
 
-                                // TODO
-                                else
-                                {
-                                    deck.ForEach(x => Console.Write(x + ", "));
-                                    Console.WriteLine();
-                                    Console.WriteLine("5: " + deck[cardToSend]);
-                                    SendCard(cardToSend);
-                                }
+                                //// TODO
+                                //else
+                                //{
+                                //    deck.ForEach(x => Console.Write(x + ", "));
+                                //    Console.WriteLine();
+                                //    Console.WriteLine("5: " + deck[cardToSend]);
+                                //    SendCard(cardToSend);
+                                //}
                             }
 
                             // TODO
