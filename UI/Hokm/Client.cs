@@ -15,6 +15,7 @@ namespace Hokm
 
         // Initating socket variables
         public Socket clientSock;
+        public IPEndPoint ipPort;
         public IPEndPoint serverIpPort;
         public Byte[] buf;
         public int rec;
@@ -22,21 +23,12 @@ namespace Hokm
         public string msg;
         public string msgFrag;
         public string[] strongSuits;
-        public static string startingData;
-        public GameClient gameClient;
-
 
         // Initiating game variables
         public List<string> deck = new List<string>();
-        public static int ruler { get; set; }
-        public static int clientId { get; set; }
+        public int ruler { get; set; }
+        public int clientId { get; set; }
 
-        public void initSock()
-        {
-            this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.buf = new byte[8];
-            ServerConnect();
-        }
         public Client(IPAddress ip, int port)
         {
             /// <summary>
@@ -46,15 +38,26 @@ namespace Hokm
             /// <param name="port"> the port in which we are connecting </param>
             /// <return> None </return>
             /// </summary>
+
+            this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.buf = new byte[8];
             this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();
             }
+            try
+            {
+                this.ipPort = new IPEndPoint(ip, port);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("was not able to bind said ip/port");
+            }
             //client_sock.Bind(ip_port);
-            initSock();
+            Server_Connect();
         }
-        public void ServerConnect()
+        public void Server_Connect()
         {
 
             /// <summary>

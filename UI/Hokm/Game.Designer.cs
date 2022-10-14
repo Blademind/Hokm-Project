@@ -669,6 +669,7 @@ namespace Hokm
             // 
             // pictureBox53
             // 
+            //this.pictureBox53.Image = global::Hokm.Properties.Resources.king_of_clubs;
             this.pictureBox53.Location = new System.Drawing.Point(591, 509);
             this.pictureBox53.Name = "pictureBox53";
             this.pictureBox53.Size = new System.Drawing.Size(84, 133);
@@ -678,6 +679,8 @@ namespace Hokm
             // 
             // pictureBox54
             // 
+            //this.pictureBox54.Image = global::Hokm.Properties.Resources.king_of_clubs;
+
             this.pictureBox54.Location = new System.Drawing.Point(591, 281);
             this.pictureBox54.Name = "pictureBox54";
             this.pictureBox54.Size = new System.Drawing.Size(84, 133);
@@ -687,6 +690,9 @@ namespace Hokm
             // 
             // pictureBox55
             // 
+            //this.pictureBox55.Image = global::Hokm.Properties.Resources.king_of_clubs;
+            //this.pictureBox55.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
             this.pictureBox55.Location = new System.Drawing.Point(681, 417);
             this.pictureBox55.Name = "pictureBox55";
             this.pictureBox55.Size = new System.Drawing.Size(133, 84);
@@ -696,6 +702,8 @@ namespace Hokm
             // 
             // pictureBox56
             // 
+            //this.pictureBox56.Image = global::Hokm.Properties.Resources.king_of_clubs;
+            //this.pictureBox56.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
             this.pictureBox56.Location = new System.Drawing.Point(452, 417);
             this.pictureBox56.Name = "pictureBox56";
             this.pictureBox56.Size = new System.Drawing.Size(133, 84);
@@ -706,11 +714,13 @@ namespace Hokm
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Font = new Font("Arial", 24, FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(113, 67);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 37);
+            this.label1.Size = new System.Drawing.Size(38, 15);
             this.label1.TabIndex = 58;
+            this.label1.Text = "";
+
             // 
             // Game
             // 
@@ -834,6 +844,7 @@ namespace Hokm
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox56)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
 
         }
 

@@ -83,4 +83,3 @@ D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debu
 D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
 D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
 D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
-C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources

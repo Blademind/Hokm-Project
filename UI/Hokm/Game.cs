@@ -14,7 +14,7 @@ namespace Hokm
             Random rand = new Random();
             label1.Text = "Hokm: " + list[rand.Next(0, 5)];
 
-            string dir = @"D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\Cards";
+            string dir = @"C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\Cards";
             string[] files = Directory.GetFiles(dir, "*.png");
             string name = "";
 
@@ -23,17 +23,17 @@ namespace Hokm
                 name = file.Substring(file.LastIndexOf('\\') + 1);
                 name = name.Substring(0, name.Length - 4);
                 string[] cardShapeValue = name.Split("_");
-                Cardssss card = new Cardssss(cardShapeValue[2], cardShapeValue[0]);
+                Card card = new Card(cardShapeValue[2], cardShapeValue[0]);
                 Console.WriteLine(card);
             }
         }
 
     }
-    class Cardssss
+    class Card
     {
         public string shape { get; set; }
         public string value { get; set; }
-        public Cardssss(string shape, string value)
+        public Card(string shape, string value)
         {
             this.shape = shape;
             this.value = value;
