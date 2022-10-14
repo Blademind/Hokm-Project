@@ -13,6 +13,7 @@ using System.Transactions;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using static Hokm.HelperFunctions;
+using static Hokm.Client;
 
 namespace Hokm
 {
@@ -27,6 +28,8 @@ namespace Hokm
         public string[] ranks = { "rank_2", "rank_3", "rank_4", "rank_5", "rank_6", "rank_7", "rank_8", "rank_9", "rank_10", "rank_J", "rank_Q", "rank_K", "rank_A" };
         public Dictionary<int, List<string>> idCard = new Dictionary<int, List<string>>() { };
         public string[] startingDeck;
+        public GameClient gameClient;
+        public string[] playedCards;
         public dynamic GameMessageParser(string msg)
         {
             if (Char.IsUpper(msg[0])) // card deck
@@ -39,6 +42,14 @@ namespace Hokm
                 }
                 if (cards.Length == 14)
                 {
+                    //Console.WriteLine(msg);
+                    gameClient = new GameClient(msg, clientId.ToString(), ruler.ToString());
+                    new Thread(
+                    () =>
+                    {
+                    Application.Run(gameClient);
+                    }
+                    ).Start();
                     cards = msg.Split(",");
                     strongSuit = cards[2].Split(":")[1];
                     cards = cards[0].Split("|");
@@ -65,6 +76,17 @@ namespace Hokm
             }
             else if (msg.Contains("round_cards:"))
             {
+                string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
+
+                for (int i = 0; i < round_cards.Length; i++)
+                {
+                    if (round_cards[i] != "" && i + 1 != clientId)
+                        gameClient.PlayOtherCard(round_cards[i], i + 1);
+                    else
+                        gameClient.PlayCard(round_cards[i]);
+                }
+                gameClient.RoundEnding(msg.Split(":")[1].Split("+")[0]);
+
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
                 {
@@ -148,7 +170,7 @@ namespace Hokm
             int index = 0;
             string rank = ranks[index];
             string playedSuit = played.Split(",")[0].Split(":")[1];
-            string[] playedCards = played.Split(",")[1].Split(":")[1].Split("|");
+            playedCards = played.Split(",")[1].Split(":")[1].Split("|");
 
             // First turn
             if (playedSuit == "")

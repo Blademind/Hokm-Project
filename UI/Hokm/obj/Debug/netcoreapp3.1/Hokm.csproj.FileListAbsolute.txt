@@ -56,7 +56,6 @@ C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.r
 C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
 C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
 C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
-C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Game.resources
 C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
 C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
 C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
@@ -83,3 +82,4 @@ D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debu
 D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
 D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
 D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
