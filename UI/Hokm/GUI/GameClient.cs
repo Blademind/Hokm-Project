@@ -223,8 +223,9 @@ namespace Hokm
 
         public void PlayCard(string played)
         {
-            UpdateMyDeck(played);
-            MyCardToMiddle(played);
+            this.Invoke(new Action<int>((int _) => { UpdateMyDeck(played); }), 0);
+            this.Invoke(new Action<int>((int _) => { MyCardToMiddle(played); }), 0);
+            this.Invoke(new Action<int>((int _) => { this.ResumeLayout(false); }), 0);
         }
 
         // Others
@@ -285,7 +286,7 @@ namespace Hokm
         {
             player = dA.GetRealPlayerID(player.ToString());
             int k = UpdateOthersDeck(played, player);
-            OthersCardToMiddle(played, player, k);
+            this.Invoke(new Action<int>((int _) => { OthersCardToMiddle(played, player, k);}), 0);         
         }
 
 
@@ -342,9 +343,9 @@ namespace Hokm
             this.roundN++;
             this.winner_label.Text = "Winner: " + winner;
             this.round_title.Text = "End of Round: " + this.roundN.ToString();
-            EditScorePanel(winner);
-            ShowPanels(this.winning_panel);
-            RemoveMiddleCards();
+            this.Invoke(new Action<int>((int _) => { EditScorePanel(winner); }), 0);
+            this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
+            this.Invoke(new Action<int>((int _) => { RemoveMiddleCards(); }), 0); 
             var t = new Timer();
             t.Interval = 2400; // will tick in 2.4 seconds
             t.Tick += (s, e) =>
@@ -365,7 +366,7 @@ namespace Hokm
             }
         }
 
-        private void EndingScreen(string winner, string score)
+        private void EndingScreen(string winner)
         {
             this.ending_panel.Visible = true;
             foreach(Control c in this.ending_panel.Controls)
@@ -376,10 +377,9 @@ namespace Hokm
 
         public void GameOver(string gWinner, string score)
         {
-            RemoveAllCards();
-            EndingScreen(gWinner, "score");
+            this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
+            this.Invoke(new Action<int>((int _) => { EndingScreen(gWinner); }), 0);
             // exit button
-
         }
         
         #region TRASH

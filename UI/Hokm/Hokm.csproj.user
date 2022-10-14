@@ -4,8 +4,5 @@
     <Compile Update="GUI\GameClient.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="trash\Game.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

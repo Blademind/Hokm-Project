@@ -27,7 +27,29 @@ namespace Hokm
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameClient());
+
+            // reciving data
+            string startData = "clubs*rank_2|diamonds*rank_2|spades*rank_3|hearts*rank_4|" +
+            "spades*rank_A|clubs*rank_J|hearts*rank_7|spades*rank_8|diamonds*rank_9" +
+            "|clubs*rank_K|clubs*rank_A|spades*rank_2|hearts*rank_8,teams:[1+3]|[2+4],strong:hearts";
+            string clientID = "4";
+            string ruler = "1";
+            // got my data
+            GameClient g = new GameClient();
+            new Thread(
+                () =>
+                {
+                    Application.Run(g);
+                }
+            ).Start();
+
+            g.PlayOtherCard("clubs*rank_2", 2);
+
+            while (true)
+                Console.WriteLine("!!!!");
+
+
+
         }
     }
 }

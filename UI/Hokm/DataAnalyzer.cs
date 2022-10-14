@@ -13,9 +13,9 @@ namespace Hokm
         private string[] players;
         public DataAnalyzer(string clientID,string rulerID, string startData)
         {
-            this.clientID = clientID;
-            this.rulerID = rulerID;
-            this.startData = startData;
+            this.clientID = clientID.ToLower();
+            this.rulerID = rulerID.ToLower();
+            this.startData = startData.ToLower();
             this.players = new string[3];
             SetRealOtherID();
         }

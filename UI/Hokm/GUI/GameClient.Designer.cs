@@ -46,13 +46,13 @@ namespace Hokm
             this.p_id_2 = new System.Windows.Forms.Label();
             this.p_id_3 = new System.Windows.Forms.Label();
             this.ending_panel = new System.Windows.Forms.Panel();
+            this.ending_winner = new System.Windows.Forms.Label();
+            this.ending_title = new System.Windows.Forms.Label();
+            this.game_again_but = new System.Windows.Forms.Button();
+            this.exit_but = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.exit_but = new System.Windows.Forms.Button();
-            this.game_again_but = new System.Windows.Forms.Button();
-            this.ending_title = new System.Windows.Forms.Label();
-            this.ending_winner = new System.Windows.Forms.Label();
             this.info_panel.SuspendLayout();
             this.score_panel.SuspendLayout();
             this.winning_panel.SuspendLayout();
@@ -75,11 +75,11 @@ namespace Hokm
             // 
             this.info_title.AutoSize = true;
             this.info_title.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.info_title.Location = new System.Drawing.Point(61, -1);
+            this.info_title.Location = new System.Drawing.Point(31, -1);
             this.info_title.Name = "info_title";
-            this.info_title.Size = new System.Drawing.Size(114, 40);
+            this.info_title.Size = new System.Drawing.Size(183, 40);
             this.info_title.TabIndex = 2;
-            this.info_title.Text = "Results";
+            this.info_title.Text = "Information";
             this.info_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // info_text
@@ -100,7 +100,8 @@ namespace Hokm
             this.score_text.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.score_text.Location = new System.Drawing.Point(19, 39);
             this.score_text.Name = "score_text";
-            this.score_text.Size = new System.Drawing.Size(0, 37);
+            this.score_text.Size = new System.Drawing.Size(116, 74);
+            this.score_text.TabIndex = 2;
             this.score_text.Text = "4+2: p1 \n3+1: p2";
             this.score_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -130,9 +131,9 @@ namespace Hokm
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(849, 664);
+            this.button1.Location = new System.Drawing.Point(956, 664);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(288, 148);
+            this.button1.Size = new System.Drawing.Size(181, 148);
             this.button1.TabIndex = 5;
             this.button1.Text = "EndRound";
             this.button1.UseVisualStyleBackColor = true;
@@ -219,56 +220,15 @@ namespace Hokm
             this.ending_panel.Size = new System.Drawing.Size(255, 160);
             this.ending_panel.TabIndex = 11;
             // 
-            // button2
+            // ending_winner
             // 
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button2.Location = new System.Drawing.Point(21, 674);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(288, 148);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "preset round";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button3.Location = new System.Drawing.Point(94, 467);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(288, 148);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "cmd round";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 37F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(782, 467);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(288, 148);
-            this.button4.TabIndex = 14;
-            this.button4.Text = "end game";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // exit_but
-            // 
-            this.exit_but.Location = new System.Drawing.Point(3, 115);
-            this.exit_but.Name = "exit_but";
-            this.exit_but.Size = new System.Drawing.Size(122, 42);
-            this.exit_but.TabIndex = 0;
-            this.exit_but.Text = "Exit Game";
-            this.exit_but.UseVisualStyleBackColor = true;
-            // 
-            // game_again_but
-            // 
-            this.game_again_but.Location = new System.Drawing.Point(130, 115);
-            this.game_again_but.Name = "game_again_but";
-            this.game_again_but.Size = new System.Drawing.Size(122, 42);
-            this.game_again_but.TabIndex = 1;
-            this.game_again_but.Text = "Another Game";
-            this.game_again_but.UseVisualStyleBackColor = true;
+            this.ending_winner.AutoSize = true;
+            this.ending_winner.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ending_winner.Location = new System.Drawing.Point(54, 67);
+            this.ending_winner.Name = "ending_winner";
+            this.ending_winner.Size = new System.Drawing.Size(128, 28);
+            this.ending_winner.TabIndex = 4;
+            this.ending_winner.Text = "Winner: team";
             // 
             // ending_title
             // 
@@ -281,15 +241,56 @@ namespace Hokm
             this.ending_title.Text = "Game End";
             this.ending_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ending_winner
+            // game_again_but
             // 
-            this.ending_winner.AutoSize = true;
-            this.ending_winner.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ending_winner.Location = new System.Drawing.Point(54, 67);
-            this.ending_winner.Name = "ending_winner";
-            this.ending_winner.Size = new System.Drawing.Size(128, 28);
-            this.ending_winner.TabIndex = 4;
-            this.ending_winner.Text = "Winner: team";
+            this.game_again_but.Location = new System.Drawing.Point(130, 115);
+            this.game_again_but.Name = "game_again_but";
+            this.game_again_but.Size = new System.Drawing.Size(122, 42);
+            this.game_again_but.TabIndex = 1;
+            this.game_again_but.Text = "Another Game";
+            this.game_again_but.UseVisualStyleBackColor = true;
+            // 
+            // exit_but
+            // 
+            this.exit_but.Location = new System.Drawing.Point(3, 115);
+            this.exit_but.Name = "exit_but";
+            this.exit_but.Size = new System.Drawing.Size(122, 42);
+            this.exit_but.TabIndex = 0;
+            this.exit_but.Text = "Exit Game";
+            this.exit_but.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button2.Location = new System.Drawing.Point(21, 674);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(160, 148);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "preset round";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button3.Location = new System.Drawing.Point(94, 467);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(172, 148);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "cmd round";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 37F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button4.Location = new System.Drawing.Point(904, 467);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(166, 148);
+            this.button4.TabIndex = 14;
+            this.button4.Text = "end game";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // GameClient
             // 
