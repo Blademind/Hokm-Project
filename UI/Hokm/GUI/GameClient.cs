@@ -354,27 +354,26 @@ namespace Hokm
             }
         }
 
-        public void RoundEnding(string winner)
+        public void RoundEnding(string winner, string team)
         {
-            var t = new Timer();
-            //t.Interval = 10;
-            Console.WriteLine("DELETING!");
+            this.Invoke(new Action<int>((int _) => {
+                this.roundN++;
+                this.winner_label.Text = "Winner: " + team;
+                this.round_title.Text = "End of Round: " + this.roundN.ToString();
+            }), 0);
 
-            //t.Tick += (s, e) => { this.Invoke(new Action<int>((int _) => { RemoveMiddleCards(); }), 0); };
-            //t.Start();
-            
-            this.roundN++;
-            this.winner_label.Text = "Winner: " + winner;
-            this.round_title.Text = "End of Round: " + this.roundN.ToString();
             this.Invoke(new Action<int>((int _) => { EditScorePanel(winner); }), 0);
-            //this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
-            //var t = new Timer();
-            //t.Interval = 3; // will tick in 2.4 seconds
-            //t.Tick += (s, e) =>
-            //{
-            //    ShowPanels(this.winning_panel, false);
-            //};
-            //t.Start();
+            this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
+
+            var t = new Timer();
+            t.Interval = 1000; // will tick in 1 second
+            t.Tick += (s, e) =>
+            {
+                this.Invoke(new Action<int>((int _) => {
+                    ShowPanels(this.winning_panel, false); ;
+                }), 0);
+            };
+            t.Start();
         }
 
         // Game Over
@@ -408,11 +407,11 @@ namespace Hokm
                 string[] t = this.score_text.Text.Split("\n");
                 if (t[0].Contains("7"))
                 {
-                    gWinner = t[0].Remove(t[0].Length - 1);
+                    gWinner = t[0].Remove(t[0].Length - 3);
                 }
                 else if (t[1].Contains("7"))
                 {
-                    gWinner = t[1].Remove(t[1].Length - 1);
+                    gWinner = t[1].Remove(t[1].Length - 3);
                 }
                 else
                 {
@@ -590,20 +589,22 @@ namespace Hokm
 
             if (startData == null)
                  startData = "clubs*rank_2|diamonds*rank_2|spades*rank_3|hearts*rank_4|" +
-                    "spades*rank_A|clubs*rank_J|hearts*rank_7|spades*rank_8|diamonds*rank_9" +
+                    "spades*rank_A|clubs*rank_J|hearts*rank_K|spades*rank_8|diamonds*rank_9" +
                     "|clubs*rank_K|clubs*rank_A|spades*rank_2|hearts*rank_8,teams:[1+3]|[2+4],strong:hearts";
             if (clientID == null)
                 clientID = "4";
             if (ruler == null)
                 ruler = "1";
-            StartInitializer(clientID, ruler, startData);
+            StartInitializer(clientID, ruler, "clubs*rank_2|diamonds*rank_2|spades*rank_3|hearts*rank_4|" +
+                    "spades*rank_A|clubs*rank_J|hearts*rank_K|spades*rank_8|diamonds*rank_9" +
+                    "|clubs*rank_K|clubs*rank_A|spades*rank_2|hearts*rank_8,teams:[1+3]|[2+4],strong:hearts");
 
         }
 
         // Tests
         private void button1_Click(object sender, EventArgs e)
         {
-            RoundEnding("1");
+            RoundEnding("1", "1");
         }
 
         private void GameClient_Load(object sender, EventArgs e)

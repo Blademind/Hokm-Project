@@ -86,7 +86,7 @@ namespace Hokm
                     else
                         gameClient.PlayCard(round_cards[i]);
                 }
-                gameClient.RoundEnding(msg.Split(":")[1].Split("+")[0]);
+                gameClient.RoundEnding(msg.Split(":")[1].Split("+")[0], msg.Split(":")[1].Substring(0,3));
 
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
