@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Numerics;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading;
@@ -294,15 +295,30 @@ namespace Hokm
 
         // Round Over
 
-        private void RemoveMiddleCards()
+        public void RemoveMiddleCards()
         {
-            var t = new Timer();
-            for (int i = 0; i < this.activeCards.Length; i++)
+            void Lol()
             {
-                this.Controls.Remove(activeCards[i]);
+                foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
+                {
+                    if (p.Location == new Point(403, 350) ||
+                        p.Location == new Point(530, 230) ||
+                        p.Location == new Point(660, 350) ||
+                        p.Location == new Point(530, 470))
+                    {
+                        this.Controls.Remove(p);
+                    }
+
+                }
             }
-            t.Start();
-            
+            this.Invoke(new Action<int>((int _) => { Lol(); }), 0);
+
+
+            //for (int i = 0; i < this.activeCards.Length; i++)
+            //{
+            //    Console.WriteLine(">>>>>>>>>>>" + activeCards[i]);
+            //    this.Controls.Remove(activeCards[i]);
+            //}            
         }
 
         private void RefreshCards()
@@ -341,9 +357,12 @@ namespace Hokm
         public void RoundEnding(string winner)
         {
             var t = new Timer();
-            t.Interval = 2000;
-            t.Tick += (s, e) => { this.Invoke(new Action<int>((int _) => { RemoveMiddleCards(); }), 0); };
-            t.Start();
+            //t.Interval = 10;
+            Console.WriteLine("DELETING!");
+
+            //t.Tick += (s, e) => { this.Invoke(new Action<int>((int _) => { RemoveMiddleCards(); }), 0); };
+            //t.Start();
+            
             this.roundN++;
             this.winner_label.Text = "Winner: " + winner;
             this.round_title.Text = "End of Round: " + this.roundN.ToString();
@@ -375,11 +394,32 @@ namespace Hokm
             foreach(Control c in this.ending_panel.Controls)
             {
                 c.Visible = true;
+                if (c.Name == "ending_winner")
+                {
+                    c.Text = "Winner: " + winner;
+                }
             }
         }
 
-        public void GameOver(string gWinner, string score)
+        public void GameOver(string gWinner=null)
         {
+            if (gWinner == null)
+            {
+                string[] t = this.score_text.Text.Split("\n");
+                if (t[0].Contains("7"))
+                {
+                    gWinner = t[0].Remove(t[0].Length - 1);
+                }
+                else if (t[1].Contains("7"))
+                {
+                    gWinner = t[1].Remove(t[1].Length - 1);
+                }
+                else
+                {
+                    gWinner = "erorrr";
+                }
+            }
+
             this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
             this.Invoke(new Action<int>((int _) => { EndingScreen(gWinner); }), 0);
             // exit button
@@ -593,7 +633,7 @@ namespace Hokm
 
         private void button4_Click(object sender, EventArgs e)
         {
-            GameOver("2+4", "7");
+            GameOver("2+4");
         }
     }
 }

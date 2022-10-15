@@ -76,6 +76,7 @@ namespace Hokm
             }
             else if (msg.Contains("round_cards:"))
             {
+                gameClient.RemoveMiddleCards();
                 string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
 
                 for (int i = 0; i < round_cards.Length; i++)
