@@ -29,10 +29,13 @@ namespace Hokm
         public string[] startingDeck;
         public dynamic GameMessageParser(string msg)
         {
-            if (Char.IsUpper(msg[0])) // card deck
+            // Card deck
+            if (Char.IsUpper(msg[0]))
             {
                 string[] cards = msg.Split("|");
-                if (cards.Length == 5 && clientId == ruler) // starting deck for ruler
+
+                // Starting deck for ruler
+                if (cards.Length == 5 && clientId == ruler)
                 {
                     startingDeck = cards;
                     SendStrongSuit();
@@ -46,7 +49,7 @@ namespace Hokm
                     {
                         deck.Add(card);
                     }
-                    //Dictionary<string, int> s = HelperFunctions.MakeCounter(deck);
+                    Dictionary<string, int> s = HelperFunctions.MakeCounter(deck);
                     //int count = 0;
                     //foreach (string c in deck)
                     //{
