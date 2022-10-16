@@ -143,31 +143,32 @@ namespace Hokm
             // 
             this.winning_panel.Controls.Add(this.round_title);
             this.winning_panel.Controls.Add(this.winner_label);
-            this.winning_panel.Location = new System.Drawing.Point(272, 213);
+            this.winning_panel.Location = new System.Drawing.Point(385, 49);
             this.winning_panel.Name = "winning_panel";
-            this.winning_panel.Size = new System.Drawing.Size(626, 445);
+            this.winning_panel.Size = new System.Drawing.Size(387, 111);
             this.winning_panel.TabIndex = 6;
             // 
             // round_title
             // 
             this.round_title.AutoSize = true;
-            this.round_title.Font = new System.Drawing.Font("Segoe UI", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.round_title.Location = new System.Drawing.Point(80, 16);
+            this.round_title.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.round_title.Location = new System.Drawing.Point(42, -3);
             this.round_title.Name = "round_title";
-            this.round_title.Size = new System.Drawing.Size(470, 81);
+            this.round_title.Size = new System.Drawing.Size(310, 54);
             this.round_title.TabIndex = 2;
             this.round_title.Text = "End of Round n";
             this.round_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.round_title.Click += new System.EventHandler(this.round_title_Click);
             // 
             // winner_label
             // 
             this.winner_label.AutoSize = true;
-            this.winner_label.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.winner_label.Location = new System.Drawing.Point(109, 179);
+            this.winner_label.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.winner_label.Location = new System.Drawing.Point(95, 51);
             this.winner_label.Name = "winner_label";
-            this.winner_label.Size = new System.Drawing.Size(424, 72);
+            this.winner_label.Size = new System.Drawing.Size(196, 45);
             this.winner_label.TabIndex = 0;
-            this.winner_label.Text = "Winner: client_id";
+            this.winner_label.Text = "Winner: n+n";
             // 
             // p_id_1
             // 
@@ -215,26 +216,26 @@ namespace Hokm
             this.ending_panel.Controls.Add(this.ending_title);
             this.ending_panel.Controls.Add(this.game_again_but);
             this.ending_panel.Controls.Add(this.exit_but);
-            this.ending_panel.Location = new System.Drawing.Point(429, 49);
+            this.ending_panel.Location = new System.Drawing.Point(311, 216);
             this.ending_panel.Name = "ending_panel";
-            this.ending_panel.Size = new System.Drawing.Size(255, 160);
+            this.ending_panel.Size = new System.Drawing.Size(557, 399);
             this.ending_panel.TabIndex = 11;
             // 
             // ending_winner
             // 
             this.ending_winner.AutoSize = true;
             this.ending_winner.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ending_winner.Location = new System.Drawing.Point(54, 67);
+            this.ending_winner.Location = new System.Drawing.Point(232, 176);
             this.ending_winner.Name = "ending_winner";
-            this.ending_winner.Size = new System.Drawing.Size(128, 28);
+            this.ending_winner.Size = new System.Drawing.Size(120, 28);
             this.ending_winner.TabIndex = 4;
-            this.ending_winner.Text = "Winner: team";
+            this.ending_winner.Text = "Winner: n+n";
             // 
             // ending_title
             // 
             this.ending_title.AutoSize = true;
             this.ending_title.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.ending_title.Location = new System.Drawing.Point(54, 0);
+            this.ending_title.Location = new System.Drawing.Point(207, 18);
             this.ending_title.Name = "ending_title";
             this.ending_title.Size = new System.Drawing.Size(145, 37);
             this.ending_title.TabIndex = 3;
@@ -243,7 +244,7 @@ namespace Hokm
             // 
             // game_again_but
             // 
-            this.game_again_but.Location = new System.Drawing.Point(130, 115);
+            this.game_again_but.Location = new System.Drawing.Point(339, 293);
             this.game_again_but.Name = "game_again_but";
             this.game_again_but.Size = new System.Drawing.Size(122, 42);
             this.game_again_but.TabIndex = 1;
@@ -252,7 +253,7 @@ namespace Hokm
             // 
             // exit_but
             // 
-            this.exit_but.Location = new System.Drawing.Point(3, 115);
+            this.exit_but.Location = new System.Drawing.Point(63, 293);
             this.exit_but.Name = "exit_but";
             this.exit_but.Size = new System.Drawing.Size(122, 42);
             this.exit_but.TabIndex = 0;
@@ -310,6 +311,8 @@ namespace Hokm
             this.Controls.Add(this.button1);
             this.Controls.Add(this.info_panel);
             this.Controls.Add(this.score_panel);
+            this.MaximumSize = new System.Drawing.Size(1187, 910);
+            this.MinimumSize = new System.Drawing.Size(1187, 910);
             this.Name = "GameClient";
             this.Text = "ODEA Client";
             this.Load += new System.EventHandler(this.GameClient_Load);

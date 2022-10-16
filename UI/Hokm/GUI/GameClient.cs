@@ -634,5 +634,10 @@ namespace Hokm
         {
             GameOver("2+4");
         }
+
+        private void round_title_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
