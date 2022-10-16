@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Hokm
 {
@@ -39,9 +40,7 @@ namespace Hokm
             /// <return> None </return>
             /// </summary>
 
-            this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.buf = new byte[8];
-            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 55555);
+            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();
@@ -55,6 +54,18 @@ namespace Hokm
                 Console.WriteLine("was not able to bind said ip/port");
             }
             //client_sock.Bind(ip_port);
+            InitSock();
+
+        }
+        public void InitSock()
+        {
+            /// <summary>
+            /// Restarts client and connects to server
+            /// <return> None </return>
+            /// </summary>
+            /// 
+            this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.buf = new byte[8];
             Server_Connect();
         }
         public void Server_Connect()
@@ -119,7 +130,13 @@ namespace Hokm
                 // Raw message from server
                 string new_msg = this.msg;
                 Console.WriteLine("raw_message: " + new_msg);
-
+                if (msg == "SERVER_DISCONNECTED")
+                {
+                    this.clientSock.Close();
+                    Console.WriteLine("Server has crashed, press any key when the server is back online. . .");
+                    Console.ReadLine();
+                    break;
+                }
                 // Parsing message
                 new_msg = GameMessageParser(new_msg);
 
@@ -156,7 +173,9 @@ namespace Hokm
                 }
                 this.buf = new byte[8];
             }
-        //}
+            InitSock();
+
+            //}
 
 
             // Server has disconnected
