@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Reflection.Metadata.BlobBuilder;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
@@ -55,6 +56,37 @@ namespace Hokm
         }
 
         // Game setup
+        private void FirstFiveCardsVisuals(Card[] cards)
+        {
+            int[] loc = { 0, 400 };
+            foreach (Card c in cards)
+            {
+                Console.WriteLine(c);
+                CardInitializer(c, loc[0], loc[1]);
+                loc[0] += 30;
+            }
+        }
+
+        public void FirstFiveCards(string cardsString)
+        {
+            cardsString = "CLUBS*rank_3|CLUBS*rank_7|DIAMONDS*rank_Q|CLUBS*rank_4|SPADES*rank_K";
+            
+            string[] cards = cardsString.Split('|');
+            Array.Sort(cards, StringComparer.InvariantCulture);
+            Card[] fiveDeck = new Card[cards.Length];
+
+            ShowPanels(this.ending_panel, false);
+            ShowPanels(this.winning_panel, false);
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                string[] cardInfo = cards[i].Split('*');
+
+                fiveDeck[i] = new Card(cardInfo[0], cardInfo[1]);
+            }
+            FirstFiveCardsVisuals(fiveDeck);
+        }
+
         private void SetStartingDeck(string data)
         {
             int pFrom = 0;
@@ -139,14 +171,26 @@ namespace Hokm
 
         private void ShowPanels(Control cc, bool show=true)
         {
-            cc.Visible = show;
-            foreach (Control c in cc.Controls)
+            if (show)
             {
-                c.Visible = show;
+                cc.Visible = show;
+                foreach (Control c in cc.Controls)
+                {
+                    c.Visible = show;
+                }
+            }
+            else
+            {
+                foreach (Control c in cc.Controls)
+                {
+                    c.Visible = show;
+                }
+                cc.Visible = show;
+
             }
         }
 
-        public void StartInitializer(string clientID, string rulerID, string startData)
+        private void StartInitializer(string startData, string clientID, string rulerID)
         {
 
             this.playerDecks[0] = this.pDeck0;
@@ -188,6 +232,14 @@ namespace Hokm
             ShowPanels(this.winning_panel, false);
 
         }
+
+        public void PublicStartInitializer(string startData, string clientID, string rulerID)
+        {
+            this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
+            this.Invoke(new Action<int>((int _) => { StartInitializer(startData, clientID, rulerID); }), 0);
+
+        }
+
 
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -297,7 +349,7 @@ namespace Hokm
 
         public void RemoveMiddleCards()
         {
-            void Lol()
+            void Re()
             {
                 foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
                 {
@@ -311,14 +363,8 @@ namespace Hokm
 
                 }
             }
-            this.Invoke(new Action<int>((int _) => { Lol(); }), 0);
-
-
-            //for (int i = 0; i < this.activeCards.Length; i++)
-            //{
-            //    Console.WriteLine(">>>>>>>>>>>" + activeCards[i]);
-            //    this.Controls.Remove(activeCards[i]);
-            //}            
+            this.Invoke(new Action<int>((int _) => { Re(); }), 0);
+           
         }
 
         private void RefreshCards()
@@ -365,15 +411,10 @@ namespace Hokm
             this.Invoke(new Action<int>((int _) => { EditScorePanel(winner); }), 0);
             this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
 
-            var t = new Timer();
-            t.Interval = 1000; // will tick in 1 second
-            t.Tick += (s, e) =>
-            {
-                this.Invoke(new Action<int>((int _) => {
-                    ShowPanels(this.winning_panel, false); ;
-                }), 0);
-            };
-            t.Start();
+            Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
+                ShowPanels(this.winning_panel, false); ;
+            }), 0));
+
         }
 
         // Game Over
@@ -480,7 +521,6 @@ namespace Hokm
                     }
                 }
                 this.deck = l.Where(c => c != null).ToArray(); ;
-                Console.WriteLine(this.deck);
             }
             MyCardToMiddle(played);
             UpdateMyCardsVisuals();
@@ -491,9 +531,6 @@ namespace Hokm
             int[] sizes = {100, 160};
             int[] length = {780, 240, 677 };
             int jump = (length[0] - length[1]) / 13;
-
-            string dir = @"D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\Cards";
-            string[] files = Directory.GetFiles(dir, "*.png");
 
             Random rnd = new Random();
 
@@ -528,9 +565,6 @@ namespace Hokm
                 {950, 950, 200, 770},
             };
             int[] length = { lengthAll[enemy, 0], lengthAll[enemy, 1], lengthAll[enemy, 2], lengthAll[enemy, 3] };
-
-            string dir = @"D:\Doron\עבודות יב\ערן\HOKM\Hokm-Project\UI\Hokm\Cards";
-            string[] files = Directory.GetFiles(dir, "*.png");
 
             Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject("back");
             Random rnd = new Random();
@@ -598,6 +632,15 @@ namespace Hokm
             StartInitializer(clientID, ruler, startData);
 
         }
+
+        public GameClient(string fCards)
+        {
+            InitializeComponent();
+
+            FirstFiveCards(fCards);
+
+        }
+
 
         // Tests
         private void button1_Click(object sender, EventArgs e)

@@ -35,21 +35,36 @@ namespace Hokm
             if (Char.IsUpper(msg[0])) // card deck
             {
                 string[] cards = msg.Split("|");
+
+                if (cards.Length == 5)
+                {
+                    gameClient = new GameClient(msg);
+                    new Thread(
+                    () =>
+                    {
+                        Application.Run(gameClient);
+                    }
+                    ).Start();
+                }
+
                 if (cards.Length == 5 && clientId == ruler) // starting deck for ruler
                 {
+                    
                     startingDeck = cards;
                     SendStrongSuit();
                 }
                 if (cards.Length == 14)
                 {
+                    Console.WriteLine(msg);
+                    gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
                     //Console.WriteLine(msg);
-                    gameClient = new GameClient(msg, clientId.ToString(), ruler.ToString());
-                    new Thread(
-                    () =>
-                    {
-                    Application.Run(gameClient);
-                    }
-                    ).Start();
+                    //gameClient = new GameClient(msg, clientId.ToString(), ruler.ToString());
+                    //new Thread(
+                    //() =>
+                    //{
+                    //    Application.Run(gameClient);
+                    //}
+                    //).Start();
                     cards = msg.Split(",");
                     strongSuit = cards[2].Split(":")[1];
                     cards = cards[0].Split("|");
