@@ -189,9 +189,9 @@ namespace Hokm
             this.p_id_1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_1.Location = new System.Drawing.Point(538, 9);
             this.p_id_1.Name = "p_id_1";
-            this.p_id_1.Size = new System.Drawing.Size(90, 37);
+            this.p_id_1.Size = new System.Drawing.Size(32, 37);
             this.p_id_1.TabIndex = 7;
-            this.p_id_1.Text = "label1";
+            this.p_id_1.Text = "n";
             // 
             // p_id_0
             // 
@@ -199,9 +199,9 @@ namespace Hokm
             this.p_id_0.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_0.Location = new System.Drawing.Point(538, 825);
             this.p_id_0.Name = "p_id_0";
-            this.p_id_0.Size = new System.Drawing.Size(90, 37);
+            this.p_id_0.Size = new System.Drawing.Size(101, 37);
             this.p_id_0.TabIndex = 8;
-            this.p_id_0.Text = "label1";
+            this.p_id_0.Text = "n - You";
             // 
             // p_id_2
             // 
@@ -209,19 +209,19 @@ namespace Hokm
             this.p_id_2.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_2.Location = new System.Drawing.Point(12, 401);
             this.p_id_2.Name = "p_id_2";
-            this.p_id_2.Size = new System.Drawing.Size(90, 37);
+            this.p_id_2.Size = new System.Drawing.Size(32, 37);
             this.p_id_2.TabIndex = 9;
-            this.p_id_2.Text = "label1";
+            this.p_id_2.Text = "n";
             // 
             // p_id_3
             // 
             this.p_id_3.AutoSize = true;
             this.p_id_3.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.p_id_3.Location = new System.Drawing.Point(1079, 415);
+            this.p_id_3.Location = new System.Drawing.Point(1127, 416);
             this.p_id_3.Name = "p_id_3";
-            this.p_id_3.Size = new System.Drawing.Size(90, 37);
+            this.p_id_3.Size = new System.Drawing.Size(32, 37);
             this.p_id_3.TabIndex = 10;
-            this.p_id_3.Text = "label1";
+            this.p_id_3.Text = "n";
             // 
             // ending_panel
             // 

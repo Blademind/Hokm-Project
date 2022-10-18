@@ -38,14 +38,14 @@ namespace Hokm
 
                 if (cards.Length == 5)
                 {
-                    gameClient = new GameClient(msg);
-                    new Thread(
-                    () =>
-                    {
-                        Application.Run(gameClient);
-                    }
-                    ).Start();
-                    //Thread.Sleep(1000);
+                    //gameClient = new GameClient(msg);
+                    //new Thread(
+                    //() =>
+                    //{
+                    //    Application.Run(gameClient);
+                    //}
+                    //).Start();
+                    //Thread.Sleep(6000);
                 }
 
                 if (cards.Length == 5 && clientId == ruler) // starting deck for ruler
@@ -57,7 +57,7 @@ namespace Hokm
                 if (cards.Length == 14)
                 {
                     Console.WriteLine(msg);
-                    gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
+                    //gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
 
 
                     //Console.WriteLine(msg);
@@ -93,17 +93,17 @@ namespace Hokm
             }
             else if (msg.Contains("round_cards:"))
             {
-                gameClient.RemoveMiddleCards();
-                string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
+                //gameClient.RemoveMiddleCards();
+                //string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
 
-                for (int i = 0; i < round_cards.Length; i++)
-                {
-                    if (round_cards[i] != "" && i + 1 != clientId)
-                        gameClient.PlayOtherCard(round_cards[i], i + 1);
-                    else
-                        gameClient.PlayCard(round_cards[i]);
-                }
-                gameClient.RoundEnding(msg.Split(":")[1].Split("+")[0], msg.Split(":")[1].Substring(0, 3));
+                //for (int i = 0; i < round_cards.Length; i++)
+                //{
+                //    if (round_cards[i] != "" && i + 1 != clientId)
+                //        gameClient.PlayOtherCard(round_cards[i], i + 1);
+                //    else
+                //        gameClient.PlayCard(round_cards[i]);
+                //}
+                //gameClient.RoundEnding(msg.Split(":")[1].Split("+")[0], msg.Split(":")[1].Substring(0, 3));
 
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
@@ -145,6 +145,7 @@ namespace Hokm
             ///
 
             bool haveStrong = true;
+            Console.WriteLine("===============" + strongSuit);
             foreach (var card in deck)
             {
                 if (card.Split("*")[0] != strongSuit)
@@ -217,6 +218,7 @@ namespace Hokm
                 }
 
             }
+
             // Not first turn
             else
             {
@@ -290,9 +292,11 @@ namespace Hokm
                         bool winningCardExists = false;
                         bool aceFound = false;
                         bool haveAce = false;
+
                         // 4th player in line
                         if (playedCards.Count(s => s != "") == 3)
                         {
+
                             foreach (string candidate in candidates)
                             {
 
@@ -317,6 +321,7 @@ namespace Hokm
                                             flag = false;
                                             break;
                                         }
+
                                         if (card.Split("*")[0] == strongSuit && playedSuit != strongSuit)
                                         {
                                             if (!IsExists(strongSuit))
@@ -979,6 +984,7 @@ namespace Hokm
             Console.WriteLine("Sending strong suit...");
             Console.WriteLine("set_strong:" + strongSuits[sendingIndex]);
             string msg_to_send = "set_strong:" + strongSuits[sendingIndex];
+            strongSuit = strongSuits[sendingIndex];
             Console.WriteLine(msg_to_send.Length.ToString("D8") + msg_to_send);
             byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
             clientSock.Send(buffer);

@@ -100,3 +100,20 @@ D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.
 D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
 D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
 D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig

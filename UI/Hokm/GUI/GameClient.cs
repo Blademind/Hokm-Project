@@ -31,6 +31,7 @@ namespace Hokm
         private DataAnalyzer dA = new DataAnalyzer();
         private int roundN = 0;
         private bool firstTime = true;
+        Dictionary<int, string> d = new Dictionary<int, string>();
         // 
 
         private PictureBox CardInitializer(Card c, int x, int y, bool rot=false)
@@ -55,21 +56,27 @@ namespace Hokm
             return cardBox;
         }
 
+        private void PopUpMessage(string title, string info, int mil)
+        {
+
+        }
+
+
         // Game setup
         private void FirstFiveCardsVisuals(Card[] cards)
         {
-            int[] loc = { 0, 400 };
+            int[] loc = { 310, 500 };
             foreach (Card c in cards)
             {
                 Console.WriteLine(c);
                 CardInitializer(c, loc[0], loc[1]);
-                loc[0] += 30;
+                loc[0] += 115;
             }
         }
 
         public void FirstFiveCards(string cardsString)
         {
-            cardsString = "CLUBS*rank_3|CLUBS*rank_7|DIAMONDS*rank_Q|CLUBS*rank_4|SPADES*rank_K";
+            //cardsString = "CLUBS*rank_3|CLUBS*rank_7|DIAMONDS*rank_Q|CLUBS*rank_4|SPADES*rank_K";
             
             string[] cards = cardsString.Split('|');
             Array.Sort(cards, StringComparer.InvariantCulture);
@@ -206,7 +213,7 @@ namespace Hokm
             info_text.Text = info_text.Text.Replace("ruler_id", dA.GetRuler());
 
             // Set IDs on screen
-            this.p_id_0.Text = dA.GetClientID();
+            this.p_id_0.Text = dA.GetClientID() + " - You";
             this.p_id_1.Text = dA.GetFakeID(1);
             this.p_id_2.Text = dA.GetFakeID(0);
             this.p_id_3.Text = dA.GetFakeID(2);
