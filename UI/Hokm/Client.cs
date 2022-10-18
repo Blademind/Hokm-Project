@@ -100,14 +100,14 @@ namespace Hokm
 
             //try
             //{
-                while (true)
+            bool runOnce = true;
+            while (true)
             {
                 this.rec = this.clientSock.Receive(this.buf);
                 byte[] data = new byte[this.rec];
                 Array.Copy(this.buf, data, this.rec);
                 this.msg = "";
                 this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data)); // the message's size
-
                 // Receive from the server
                 while (this.msg.Length < this.msgSize)
                 {
@@ -147,6 +147,21 @@ namespace Hokm
                 if (msg.Contains("played_suit:"))
                 {
                     Console.WriteLine("Its our turn");
+                    if (clientId == 3 && runOnce)
+                    {
+                        this.buf = new byte[8];
+                        this.rec = this.clientSock.Receive(this.buf);
+                        data = new byte[this.rec];
+                        Array.Copy(this.buf, data, this.rec);
+                        this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data)); // the message's size
+                        this.buf = new byte[this.msgSize];
+                        this.rec = this.clientSock.Receive(this.buf);
+                        data = new byte[this.rec];
+                        Array.Copy(this.buf, data, this.rec);
+                        new_msg = Encoding.ASCII.GetString(data);
+                        GameMessageParser(new_msg);
+                        runOnce = false;
+                    }
                     PlayTurn(msg);
                 }
 

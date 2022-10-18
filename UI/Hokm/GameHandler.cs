@@ -56,7 +56,6 @@ namespace Hokm
                 }
                 if (cards.Length == 14)
                 {
-                    Console.WriteLine(msg);
                     //gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
 
 
@@ -67,6 +66,10 @@ namespace Hokm
                     //    Application.Run(gameClient);
                     //}
                     //).Start();
+                    if(msg.Split(",").Length != 3)
+                    {
+                        HandleValueError();
+                    }
                     cards = msg.Split(",");
                     strongSuit = cards[2].Split(":")[1];
                     cards = cards[0].Split("|");
@@ -145,7 +148,6 @@ namespace Hokm
             ///
 
             bool haveStrong = true;
-            Console.WriteLine("===============" + strongSuit);
             foreach (var card in deck)
             {
                 if (card.Split("*")[0] != strongSuit)
@@ -167,6 +169,16 @@ namespace Hokm
                 }
             }
             return -1;
+        }
+        public void HandleValueError()
+        {
+            Console.WriteLine("Value Error");
+            this.buf = new byte[0];
+            byte[] buffer = Encoding.ASCII.GetBytes("request_start_info");
+            clientSock.Send(buffer);
+            buffer = Encoding.ASCII.GetBytes("request_turn");
+            clientSock.Send(buffer);
+            Console.WriteLine("Requested new turn");
         }
         public void PlayTurn(string played)
         {
