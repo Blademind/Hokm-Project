@@ -389,7 +389,7 @@ namespace Hokm
                                             }
 
                                             // 2 levels above highest playing card
-                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
+                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
                                             {
                                                 // Flag false if any card is bigger than my biggest one
                                                 flag = false;
@@ -624,7 +624,7 @@ namespace Hokm
                                                             winningCardExists = false;
                                                     }
                                                     // 3 levels above highest playing card
-                                                    else if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
+                                                    else if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
                                                     {
                                                         flag = false;
                                                         break;
