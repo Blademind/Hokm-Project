@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm\\UI\\Hokm\\Hokm.csproj": {}
+    "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm\\UI\\Hokm\\Hokm.csproj": {
+    "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm\\UI\\Hokm\\Hokm.csproj",
+        "projectUniqueName": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj",
         "projectName": "Hokm",
-        "projectPath": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm\\UI\\Hokm\\Hokm.csproj",
-        "packagesPath": "C:\\Users\\alonl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alonl\\OneDrive\\מסמכים\\Hokm\\UI\\Hokm\\obj\\",
+        "projectPath": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\alonl\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,24 +50,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.29, 3.1.29]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"

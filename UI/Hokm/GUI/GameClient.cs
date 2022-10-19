@@ -31,7 +31,9 @@ namespace Hokm
         private DataAnalyzer dA = new DataAnalyzer();
         private int roundN = 0;
         private bool firstTime = true;
-        Dictionary<int, string> d = new Dictionary<int, string>();
+        private Dictionary<string, int> scores = new Dictionary<string, int>();
+        private string[] teams;
+
         // 
 
         private PictureBox CardInitializer(Card c, int x, int y, bool rot=false)
@@ -219,8 +221,10 @@ namespace Hokm
             this.p_id_3.Text = dA.GetFakeID(2);
 
             // Set teams
-            string[] teams = dA.GetTeams();
+            this.teams = dA.GetTeams();
             score_text.Text = teams[0] + ": 0" + "\n" + teams[1] + ": 0";
+            scores.Add(teams[0], 0);
+            scores.Add(teams[1], 0);
 
             //Set decks
             SetStartingDeck(dA.ClearString(startData));
@@ -246,8 +250,6 @@ namespace Hokm
             this.Invoke(new Action<int>((int _) => { StartInitializer(startData, clientID, rulerID); }), 0);
 
         }
-
-
 
         ///////////////////////////////////////////////////////////////////////////////
 
@@ -390,24 +392,15 @@ namespace Hokm
             OthersStartingDeckVisuals(0);
         }
 
-        private void EditScorePanel(string winner)
+        private void EditScorePanel(string winnerTeam)
         {
-            string[] t = this.score_text.Text.Split("\n");
-            if (t[0].Contains(winner))
-            {
-                string s1 = t[0].Split(": ")[0];
-                string s2 = t[0].Split(": ")[1];
-                this.score_text.Text = this.score_text.Text.Replace(t[0], s1+": " + (int.Parse(s2) + 1).ToString());
-            }
-            else
-            {
-                string s1 = t[1].Split(": ")[0];
-                string s2 = t[1].Split(": ")[1];
-                this.score_text.Text = this.score_text.Text.Replace(t[1], s1+ ": " + (int.Parse(s2) + 1).ToString());
-            }
+            this.scores[winnerTeam] += 1;
+
+            this.score_text.Text = teams[0] + ": " + this.scores[teams[0]]
+                + "\n" + teams[1] + ": " + this.scores[teams[1]];
         }
 
-        public void RoundEnding(string winner, string team)
+        public void RoundEnding(string team)
         {
             this.Invoke(new Action<int>((int _) => {
                 this.roundN++;
@@ -415,7 +408,7 @@ namespace Hokm
                 this.round_title.Text = "End of Round: " + this.roundN.ToString();
             }), 0);
 
-            this.Invoke(new Action<int>((int _) => { EditScorePanel(winner); }), 0);
+            this.Invoke(new Action<int>((int _) => { EditScorePanel(team); }), 0);
             this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
 
             Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
@@ -627,32 +620,20 @@ namespace Hokm
         public GameClient(string startData=null, string clientID=null, string ruler=null)
         {
             InitializeComponent();
-
-            if (startData == null)
-                 startData = "clubs*rank_2|diamonds*rank_2|spades*rank_3|hearts*rank_4|" +
-                    "spades*rank_A|clubs*rank_J|hearts*rank_K|spades*rank_8|diamonds*rank_9" +
-                    "|clubs*rank_K|clubs*rank_A|spades*rank_2|hearts*rank_8,teams:[1+3]|[2+4],strong:hearts";
-            if (clientID == null)
-                clientID = "4";
-            if (ruler == null)
-                ruler = "1";
             StartInitializer(clientID, ruler, startData);
-
         }
 
         public GameClient(string fCards)
         {
             InitializeComponent();
-
             FirstFiveCards(fCards);
-
         }
 
 
         // Tests
         private void button1_Click(object sender, EventArgs e)
         {
-            RoundEnding("1", "1");
+            RoundEnding("1+2");
         }
 
         private void GameClient_Load(object sender, EventArgs e)

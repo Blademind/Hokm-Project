@@ -38,13 +38,13 @@ namespace Hokm
 
                 if (cards.Length == 5)
                 {
-                    //gameClient = new GameClient(msg);
-                    //new Thread(
-                    //() =>
-                    //{
-                    //    Application.Run(gameClient);
-                    //}
-                    //).Start();
+                    gameClient = new GameClient(msg);
+                    new Thread(
+                    () =>
+                    {
+                        Application.Run(gameClient);
+                    }
+                    ).Start();
                     //Thread.Sleep(6000);
                 }
 
@@ -56,16 +56,8 @@ namespace Hokm
                 }
                 if (cards.Length == 14)
                 {
-                    //gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
+                    gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
 
-
-                    //Console.WriteLine(msg);
-                    //new Thread(
-                    //() =>
-                    //{
-                    //    Application.Run(gameClient);
-                    //}
-                    //).Start();
                     if(msg.Split(",").Length != 3)
                     {
                         HandleValueError();
@@ -96,17 +88,17 @@ namespace Hokm
             }
             else if (msg.Contains("round_cards:"))
             {
-                //gameClient.RemoveMiddleCards();
-                //string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
+                gameClient.RemoveMiddleCards();
+                string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
 
-                //for (int i = 0; i < round_cards.Length; i++)
-                //{
-                //    if (round_cards[i] != "" && i + 1 != clientId)
-                //        gameClient.PlayOtherCard(round_cards[i], i + 1);
-                //    else
-                //        gameClient.PlayCard(round_cards[i]);
-                //}
-                //gameClient.RoundEnding(msg.Split(":")[1].Split("+")[0], msg.Split(":")[1].Substring(0, 3));
+                for (int i = 0; i < round_cards.Length; i++)
+                {
+                    if (round_cards[i] != "" && i + 1 != clientId)
+                        gameClient.PlayOtherCard(round_cards[i], i + 1);
+                    else
+                        gameClient.PlayCard(round_cards[i]);
+                }
+                gameClient.RoundEnding(msg.Split(":")[1].Substring(0, 3));
 
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
@@ -114,6 +106,11 @@ namespace Hokm
                     if (idCard[i].IndexOf(arr[i]) == -1)
                         idCard[i].Add(arr[i]);
                 }
+            }
+
+            if (msg== "GAME_OVER")
+            {
+                gameClient.GameOver();
             }
 
 
