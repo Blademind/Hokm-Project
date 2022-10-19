@@ -14,9 +14,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Reflection.Metadata.BlobBuilder;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using Timer = System.Windows.Forms.Timer;
 
 namespace Hokm
 {
@@ -58,9 +55,48 @@ namespace Hokm
             return cardBox;
         }
 
-        private void PopUpMessage(string title, string info, int mil)
+        private void ShowPanels(Control cc, bool show = true)
         {
+            if (show)
+            {
+                cc.Visible = show;
+                foreach (Control c in cc.Controls)
+                {
+                    c.Visible = show;
+                }
+            }
+            else
+            {
+                foreach (Control c in cc.Controls)
+                {
+                    c.Visible = show;
+                }
+                cc.Visible = show;
 
+            }
+        }
+
+        public void PopUpMessage(string title, string info, int mil)
+        {
+            round_title.Text = title;
+            winner_label.Text = info;          
+
+            if (title.Length > 17)
+                round_title.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            else
+                round_title.Font = new Font("Segoe UI", 25F, FontStyle.Regular, GraphicsUnit.Point);
+
+            if (info.Length > 22)
+                winner_label.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            else
+                winner_label.Font = new Font("Segoe UI", 21F, FontStyle.Regular, GraphicsUnit.Point);
+
+
+            this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
+
+            Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
+                ShowPanels(this.winning_panel, false); ;
+            }), 0));
         }
 
 
@@ -178,27 +214,6 @@ namespace Hokm
             }
         }
 
-        private void ShowPanels(Control cc, bool show=true)
-        {
-            if (show)
-            {
-                cc.Visible = show;
-                foreach (Control c in cc.Controls)
-                {
-                    c.Visible = show;
-                }
-            }
-            else
-            {
-                foreach (Control c in cc.Controls)
-                {
-                    c.Visible = show;
-                }
-                cc.Visible = show;
-
-            }
-        }
-
         private void StartInitializer(string startData, string clientID, string rulerID)
         {
 
@@ -211,8 +226,8 @@ namespace Hokm
             dA.SetStartData(startData);
 
             // Set hokm+hakem
-            info_text.Text = info_text.Text.Replace("hokm_card", dA.GetStrong());
-            info_text.Text = info_text.Text.Replace("ruler_id", dA.GetRuler());
+            info_text.ForeColor = SystemColors.ControlText;
+            info_text.Text = "Hokm: " + dA.GetStrong() + "\n" + "Hakem: " + dA.GetRuler();
 
             // Set IDs on screen
             this.p_id_0.Text = dA.GetClientID() + " - You";
@@ -222,6 +237,7 @@ namespace Hokm
 
             // Set teams
             this.teams = dA.GetTeams();
+            score_text.ForeColor = SystemColors.ControlText;
             score_text.Text = teams[0] + ": 0" + "\n" + teams[1] + ": 0";
             scores.Add(teams[0], 0);
             scores.Add(teams[1], 0);
@@ -392,12 +408,16 @@ namespace Hokm
             OthersStartingDeckVisuals(0);
         }
 
-        private void EditScorePanel(string winnerTeam)
+        private void ScorePanelText(string winnerTeam)
         {
             this.scores[winnerTeam] += 1;
 
             this.score_text.Text = teams[0] + ": " + this.scores[teams[0]]
                 + "\n" + teams[1] + ": " + this.scores[teams[1]];
+
+            this.Invoke(new Action<int>((int _) => {
+                PopUpMessage("End of Round " + this.roundN.ToString(), "Winner: " + teams[0], 2300);
+            }), 0);
         }
 
         public void RoundEnding(string team)
@@ -408,12 +428,7 @@ namespace Hokm
                 this.round_title.Text = "End of Round: " + this.roundN.ToString();
             }), 0);
 
-            this.Invoke(new Action<int>((int _) => { EditScorePanel(team); }), 0);
-            this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
-
-            Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
-                ShowPanels(this.winning_panel, false); ;
-            }), 0));
+            this.Invoke(new Action<int>((int _) => { ScorePanelText(team); }), 0);
 
         }
 
@@ -439,6 +454,11 @@ namespace Hokm
                     c.Text = "Winner: " + winner;
                 }
             }
+        }
+
+        private void exit_but_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         public void GameOver(string gWinner=null)
@@ -667,6 +687,11 @@ namespace Hokm
         }
 
         private void round_title_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void info_text_Click(object sender, EventArgs e)
         {
 
         }

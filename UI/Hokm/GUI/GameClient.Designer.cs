@@ -88,13 +88,15 @@ namespace Hokm
             // 
             this.info_text.AutoSize = true;
             this.info_text.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.info_text.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.info_text.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.info_text.Location = new System.Drawing.Point(7, 39);
+            this.info_text.Location = new System.Drawing.Point(17, 48);
             this.info_text.Name = "info_text";
-            this.info_text.Size = new System.Drawing.Size(230, 74);
-            this.info_text.TabIndex = 0;
-            this.info_text.Text = "Hakem: ruler_id \nHokm: hokm_card";
+            this.info_text.Size = new System.Drawing.Size(132, 37);
+            this.info_text.TabIndex = 3;
+            this.info_text.Text = "Loading...";
             this.info_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.info_text.Click += new System.EventHandler(this.info_text_Click);
             // 
             // panel2
             // 
@@ -102,18 +104,19 @@ namespace Hokm
             this.panel2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel2.Location = new System.Drawing.Point(-1, -1);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(250, 40);
+            this.panel2.Size = new System.Drawing.Size(250, 46);
             this.panel2.TabIndex = 4;
             // 
             // score_text
             // 
             this.score_text.AutoSize = true;
             this.score_text.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.score_text.Location = new System.Drawing.Point(20, 42);
+            this.score_text.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.score_text.Location = new System.Drawing.Point(19, 48);
             this.score_text.Name = "score_text";
-            this.score_text.Size = new System.Drawing.Size(116, 74);
+            this.score_text.Size = new System.Drawing.Size(132, 37);
             this.score_text.TabIndex = 2;
-            this.score_text.Text = "4+2: p1 \n3+1: p2";
+            this.score_text.Text = "Loading...";
             this.score_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // scores_title
@@ -139,7 +142,7 @@ namespace Hokm
             this.score_panel.Location = new System.Drawing.Point(887, 30);
             this.score_panel.Name = "score_panel";
             this.score_panel.Size = new System.Drawing.Size(250, 130);
-            this.score_panel.TabIndex = 0;
+            this.score_panel.TabIndex = 13;
             // 
             // panel1
             // 
@@ -147,7 +150,7 @@ namespace Hokm
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel1.Location = new System.Drawing.Point(-1, -1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(250, 40);
+            this.panel1.Size = new System.Drawing.Size(250, 46);
             this.panel1.TabIndex = 3;
             // 
             // winning_panel
@@ -155,33 +158,34 @@ namespace Hokm
             this.winning_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(181)))), ((int)(((byte)(79)))));
             this.winning_panel.Controls.Add(this.round_title);
             this.winning_panel.Controls.Add(this.winner_label);
-            this.winning_panel.Location = new System.Drawing.Point(393, 49);
+            this.winning_panel.Location = new System.Drawing.Point(410, 49);
             this.winning_panel.Name = "winning_panel";
-            this.winning_panel.Size = new System.Drawing.Size(348, 95);
-            this.winning_panel.TabIndex = 6;
+            this.winning_panel.Size = new System.Drawing.Size(344, 95);
+            this.winning_panel.TabIndex = 12;
             // 
             // round_title
             // 
             this.round_title.AutoSize = true;
             this.round_title.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.round_title.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.round_title.Location = new System.Drawing.Point(40, -3);
+            this.round_title.Location = new System.Drawing.Point(42, 0);
             this.round_title.Name = "round_title";
             this.round_title.Size = new System.Drawing.Size(266, 46);
             this.round_title.TabIndex = 2;
             this.round_title.Text = "End of Round n";
-            this.round_title.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.round_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.round_title.Click += new System.EventHandler(this.round_title_Click);
             // 
             // winner_label
             // 
             this.winner_label.AutoSize = true;
             this.winner_label.Font = new System.Drawing.Font("Segoe UI", 21F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.winner_label.Location = new System.Drawing.Point(83, 42);
+            this.winner_label.Location = new System.Drawing.Point(3, 46);
             this.winner_label.Name = "winner_label";
-            this.winner_label.Size = new System.Drawing.Size(184, 38);
+            this.winner_label.Size = new System.Drawing.Size(362, 38);
             this.winner_label.TabIndex = 0;
-            this.winner_label.Text = "Winners: n+n";
+            this.winner_label.Text = "11111111111111111116111";
+            this.winner_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // p_id_1
             // 
@@ -189,9 +193,8 @@ namespace Hokm
             this.p_id_1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_1.Location = new System.Drawing.Point(538, 9);
             this.p_id_1.Name = "p_id_1";
-            this.p_id_1.Size = new System.Drawing.Size(32, 37);
+            this.p_id_1.Size = new System.Drawing.Size(0, 37);
             this.p_id_1.TabIndex = 7;
-            this.p_id_1.Text = "n";
             // 
             // p_id_0
             // 
@@ -199,9 +202,8 @@ namespace Hokm
             this.p_id_0.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_0.Location = new System.Drawing.Point(538, 825);
             this.p_id_0.Name = "p_id_0";
-            this.p_id_0.Size = new System.Drawing.Size(101, 37);
+            this.p_id_0.Size = new System.Drawing.Size(0, 37);
             this.p_id_0.TabIndex = 8;
-            this.p_id_0.Text = "n - You";
             // 
             // p_id_2
             // 
@@ -209,9 +211,8 @@ namespace Hokm
             this.p_id_2.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_2.Location = new System.Drawing.Point(12, 401);
             this.p_id_2.Name = "p_id_2";
-            this.p_id_2.Size = new System.Drawing.Size(32, 37);
+            this.p_id_2.Size = new System.Drawing.Size(0, 37);
             this.p_id_2.TabIndex = 9;
-            this.p_id_2.Text = "n";
             // 
             // p_id_3
             // 
@@ -219,9 +220,8 @@ namespace Hokm
             this.p_id_3.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.p_id_3.Location = new System.Drawing.Point(1127, 416);
             this.p_id_3.Name = "p_id_3";
-            this.p_id_3.Size = new System.Drawing.Size(32, 37);
+            this.p_id_3.Size = new System.Drawing.Size(0, 37);
             this.p_id_3.TabIndex = 10;
-            this.p_id_3.Text = "n";
             // 
             // ending_panel
             // 
@@ -241,9 +241,9 @@ namespace Hokm
             this.play_again_but.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.play_again_but.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.play_again_but.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.play_again_but.Location = new System.Drawing.Point(289, 293);
+            this.play_again_but.Location = new System.Drawing.Point(284, 293);
             this.play_again_but.Name = "play_again_but";
-            this.play_again_but.Size = new System.Drawing.Size(271, 101);
+            this.play_again_but.Size = new System.Drawing.Size(266, 101);
             this.play_again_but.TabIndex = 5;
             this.play_again_but.Text = "Play Again";
             this.play_again_but.UseVisualStyleBackColor = false;
@@ -264,12 +264,13 @@ namespace Hokm
             this.exit_but.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exit_but.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.exit_but.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.exit_but.Location = new System.Drawing.Point(3, 293);
+            this.exit_but.Location = new System.Drawing.Point(12, 293);
             this.exit_but.Name = "exit_but";
             this.exit_but.Size = new System.Drawing.Size(266, 101);
             this.exit_but.TabIndex = 0;
             this.exit_but.Text = "Exit Game";
             this.exit_but.UseVisualStyleBackColor = false;
+            this.exit_but.Click += new System.EventHandler(this.exit_but_Click);
             // 
             // panel3
             // 

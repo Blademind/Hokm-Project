@@ -45,6 +45,7 @@ namespace Hokm
                         Application.Run(gameClient);
                     }
                     ).Start();
+                    gameClient.PopUpMessage("   Loading...", "The game will start soon", 2000);
                     //Thread.Sleep(6000);
                 }
 
@@ -108,12 +109,6 @@ namespace Hokm
                 }
             }
 
-            if (msg== "GAME_OVER")
-            {
-                gameClient.GameOver();
-            }
-
-
             if (msg.Split(":").Length > 0)
             {
                 string[] splitMessage = msg.Split(":");
@@ -131,6 +126,14 @@ namespace Hokm
                     return "Your client ID is: " + clientId;
                 }
             }
+
+            if (msg == "GAME_OVER")
+                gameClient.GameOver();
+
+            if (msg == "PLAYER_DISCONNECTED")
+                gameClient.PopUpMessage("   Error!", "Player has been disconnected", 3000);
+
+
 
             return "";
 
