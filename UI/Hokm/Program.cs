@@ -40,9 +40,9 @@ namespace Hokm
            | (__) || :\/: || :\/: || :\/: |
            | '--'H|| '--'O|| '--'K|| '--'M|
            `------'`------'`------'`------'");
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
             //Client cli1 = new Client(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 1234);
-            Client cli1 = new Client(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 1234);
+            Client cli1 = new Client(new IPAddress(new byte[4] { 172, 16, 49, 212 }), 1234);
             //Client cli2 = new Client(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 1235);
             //Client cli3 = new Client(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 1236);
             //Client cli4 = new Client(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 1237);

@@ -416,7 +416,7 @@ namespace Hokm
                 + "\n" + teams[1] + ": " + this.scores[teams[1]];
 
             this.Invoke(new Action<int>((int _) => {
-                PopUpMessage("End of Round " + this.roundN.ToString(), "Winner: " + teams[0], 2300);
+                PopUpMessage("End of Round " + this.roundN.ToString(), "Winner: " + winnerTeam, 2300);
             }), 0);
         }
 

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace Hokm
 {
@@ -41,7 +42,7 @@ namespace Hokm
             /// </summary>
 
             //this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 55555);
-            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 55555);
+            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 172, 16, 49, 212 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();
@@ -82,9 +83,9 @@ namespace Hokm
             {
                 clientSock.Connect(this.serverIpPort);
                 Console.WriteLine("connected to server");
-                Listen();
-                //Thread th = new Thread(new ThreadStart(Listen));
-                //th.Start();
+                //Listen();
+                Thread th = new Thread(new ThreadStart(Listen));
+                th.Start();
             }
             catch (SocketException)
             {
@@ -102,6 +103,7 @@ namespace Hokm
             //try
             //{
             bool runOnce = true;
+            bool firstRun = true;
             while (true)
             {
                 this.rec = this.clientSock.Receive(this.buf);
@@ -189,7 +191,11 @@ namespace Hokm
                 }
                 this.buf = new byte[8];
             }
-            InitSock();
+            if (firstRun)
+            {
+                InitSock();
+                firstRun = false;
+            }
 
             //}
 

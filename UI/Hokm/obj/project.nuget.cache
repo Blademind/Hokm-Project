@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "0bemOq2iVjBKLesA+sB5useuscBU8SNPhXhljp/IO01FZQk/2UBnmkqnNzcZ6GNUuWybDHyyDGuBdWvnlL0W8Q==",
+  "dgSpecHash": "ORdz3lsaFEq3EEZaXN1KqWhKxPjxoQqNs7KxsSe7tpJDe/SE4+enpAniE0B+laoPpjmmoxaxA4g5H1bSGDyLqA==",
   "success": true,
-  "projectFilePath": "D:\\Doron\\עבודות יב\\ערן\\HokmProj\\UI\\Hokm\\Hokm.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\u101040.DESHALIT\\Desktop\\Hokm-Project\\UI\\Hokm\\Hokm.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\u101040.DESHALIT\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.30\\microsoft.netcore.app.host.win-x64.3.1.30.nupkg.sha512",
+    "C:\\Users\\u101040.DESHALIT\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\u101040.DESHALIT\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\u101040.DESHALIT\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512"
+  ],
   "logs": []
 }
