@@ -47,7 +47,6 @@ namespace Hokm
             this.p_id_2 = new System.Windows.Forms.Label();
             this.p_id_3 = new System.Windows.Forms.Label();
             this.ending_panel = new System.Windows.Forms.Panel();
-            this.play_again_but = new System.Windows.Forms.Button();
             this.ending_winner = new System.Windows.Forms.Label();
             this.exit_but = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -226,7 +225,6 @@ namespace Hokm
             // ending_panel
             // 
             this.ending_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(196)))), ((int)(((byte)(130)))));
-            this.ending_panel.Controls.Add(this.play_again_but);
             this.ending_panel.Controls.Add(this.ending_winner);
             this.ending_panel.Controls.Add(this.exit_but);
             this.ending_panel.Controls.Add(this.panel3);
@@ -234,19 +232,6 @@ namespace Hokm
             this.ending_panel.Name = "ending_panel";
             this.ending_panel.Size = new System.Drawing.Size(563, 397);
             this.ending_panel.TabIndex = 11;
-            // 
-            // play_again_but
-            // 
-            this.play_again_but.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(181)))), ((int)(((byte)(79)))));
-            this.play_again_but.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.play_again_but.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.play_again_but.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.play_again_but.Location = new System.Drawing.Point(284, 293);
-            this.play_again_but.Name = "play_again_but";
-            this.play_again_but.Size = new System.Drawing.Size(266, 101);
-            this.play_again_but.TabIndex = 5;
-            this.play_again_but.Text = "Play Again";
-            this.play_again_but.UseVisualStyleBackColor = false;
             // 
             // ending_winner
             // 
@@ -262,11 +247,11 @@ namespace Hokm
             // 
             this.exit_but.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(40)))), ((int)(((byte)(53)))));
             this.exit_but.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.exit_but.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.exit_but.Font = new System.Drawing.Font("Segoe UI", 37F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.exit_but.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.exit_but.Location = new System.Drawing.Point(12, 293);
+            this.exit_but.Location = new System.Drawing.Point(13, 288);
             this.exit_but.Name = "exit_but";
-            this.exit_but.Size = new System.Drawing.Size(266, 101);
+            this.exit_but.Size = new System.Drawing.Size(535, 97);
             this.exit_but.TabIndex = 0;
             this.exit_but.Text = "Exit Game";
             this.exit_but.UseVisualStyleBackColor = false;
@@ -348,7 +333,6 @@ namespace Hokm
         private System.Windows.Forms.Label ending_title;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button play_again_but;
         private System.Windows.Forms.Panel panel3;
     }
 }

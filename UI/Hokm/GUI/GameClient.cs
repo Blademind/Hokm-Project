@@ -1,11 +1,14 @@
-﻿using Hokm.Properties;
+﻿using Hokm.GUI;
+using Hokm.Properties;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
 using System.Numerics;
 using System.Reflection;
@@ -26,8 +29,10 @@ namespace Hokm
         private Card[][] playerDecks = new Card[3][];
         private PictureBox[] activeCards = new PictureBox[5];
         private DataAnalyzer dA = new DataAnalyzer();
+        private AnimationHandler aH;
         private int roundN = 0;
         private bool firstTime = true;
+        private bool animations = true;
         private Dictionary<string, int> scores = new Dictionary<string, int>();
         private string[] teams;
 
@@ -95,7 +100,7 @@ namespace Hokm
             this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
 
             Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
-                ShowPanels(this.winning_panel, false); ;
+                ShowPanels(this.winning_panel, false);
             }), 0));
         }
 
@@ -113,9 +118,7 @@ namespace Hokm
         }
 
         public void FirstFiveCards(string cardsString)
-        {
-            //cardsString = "CLUBS*rank_3|CLUBS*rank_7|DIAMONDS*rank_Q|CLUBS*rank_4|SPADES*rank_K";
-            
+        {            
             string[] cards = cardsString.Split('|');
             Array.Sort(cards, StringComparer.InvariantCulture);
             Card[] fiveDeck = new Card[cards.Length];
@@ -216,6 +219,7 @@ namespace Hokm
 
         private void StartInitializer(string startData, string clientID, string rulerID)
         {
+            this.aH = new AnimationHandler(this);
 
             this.playerDecks[0] = this.pDeck0;
             this.playerDecks[1] = this.pDeck1;
@@ -258,6 +262,11 @@ namespace Hokm
             ShowPanels(this.ending_panel, false);
             ShowPanels(this.winning_panel, false);
 
+            this.SetStyle(
+                    ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.UserPaint |
+                    ControlStyles.DoubleBuffer,
+                    true);
         }
 
         public void PublicStartInitializer(string startData, string clientID, string rulerID)
@@ -293,9 +302,16 @@ namespace Hokm
         {
             string[] cardInfo = played.Split('*');
             Card p = new Card(cardInfo[0], cardInfo[1]);
-            
 
-            this.Controls[p.ToString()].Location = new Point(530, 470);
+
+            //this.Controls[p.ToString()].Location = new Point(530, 470);
+            int[] cords = { 530, 470 };
+
+            if (this.animations)
+                this.Invoke(new Action<int>((int _) => { aH.AnimateCard(cords, (PictureBox)this.Controls[p.ToString()]); }), 0);
+            else
+                this.Controls[p.ToString()].Location = new Point(530, 470);
+
             this.activeCards[0] = (PictureBox)this.Controls[p.ToString()];
         }
 
