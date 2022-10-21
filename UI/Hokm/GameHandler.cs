@@ -20,7 +20,7 @@ namespace Hokm
     public partial class Client
     {
         /// <summary>
-        /// 
+        /// Client object 
         /// </summary>
         public string[] cardShapeSuit;
         public string strongSuit;
@@ -32,37 +32,44 @@ namespace Hokm
         public string[] playedCards;
         public dynamic GameMessageParser(string msg)
         {
-            if (Char.IsUpper(msg[0])) // card deck
+            // Card deck
+            if (Char.IsUpper(msg[0]))
             {
+                // Splitting cards
                 string[] cards = msg.Split("|");
 
                 if (cards.Length == 5)
                 {
-                    gameClient = new GameClient(msg);
-                    new Thread(
-                    () =>
-                    {
-                        Application.Run(gameClient);
-                    }
-                    ).Start();
-                    gameClient.PopUpMessage("   Loading...", "The game will start soon", 2000);
+                    //gameClient = new GameClient(msg);
+                    //new Thread(
+                    //() =>
+                    //{
+                    //    Application.Run(gameClient);
+                    //}
+                    //).Start();
+                    //gameClient.PopUpMessage("   Loading...", "The game will start soon", 2000);
                     //Thread.Sleep(6000);
                 }
 
-                if (cards.Length == 5 && clientId == ruler) // starting deck for ruler
+                // Starting deck for ruler
+                if (cards.Length == 5 && clientId == ruler)
                 {
 
                     startingDeck = cards;
                     SendStrongSuit();
                 }
+
+                // Receiving full deck
                 if (cards.Length == 14)
                 {
-                    gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
+                    //gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
 
                     if(msg.Split(",").Length != 3)
                     {
                         HandleValueError();
                     }
+
+                    // Adding remaining cards to deck
                     cards = msg.Split(",");
                     strongSuit = cards[2].Split(":")[1];
                     cards = cards[0].Split("|");
@@ -70,36 +77,32 @@ namespace Hokm
                     {
                         deck.Add(card);
                     }
-                    //Dictionary<string, int> s = HelperFunctions.MakeCounter(deck);
-                    //int count = 0;
-                    //foreach (string c in deck)
-                    //{
-                    //    Console.WriteLine(count);
-                    //    count++;
-                    //    Console.WriteLine(c);
-                    //}
+                    Dictionary<string, int> s = HelperFunctions.MakeCounter(deck);
                 }
                 else
                 {
+                    // Addin cards to deck
                     foreach (string card in cards)
                     {
                         deck.Add(card);
                     }
                 }
             }
+
+            // Adding played cards in each round to dictionary
             else if (msg.Contains("round_cards:"))
             {
-                gameClient.RemoveMiddleCards();
-                string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
+                //gameClient.RemoveMiddleCards();
+                //string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
 
-                for (int i = 0; i < round_cards.Length; i++)
-                {
-                    if (round_cards[i] != "" && i + 1 != clientId)
-                        gameClient.PlayOtherCard(round_cards[i], i + 1);
-                    else
-                        gameClient.PlayCard(round_cards[i]);
-                }
-                gameClient.RoundEnding(msg.Split(":")[1].Substring(0, 3));
+                //for (int i = 0; i < round_cards.Length; i++)
+                //{
+                //    if (round_cards[i] != "" && i + 1 != clientId)
+                //        gameClient.PlayOtherCard(round_cards[i], i + 1);
+                //    else
+                //        gameClient.PlayCard(round_cards[i]);
+                //}
+                //gameClient.RoundEnding(msg.Split(":")[1].Substring(0, 3));
 
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
@@ -111,6 +114,7 @@ namespace Hokm
 
             if (msg.Split(":").Length > 0)
             {
+                // Who is the ruler
                 string[] splitMessage = msg.Split(":");
                 if (splitMessage[0] == "ruler")
                 {
@@ -119,6 +123,7 @@ namespace Hokm
                     return "The ruler is: " + ruler;
                 }
 
+                // Our client id
                 else if (splitMessage[0] == "client_id")
                 {
                     clientId = Int32.Parse(splitMessage[1]);
@@ -127,11 +132,11 @@ namespace Hokm
                 }
             }
 
-            if (msg == "GAME_OVER")
-                gameClient.GameOver();
+            //if (msg == "GAME_OVER")
+            //    gameClient.GameOver();
 
-            if (msg == "PLAYER_DISCONNECTED")
-                gameClient.PopUpMessage("   Error!", "Player has been disconnected", 3000);
+            //if (msg == "PLAYER_DISCONNECTED")
+            //    gameClient.PopUpMessage("   Error!", "Player has been disconnected", 3000);
 
 
 
@@ -249,7 +254,7 @@ namespace Hokm
                     }
                 }
 
-                // Ace not found, sending lower card
+                // Ace not found
                 if (!found)
                 {
                     List<string> availableSuits = new List<string>() { "DIAMONDS", "SPADES", "CLUBS", "HEARTS" };
@@ -327,13 +332,14 @@ namespace Hokm
                                             break;
                                         }
 
-                                        // TODO
+                                        // If one of the played cards is higher than all of the cards in our deck
                                         if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
                                         {
                                             flag = false;
                                             break;
                                         }
 
+                                        // If there is a strong card in deck
                                         if (card.Split("*")[0] == strongSuit && playedSuit != strongSuit)
                                         {
                                             if (!IsExists(strongSuit))
@@ -346,17 +352,15 @@ namespace Hokm
                                     }
                                 }
 
-                                // TODO
+                                // If flag is true, sending candidate winning card
                                 if (flag)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
                                     break;
                                 }
-                                if (friendWins)
-                                {
-                                    break;
-                                }
-                                if (strongExists)
+
+                                // If our teammate wins, or we have strong, exiting the loop
+                                if (friendWins || strongExists)
                                 {
                                     break;
                                 }
@@ -366,7 +370,7 @@ namespace Hokm
                         // 2nd or 3rd in line
                         else
                         {
-                            // Scanning through candidates
+                            // Adding the played cards of the currently played suit to all the of the cards which were put during the game 
                             foreach (string card in playedCards)
                             {
                                 if (card != "")
@@ -375,12 +379,17 @@ namespace Hokm
                                         putCards.Add(card);
                                 }
                             }
+
+                            // Sorting by descending again in order to find a winning card
                             putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+
+                            // Scanning through candidates
                             foreach (string candidate in candidates)
                             {
-
-                                // Checking for the lowest possible card that can win what has been sent 2 levels above
+                                // Rank of the candidate in a number
                                 size = Array.IndexOf(ranks, candidate.Split("*")[1]);
+
+                                // Scanning through played cards
                                 foreach (string card in playedCards)
                                 {
 
@@ -396,20 +405,26 @@ namespace Hokm
                                                 break;
                                             }
 
-                                            // TODO
+                                            // If during the game at least 2 cards had been put in the played suit
                                             if (putCards.Count > 1)
                                             {
 
                                                 last = putCards[0];
                                                 Console.WriteLine(putCards[0].Split("*")[1]);
+                                                
+                                                // If the first card is an ace
                                                 if (putCards[0].Split("*")[1] == "rank_A")
                                                 {
                                                     foreach (string item in putCards.ToArray())
                                                     {
+                                                        // Checking if the last put card is at least 2 ranks above the current card
                                                         if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                         {
                                                             Console.WriteLine(last);
                                                             Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+
+                                                            // Checking for 1 lower rank than the last put card that is at least 2 ranks
+                                                            // above the current card in our deck
                                                             if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
                                                             {
                                                                 cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
@@ -418,13 +433,14 @@ namespace Hokm
                                                             break;
                                                         }
                                                         last = item;
-
                                                     }
                                                 }
                                             }
-
+                                            
+                                            // If found a winning card
                                             if (winningCardExists)
                                             {
+                                                // Adding cards that are not empty and in the played suit to plainCards
                                                 List<string> plainCards = new List<string>();
                                                 foreach (string c in playedCards)
                                                 {
@@ -433,10 +449,13 @@ namespace Hokm
                                                         plainCards.Add(c);
                                                     }
                                                 }
-                                                //List<string> descendingRanks = playedCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+
+                                                // Sorting by descending ranks the plainCards
                                                 List<string> descendingRanks = plainCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
                                                 descendingRanks.ForEach(a => Console.Write(a + ", "));
                                                 Console.WriteLine();
+
+                                                // Checking if highest card has a lower rank than our winning card
                                                 if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < Array.IndexOf(ranks, deck[cardToSend].Split("*")[1]))
                                                     break;
                                                 else
@@ -453,20 +472,24 @@ namespace Hokm
                                                     break;
                                                 }
                                             }
+
+                                            // Checking if there is an ace in the played cards
                                             if (FindSuit(card.Split("*")[0], "rank_A") != -1)
                                             {
                                                 cardToSend = deck.IndexOf(card.Split("*")[0]+"*"+"rank_A");
                                                 haveAce = true;
                                                 break;
                                             }
-                                            // 3 levels above highest playing card
+
+                                            // Checking if one of the played cards is 3 ranks above our candidate card
                                             if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
                                             {
-                                                // Flag false if any card is bigger than my biggest one
                                                 flag = false;
                                                 break;
                                             }
                                         }
+
+                                        // Ace found
                                         else
                                         {
                                             aceFound = true;
@@ -475,25 +498,29 @@ namespace Hokm
                                         }
                                     }
 
-
                                 }
 
-                                // TODO
-
+                                // If found a winning card
                                 if (winningCardExists)
                                 {
                                     Console.WriteLine("FOUND WINNING CARD");
                                     break;
                                 }
+
+                                // If there is an ace in the played cards
                                 if (haveAce)
                                 {
                                     break;
                                 }
+                                
+                                // If found a winning card
                                 if (flag)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
                                     break;
                                 }
+
+                                // If we have storng card or our friend wins or an ace was found in played cards
                                 if (strongExists || friendWins || aceFound)
                                 {
                                     break;
@@ -523,8 +550,8 @@ namespace Hokm
                                 index += 1;
                                 cardToSend = FindSuit(suit, rank);
                             }
-
-                            // TODO
+                            
+                            // Sending lowest possible card
                             if (cardToSend != -1)
                             {
                                 flag = false;
@@ -536,7 +563,7 @@ namespace Hokm
                             }
                         }
 
-                        // If lowest possible card wasn't found
+                        // If card wasn't found, switching to strong suit
                         if (flag || cardToSend == -1 && temp_flag)
                         {
                             flag = false;
@@ -569,19 +596,22 @@ namespace Hokm
                                 bool friendWins = false;
                                 bool winningCardExists = false;
                                 bool aceFound = false;
+                                bool haveAce = false;
+
                                 // 4th player in line
-                                if (playedCards.Count(s => s == "") == 1)
+                                if (playedCards.Count(s => s != "") == 3)
                                 {
                                     foreach (string candidate in candidates)
                                     {
+
+                                        // Checking for the smallest possible candidate winning card in the list
+                                        // Does include strong suit card
                                         size = Array.IndexOf(ranks, candidate.Split("*")[1]);
                                         foreach (string card in playedCards)
                                         {
-                                            // Checking for the smallest possible candidate winning card in the list
-                                            // Does include strong suit card 
                                             if (card != "")
                                             {
-                                                // If my teammate has put the winning card, sending the lowest card in the strong suit
+                                                // If my teammate sent the highest card, sending my lowest card in the played suit
                                                 if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
                                                 {
                                                     friendWins = true;
@@ -589,8 +619,8 @@ namespace Hokm
                                                     break;
                                                 }
 
-                                                // Checking if one of the played cards is higher than any our candidates 
-                                                else if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
+                                                // If one of the played cards is higher than all of the cards in our deck
+                                                if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
                                                 {
                                                     flag = false;
                                                     break;
@@ -598,14 +628,15 @@ namespace Hokm
                                             }
                                         }
 
-                                        // TODO
+                                        // If flag is true, sending candidate winning card
                                         if (flag)
                                         {
                                             cardToSend = deck.IndexOf(candidate);
                                             break;
                                         }
 
-                                        else if (friendWins)
+                                        // If our teammate wins, exiting the loop
+                                        if (friendWins)
                                         {
                                             break;
                                         }
@@ -615,7 +646,7 @@ namespace Hokm
                                 // 2nd or 3rd in line
                                 else
                                 {
-                                    // Scanning through candidates
+                                    // Adding the played cards of the currently played suit to all the of the cards which were put during the game 
                                     foreach (string card in playedCards)
                                     {
                                         if (card != "")
@@ -624,12 +655,14 @@ namespace Hokm
                                                 putCards.Add(card);
                                         }
                                     }
+
+                                    // Sorting by descending again in order to find a winning card
                                     putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
 
                                     // Scanning through candidates
                                     foreach (string candidate in candidates)
                                     {
-                                        // Checking for the lowest possible card that can win what has been sent 2 levels above
+                                        // Checking for the lowest possible card that can win what has been sent 2 ranks above
                                         size = Array.IndexOf(ranks, candidate.Split("*")[1]);
                                         foreach (string card in playedCards)
                                         {
@@ -637,25 +670,34 @@ namespace Hokm
                                             {
                                                 if (card.Split("*")[1] != "rank_A")
                                                 {
-                                                    // If my teammate sent an ace in strong suit, sending my lowest card in the played suit
+                                                    // If our teammate wins the round
                                                     if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId && card.Split("*")[1] == "rank_A")
                                                     {
                                                         friendWins = true;
                                                         flag = false;
                                                         break;
                                                     }
-                                                    // TODO
+
+                                                    // If during the game at least 2 cards had been put in the played suit
                                                     if (putCards.Count > 1)
                                                     {
+
                                                         last = putCards[0];
+                                                        Console.WriteLine(putCards[0].Split("*")[1]);
+
+                                                        // If the first card is an ace
                                                         if (putCards[0].Split("*")[1] == "rank_A")
                                                         {
                                                             foreach (string item in putCards.ToArray())
                                                             {
+                                                                // Checking if the last put card is at least 2 ranks above the current card
                                                                 if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                                 {
                                                                     Console.WriteLine(last);
                                                                     Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+
+                                                                    // Checking for 1 lower rank than the last put card that is at least 2 ranks
+                                                                    // above the current card in our deck
                                                                     if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
                                                                     {
                                                                         cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
@@ -664,12 +706,14 @@ namespace Hokm
                                                                     break;
                                                                 }
                                                                 last = item;
-
                                                             }
                                                         }
                                                     }
+
+                                                    // If found a winning card
                                                     if (winningCardExists)
                                                     {
+                                                        // Adding cards that are not empty and in the played suit to plainCards
                                                         List<string> plainCards = new List<string>();
                                                         foreach (string c in playedCards)
                                                         {
@@ -678,23 +722,36 @@ namespace Hokm
                                                                 plainCards.Add(c);
                                                             }
                                                         }
-                                                        //List<string> descendingRanks = playedCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
+
+                                                        // Sorting by descending ranks the plainCards
                                                         List<string> descendingRanks = plainCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
                                                         descendingRanks.ForEach(a => Console.Write(a + ", "));
                                                         Console.WriteLine();
+
+                                                        // Checking if highest card has a lower rank than our winning card
                                                         if (Array.IndexOf(ranks, descendingRanks[0].Split("*")[1]) < Array.IndexOf(ranks, deck[cardToSend].Split("*")[1]))
                                                             break;
                                                         else
                                                             winningCardExists = false;
                                                     }
-                                                    // 3 levels above highest playing card
-                                                    else if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])  // 2 levels above highest playing card
+
+                                                    // Checking if there is an ace in the played cards
+                                                    if (FindSuit(card.Split("*")[0], "rank_A") != -1)
+                                                    {
+                                                        cardToSend = deck.IndexOf(card.Split("*")[0] + "*" + "rank_A");
+                                                        haveAce = true;
+                                                        break;
+                                                    }
+
+                                                    // Checking if one of the played cards is 3 ranks above our candidate card
+                                                    if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
                                                     {
                                                         flag = false;
                                                         break;
                                                     }
                                                 }
 
+                                                // Ace found
                                                 else
                                                 {
                                                     aceFound = true;
@@ -704,17 +761,29 @@ namespace Hokm
                                             }
                                         }
 
-                                        // TODO
+                                        // If found a winning card
                                         if (winningCardExists)
                                         {
-                                            Console.WriteLine("FOUND WINNING STRONG CARD");
+                                            Console.WriteLine("FOUND STRONG WINNING CARD");
                                             break;
                                         }
-                                        if (friendWins || aceFound)
+
+                                        // If there is an ace in the played cards
+                                        if (haveAce)
+                                        {
                                             break;
+                                        }
+
+                                        // If found a winning card
                                         if (flag)
                                         {
                                             cardToSend = deck.IndexOf(candidate);
+                                            break;
+                                        }
+
+                                        // If our friend wins or an ace was found in played cards
+                                        if (friendWins || aceFound)
+                                        {
                                             break;
                                         }
                                     }
@@ -797,7 +866,7 @@ namespace Hokm
                                 //}
                             }
 
-                            // TODO
+                            // If we found winning strong card
                             else
                             {
                                 deck.ForEach(x => Console.Write(x + ", "));
@@ -833,14 +902,14 @@ namespace Hokm
             {
                 if (card != "")
                 {
-                    // TODO
+                    // Checking if any of played cards is higher than the played card of the id specified 
                     if (Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
                     {
                         max = false;
                         break;
                     }
 
-                    // TODO
+                    // Checking if any of played cards is higher than the played card of the id specified, in strong
                     else if (card.Split("*")[0] == strongSuit && playedCards[id].Split("*")[0] == strongSuit)
                     {
                         if (Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
@@ -921,6 +990,7 @@ namespace Hokm
                         putCards.Add(card);
                 }
             }
+
             // Order from high to low according to ranks
             putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
             return putCards;

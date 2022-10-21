@@ -42,7 +42,7 @@ namespace Hokm
             /// </summary>
 
             //this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 55555);
-            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 55555);
+            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 17 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();
@@ -103,7 +103,8 @@ namespace Hokm
             //try
             //{
             bool runOnce = true;
-            bool firstRun = true;
+            bool endRun = true;
+
             while (true)
             {
                 this.rec = this.clientSock.Receive(this.buf);
@@ -149,22 +150,29 @@ namespace Hokm
                 // Summary has been sent, it's our turn
                 if (msg.Contains("played_suit:"))
                 {
+                    // If we are client id number 3 handling socket errors with the server
                     Console.WriteLine("Its our turn");
                     if (clientId == 3 && runOnce)
                     {
+                        // Cleaning buffer
                         this.buf = new byte[8];
                         this.rec = this.clientSock.Receive(this.buf);
                         data = new byte[this.rec];
                         Array.Copy(this.buf, data, this.rec);
+
+                        // Requesting data again
                         this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data)); // the message's size
                         this.buf = new byte[this.msgSize];
                         this.rec = this.clientSock.Receive(this.buf);
                         data = new byte[this.rec];
                         Array.Copy(this.buf, data, this.rec);
                         new_msg = Encoding.ASCII.GetString(data);
+
                         GameMessageParser(new_msg);
                         runOnce = false;
                     }
+
+                    // Playing turn
                     PlayTurn(msg);
                 }
 
@@ -178,6 +186,7 @@ namespace Hokm
                         card.Value.ForEach(card => Console.Write(card + ", "));
                         Console.Write("] ");
                     }
+                    endRun = false;
                     break;
                 }
 
@@ -191,10 +200,12 @@ namespace Hokm
                 }
                 this.buf = new byte[8];
             }
-            if (firstRun)
+
+            // If it's out first turn, initiate socket connection
+            if (endRun)
             {
                 InitSock();
-                firstRun = false;
+                endRun = false;
             }
 
             //}
