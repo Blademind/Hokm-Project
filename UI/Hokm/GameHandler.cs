@@ -30,6 +30,8 @@ namespace Hokm
         public string[] startingDeck;
         public GameClient gameClient;
         public string[] playedCards;
+        public bool enableUI = true;
+
         public dynamic GameMessageParser(string msg)
         {
             // Card deck
@@ -38,16 +40,16 @@ namespace Hokm
                 // Splitting cards
                 string[] cards = msg.Split("|");
 
-                if (cards.Length == 5)
+                if (cards.Length == 5 && enableUI)
                 {
-                    //gameClient = new GameClient(msg);
-                    //new Thread(
-                    //() =>
-                    //{
-                    //    Application.Run(gameClient);
-                    //}
-                    //).Start();
-                    //gameClient.PopUpMessage("   Loading...", "The game will start soon", 2000);
+                    gameClient = new GameClient(msg);
+                    new Thread(
+                    () =>
+                    {
+                        Application.Run(gameClient);
+                    }
+                    ).Start();
+                    gameClient.PopUpMessage("   Loading...", "The game will start soon", 2000);
                     //Thread.Sleep(6000);
                 }
 
@@ -62,7 +64,8 @@ namespace Hokm
                 // Receiving full deck
                 if (cards.Length == 14)
                 {
-                    //gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
+                    if (enableUI)
+                        gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
 
                     if(msg.Split(",").Length != 3)
                     {
@@ -92,18 +95,20 @@ namespace Hokm
             // Adding played cards in each round to dictionary
             else if (msg.Contains("round_cards:"))
             {
-                //gameClient.RemoveMiddleCards();
-                //string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
+                if (enableUI)
+                {
+                    gameClient.RemoveMiddleCards();
+                    string[] round_cards = msg.Split(",")[2].Split(":")[1].Split("|");
 
-                //for (int i = 0; i < round_cards.Length; i++)
-                //{
-                //    if (round_cards[i] != "" && i + 1 != clientId)
-                //        gameClient.PlayOtherCard(round_cards[i], i + 1);
-                //    else
-                //        gameClient.PlayCard(round_cards[i]);
-                //}
-                //gameClient.RoundEnding(msg.Split(":")[1].Substring(0, 3));
-
+                    for (int i = 0; i < round_cards.Length; i++)
+                    {
+                        if (round_cards[i] != "" && i + 1 != clientId)
+                            gameClient.PlayOtherCard(round_cards[i], i + 1);
+                        else
+                            gameClient.PlayCard(round_cards[i]);
+                    }
+                    gameClient.RoundEnding(msg.Split(":")[1].Substring(0, 3));
+                }
                 string[] arr = msg.Split(",")[2].Split(":")[1].Split("|");
                 for (int i = 0; i < arr.Length; i++)
                 {
@@ -132,11 +137,14 @@ namespace Hokm
                 }
             }
 
-            //if (msg == "GAME_OVER")
-            //    gameClient.GameOver();
+            if (enableUI)
+            {
+                if (msg == "GAME_OVER")
+                    gameClient.GameOver();
 
-            //if (msg == "PLAYER_DISCONNECTED")
-            //    gameClient.PopUpMessage("   Error!", "Player has been disconnected", 3000);
+                if (msg == "PLAYER_DISCONNECTED")
+                    gameClient.PopUpMessage("   Error!", "Player has been disconnected", 3000);
+            }
 
 
 

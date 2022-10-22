@@ -22,6 +22,8 @@ namespace Hokm
 {
     public partial class GameClient : Form
     {
+        private bool animations = true;
+
         private Card[] deck = new Card[13];
         private Card[] pDeck0 = new Card[13];
         private Card[] pDeck1 = new Card[13];
@@ -32,13 +34,12 @@ namespace Hokm
         private AnimationHandler aH;
         private int roundN = 0;
         private bool firstTime = true;
-        private bool animations = true;
         private Dictionary<string, int> scores = new Dictionary<string, int>();
         private string[] teams;
 
         // 
 
-        private PictureBox CardInitializer(Card c, int x, int y, bool rot=false)
+        private PictureBox CardInitializer(Card c, int x, int y, bool rot = false)
         {
             Random rnd = new Random();
             PictureBox cardBox = new PictureBox();
@@ -84,7 +85,7 @@ namespace Hokm
         public void PopUpMessage(string title, string info, int mil)
         {
             round_title.Text = title;
-            winner_label.Text = info;          
+            winner_label.Text = info;
 
             if (title.Length > 17)
                 round_title.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
@@ -118,7 +119,7 @@ namespace Hokm
         }
 
         public void FirstFiveCards(string cardsString)
-        {            
+        {
             string[] cards = cardsString.Split('|');
             Array.Sort(cards, StringComparer.InvariantCulture);
             Card[] fiveDeck = new Card[cards.Length];
@@ -267,6 +268,7 @@ namespace Hokm
                     ControlStyles.UserPaint |
                     ControlStyles.DoubleBuffer,
                     true);
+            this.UpdateStyles();
         }
 
         public void PublicStartInitializer(string startData, string clientID, string rulerID)
@@ -285,7 +287,7 @@ namespace Hokm
         {
             string[] cardInfo = played.Split('*');
             Card remove = new Card(cardInfo[0], cardInfo[1]);
-            Card[] l = new Card[this.deck.Length-1];
+            Card[] l = new Card[this.deck.Length - 1];
             int j = 0;
             for (int i = 0; i < this.deck.Length; i++)
             {
@@ -325,7 +327,7 @@ namespace Hokm
         // Others
         private int UpdateOthersDeck(string played, int player)
         {
-            Card[] l = new Card[this.playerDecks[player].Length-1];
+            Card[] l = new Card[this.playerDecks[player].Length - 1];
             int j = 0;
             Random rnd = new Random();
             int k = rnd.Next(0, l.Length);
@@ -364,12 +366,38 @@ namespace Hokm
                 d++;
                 k = d;
             }
-            if (player == 0)
-                p.Location = new System.Drawing.Point(403, 350);
-            else if (player == 1)
-                p.Location = new System.Drawing.Point(530, 230);
+
+            if (this.animations)
+            {
+                int[] cords = new int[2];
+
+                if (player == 0)
+                {
+                    cords[0] = 403;
+                    cords[1] = 350;
+                }
+                else if (player == 1)
+                {
+                    cords[0] = 530;
+                    cords[1] = 230;
+                }
+                else
+                {
+                    cords[0] = 660;
+                    cords[1] = 350;
+                }
+
+                this.Invoke(new Action<int>((int _) => { aH.AnimateCard(cords, p); }), 0);
+            }
             else
-                p.Location = new System.Drawing.Point(660, 350);
+            {
+                if (player == 0)
+                    p.Location = new System.Drawing.Point(403, 350);
+                else if (player == 1)
+                    p.Location = new System.Drawing.Point(530, 230);
+                else
+                    p.Location = new System.Drawing.Point(660, 350);
+            }
             UpdateCardTexture(p, played);
             this.activeCards[player + 1] = (PictureBox)this.Controls[n];
 
@@ -380,7 +408,7 @@ namespace Hokm
         {
             player = dA.GetRealPlayerID(player.ToString());
             int k = UpdateOthersDeck(played, player);
-            this.Invoke(new Action<int>((int _) => { OthersCardToMiddle(played, player, k);}), 0);         
+            this.Invoke(new Action<int>((int _) => { OthersCardToMiddle(played, player, k); }), 0);
         }
 
 
@@ -405,7 +433,7 @@ namespace Hokm
                 }
             }
             this.Invoke(new Action<int>((int _) => { Re(); }), 0);
-           
+
         }
 
         private void RefreshCards()
@@ -462,7 +490,7 @@ namespace Hokm
         private void EndingScreen(string winner)
         {
             this.ending_panel.Visible = true;
-            foreach(Control c in this.ending_panel.Controls)
+            foreach (Control c in this.ending_panel.Controls)
             {
                 c.Visible = true;
                 if (c.Name == "ending_winner")
@@ -477,7 +505,7 @@ namespace Hokm
             Application.Exit();
         }
 
-        public void GameOver(string gWinner=null)
+        public void GameOver(string gWinner = null)
         {
             if (gWinner == null)
             {
@@ -500,7 +528,7 @@ namespace Hokm
             this.Invoke(new Action<int>((int _) => { EndingScreen(gWinner); }), 0);
             // exit button
         }
-        
+
         #region TRASH
 
         //                                                                                      .     
@@ -516,7 +544,7 @@ namespace Hokm
         ////     \\\(  ///
         ////          //
         ///////////////
-         ////////////
+        ////////////
 
         public void EnemiesCardToMiddle(string played, int enemy)
         {
@@ -545,7 +573,7 @@ namespace Hokm
                 Card remove = new Card(cardInfo[0], cardInfo[1]);
                 Card[] l = new Card[this.deck.Length];
                 int j = 0;
-                for (int i = 0; i<this.deck.Length; i++)
+                for (int i = 0; i < this.deck.Length; i++)
                 {
                     Console.WriteLine(this.deck[i]);
                     Console.WriteLine(remove);
@@ -564,29 +592,29 @@ namespace Hokm
 
         public void UpdateMyCardsVisuals()
         {
-            int[] sizes = {100, 160};
-            int[] length = {780, 240, 677 };
+            int[] sizes = { 100, 160 };
+            int[] length = { 780, 240, 677 };
             int jump = (length[0] - length[1]) / 13;
 
             Random rnd = new Random();
 
             foreach (Card c in this.deck)
             {
-                    Console.WriteLine(c);
-                    PictureBox cardBox = new PictureBox();
-                    cardBox.Size = new System.Drawing.Size(sizes[0], sizes[1]);
-                    cardBox.Location = new System.Drawing.Point(length[0], length[2]);
+                Console.WriteLine(c);
+                PictureBox cardBox = new PictureBox();
+                cardBox.Size = new System.Drawing.Size(sizes[0], sizes[1]);
+                cardBox.Location = new System.Drawing.Point(length[0], length[2]);
 
-                    // Image
-                    string one = c.value;
-                    string two = c.shape;
-                    Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(one + "_of_" + two);
-                    cardBox.Image = bmp;
+                // Image
+                string one = c.value;
+                string two = c.shape;
+                Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(one + "_of_" + two);
+                cardBox.Image = bmp;
 
-                    cardBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-                    cardBox.Name = c.ToString();
-                    length[0] -= jump;
-                    this.Controls.Add(cardBox);
+                cardBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                cardBox.Name = c.ToString();
+                length[0] -= jump;
+                this.Controls.Add(cardBox);
             }
         }
 
@@ -595,7 +623,7 @@ namespace Hokm
 
         public void UpdateEnemiesCardsVisuals(int enemy)
         {
-            int[,] lengthAll = { 
+            int[,] lengthAll = {
                 {55, 55, 200, 770},
                 {780, 240, 37, 37},
                 {950, 950, 200, 770},
@@ -651,9 +679,9 @@ namespace Hokm
                 }
             }
         }
-#endregion
+        #endregion
 
-        public GameClient(string startData=null, string clientID=null, string ruler=null)
+        public GameClient(string startData = null, string clientID = null, string ruler = null)
         {
             InitializeComponent();
             StartInitializer(clientID, ruler, startData);
