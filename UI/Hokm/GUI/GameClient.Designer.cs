@@ -95,7 +95,6 @@ namespace Hokm
             this.info_text.TabIndex = 3;
             this.info_text.Text = "Loading...";
             this.info_text.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.info_text.Click += new System.EventHandler(this.info_text_Click);
             // 
             // panel2
             // 
@@ -173,7 +172,6 @@ namespace Hokm
             this.round_title.TabIndex = 2;
             this.round_title.Text = "End of Round n";
             this.round_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.round_title.Click += new System.EventHandler(this.round_title_Click);
             // 
             // winner_label
             // 
@@ -181,9 +179,9 @@ namespace Hokm
             this.winner_label.Font = new System.Drawing.Font("Segoe UI", 21F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.winner_label.Location = new System.Drawing.Point(3, 46);
             this.winner_label.Name = "winner_label";
-            this.winner_label.Size = new System.Drawing.Size(362, 38);
+            this.winner_label.Size = new System.Drawing.Size(63, 38);
             this.winner_label.TabIndex = 0;
-            this.winner_label.Text = "11111111111111111116111";
+            this.winner_label.Text = "text";
             this.winner_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // p_id_1
@@ -297,7 +295,6 @@ namespace Hokm
             this.MinimumSize = new System.Drawing.Size(1187, 910);
             this.Name = "GameClient";
             this.Text = "ODEA Client";
-            this.Load += new System.EventHandler(this.GameClient_Load);
             this.info_panel.ResumeLayout(false);
             this.info_panel.PerformLayout();
             this.score_panel.ResumeLayout(false);

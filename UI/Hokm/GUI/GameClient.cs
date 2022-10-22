@@ -37,10 +37,12 @@ namespace Hokm
         private Dictionary<string, int> scores = new Dictionary<string, int>();
         private string[] teams;
 
-        // 
 
         private PictureBox CardInitializer(Card c, int x, int y, bool rot = false)
         {
+            // Initializes a card onscreen using the apropiate values  
+
+
             Random rnd = new Random();
             PictureBox cardBox = new PictureBox();
             if (this.firstTime && rot)
@@ -84,6 +86,7 @@ namespace Hokm
 
         public void PopUpMessage(string title, string info, int mil)
         {
+            // Shows a popup message to the user on top of the screen
             round_title.Text = title;
             winner_label.Text = info;
 
@@ -109,6 +112,7 @@ namespace Hokm
         // Game setup
         private void FirstFiveCardsVisuals(Card[] cards)
         {
+            // Shows the first 5 cards
             int[] loc = { 310, 500 };
             foreach (Card c in cards)
             {
@@ -120,6 +124,7 @@ namespace Hokm
 
         public void FirstFiveCards(string cardsString)
         {
+            // Manages the first five cards
             string[] cards = cardsString.Split('|');
             Array.Sort(cards, StringComparer.InvariantCulture);
             Card[] fiveDeck = new Card[cards.Length];
@@ -138,6 +143,7 @@ namespace Hokm
 
         private void SetStartingDeck(string data)
         {
+            // manages the starting deck of the player
             int pFrom = 0;
             int pTo = data.LastIndexOf(",teams");
 
@@ -156,6 +162,8 @@ namespace Hokm
 
         private void SetOthersStartingDeck()
         {
+            // manages the starting deck of the other players
+
             for (int i = 0; i < pDeck0.Length; i++)
             {
                 string[] cardInfo = "back*back".Split('*');
@@ -165,6 +173,7 @@ namespace Hokm
             }
         }
 
+        // Deck visuals
         private void StartingDeckVisuals()
         {
             int[] length = { 780, 240, 677 };
@@ -220,6 +229,8 @@ namespace Hokm
 
         private void StartInitializer(string startData, string clientID, string rulerID)
         {
+            // Setups all the different and important arguments for the UI to work correctly
+
             this.aH = new AnimationHandler(this);
 
             this.playerDecks[0] = this.pDeck0;
@@ -319,12 +330,13 @@ namespace Hokm
 
         public void PlayCard(string played)
         {
+            // Manages the logics and visuals when playing a card
             this.Invoke(new Action<int>((int _) => { UpdateMyDeck(played); }), 0);
             this.Invoke(new Action<int>((int _) => { MyCardToMiddle(played); }), 0);
             this.Invoke(new Action<int>((int _) => { this.ResumeLayout(false); }), 0);
         }
 
-        // Others
+        // Other players
         private int UpdateOthersDeck(string played, int player)
         {
             Card[] l = new Card[this.playerDecks[player].Length - 1];
@@ -406,6 +418,7 @@ namespace Hokm
 
         public void PlayOtherCard(string played, int player)
         {
+            // Manages the logics and visuals when others play a card
             player = dA.GetRealPlayerID(player.ToString());
             int k = UpdateOthersDeck(played, player);
             this.Invoke(new Action<int>((int _) => { OthersCardToMiddle(played, player, k); }), 0);
@@ -436,22 +449,6 @@ namespace Hokm
 
         }
 
-        private void RefreshCards()
-        {
-            foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
-            {
-                this.Controls.Remove(p);
-                p.Dispose();
-            }
-            //Visuals
-            StartingDeckVisuals();
-
-            //Others
-            OthersStartingDeckVisuals(1);
-            OthersStartingDeckVisuals(2);
-            OthersStartingDeckVisuals(0);
-        }
-
         private void ScorePanelText(string winnerTeam)
         {
             this.scores[winnerTeam] += 1;
@@ -466,6 +463,7 @@ namespace Hokm
 
         public void RoundEnding(string team)
         {
+            // Manages the logics and visuals when at the end of each round
             this.Invoke(new Action<int>((int _) => {
                 this.roundN++;
                 this.winner_label.Text = "Winner: " + team;
@@ -507,6 +505,7 @@ namespace Hokm
 
         public void GameOver(string gWinner = null)
         {
+            // Manages the logics and visuals when at the end of the game
             if (gWinner == null)
             {
                 string[] t = this.score_text.Text.Split("\n");
@@ -683,61 +682,16 @@ namespace Hokm
 
         public GameClient(string startData = null, string clientID = null, string ruler = null)
         {
+            // Start when the 5 first cards are not necessary
             InitializeComponent();
             StartInitializer(clientID, ruler, startData);
         }
 
         public GameClient(string fCards)
         {
+            // Start when the 5 first cards are necessary
             InitializeComponent();
             FirstFiveCards(fCards);
-        }
-
-
-        // Tests
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RoundEnding("1+2");
-        }
-
-        private void GameClient_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            PlayCard("spades*rank_8");
-            PlayOtherCard("clubs*rank_2", 3);
-            PlayOtherCard("spades*rank_2", 2);
-            PlayOtherCard("hearts*rank_2", 1);
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("Enter VALuE: ");
-            string x = Console.ReadLine();
-            PlayCard(x);
-            PlayOtherCard("clubs*rank_3", 3);
-            PlayOtherCard("spades*rank_3", 2);
-            PlayOtherCard("hearts*rank_3", 1);
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            GameOver("2+4");
-        }
-
-        private void round_title_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void info_text_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
