@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Hokm
 {
@@ -273,7 +276,7 @@ namespace Hokm
             this.ending_title.Location = new System.Drawing.Point(109, 12);
             this.ending_title.Name = "ending_title";
             this.ending_title.Size = new System.Drawing.Size(347, 72);
-            this.ending_title.TabIndex = 3;
+            this.ending_title.TabIndex = 0;
             this.ending_title.Text = "Game Ended";
             this.ending_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -291,6 +294,7 @@ namespace Hokm
             this.Controls.Add(this.winning_panel);
             this.Controls.Add(this.info_panel);
             this.Controls.Add(this.score_panel);
+            this.Icon = global::Hokm.Properties.Resources.logo;
             this.MaximumSize = new System.Drawing.Size(1187, 910);
             this.MinimumSize = new System.Drawing.Size(1187, 910);
             this.Name = "GameClient";

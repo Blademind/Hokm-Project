@@ -40,7 +40,7 @@ namespace Hokm
 
         private PictureBox CardInitializer(Card c, int x, int y, bool rot = false)
         {
-            // Initializes a card onscreen using the apropiate values  
+            // Initializes a card onscreen using the appropriate values  
 
 
             Random rnd = new Random();
@@ -55,6 +55,7 @@ namespace Hokm
             // Image
             cardBox.Image = c.GetBMP();
             cardBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            cardBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
 
             cardBox.Name = c.ToString();
@@ -65,6 +66,7 @@ namespace Hokm
 
         private void ShowPanels(Control cc, bool show = true)
         {
+            // A simple function that shows or hides the control and its childrens
             if (show)
             {
                 cc.Visible = show;
@@ -112,7 +114,7 @@ namespace Hokm
         // Game setup
         private void FirstFiveCardsVisuals(Card[] cards)
         {
-            // Shows the first 5 cards
+            // Shows the first 5 cards on screen
             int[] loc = { 310, 500 };
             foreach (Card c in cards)
             {
@@ -124,7 +126,7 @@ namespace Hokm
 
         public void FirstFiveCards(string cardsString)
         {
-            // Manages the first five cards
+            // Manages the first five cards at the start of the game
             string[] cards = cardsString.Split('|');
             Array.Sort(cards, StringComparer.InvariantCulture);
             Card[] fiveDeck = new Card[cards.Length];
@@ -143,7 +145,7 @@ namespace Hokm
 
         private void SetStartingDeck(string data)
         {
-            // manages the starting deck of the player
+            // manages the starting deck of the player using a Card array
             int pFrom = 0;
             int pTo = data.LastIndexOf(",teams");
 
@@ -176,6 +178,7 @@ namespace Hokm
         // Deck visuals
         private void StartingDeckVisuals()
         {
+            // generate the player's deck screen
             int[] length = { 780, 240, 677 };
             int jump = (length[0] - length[1]) / this.deck.Length;
 
@@ -189,6 +192,7 @@ namespace Hokm
 
         private void OthersStartingDeckVisuals(int player)
         {
+            // generate the others player's deck screen by ID
             int[,] lengthAll = {
                 {55, 55, 200, 770},
                 {780, 240, 37, 37},
@@ -251,6 +255,16 @@ namespace Hokm
             this.p_id_2.Text = dA.GetFakeID(0);
             this.p_id_3.Text = dA.GetFakeID(2);
 
+            //Set ruler color
+            if (dA.GetRuler() == dA.GetClientID())
+                this.p_id_0.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            else if (dA.GetRuler() == dA.GetFakeID(1))
+                this.p_id_1.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            else if (dA.GetRuler() == dA.GetFakeID(0))
+                this.p_id_2.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            else
+                this.p_id_3.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+
             // Set teams
             this.teams = dA.GetTeams();
             score_text.ForeColor = SystemColors.ControlText;
@@ -296,6 +310,8 @@ namespace Hokm
 
         private void UpdateMyDeck(string played)
         {
+            // When a player plays a card, the visuals and his deck needs to be update
+            // this function manages the operation
             string[] cardInfo = played.Split('*');
             Card remove = new Card(cardInfo[0], cardInfo[1]);
             Card[] l = new Card[this.deck.Length - 1];
@@ -317,7 +333,6 @@ namespace Hokm
             Card p = new Card(cardInfo[0], cardInfo[1]);
 
 
-            //this.Controls[p.ToString()].Location = new Point(530, 470);
             int[] cords = { 530, 470 };
 
             if (this.animations)
@@ -339,6 +354,9 @@ namespace Hokm
         // Other players
         private int UpdateOthersDeck(string played, int player)
         {
+            // When a player plays a card, the visuals and his deck needs to be update
+            // and change the texture of the card 
+            // this function manages the operation
             Card[] l = new Card[this.playerDecks[player].Length - 1];
             int j = 0;
             Random rnd = new Random();
@@ -359,6 +377,7 @@ namespace Hokm
 
         private void UpdateCardTexture(PictureBox p, string played)
         {
+            // Updates the card texture from the back to the front
             string[] cardInfo = played.Split('*');
             Card c = new Card(cardInfo[0], cardInfo[1]);
             p.Image = (Bitmap)Resources.ResourceManager.GetObject(c.value + "_of_" + c.shape);
@@ -431,6 +450,7 @@ namespace Hokm
 
         public void RemoveMiddleCards()
         {
+            // Clears all the middle cards at the end of the round
             void Re()
             {
                 foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
@@ -442,7 +462,6 @@ namespace Hokm
                     {
                         this.Controls.Remove(p);
                     }
-
                 }
             }
             this.Invoke(new Action<int>((int _) => { Re(); }), 0);
@@ -451,6 +470,7 @@ namespace Hokm
 
         private void ScorePanelText(string winnerTeam)
         {
+            // Manages the values and viewing of the scores panel
             this.scores[winnerTeam] += 1;
 
             this.score_text.Text = teams[0] + ": " + this.scores[teams[0]]

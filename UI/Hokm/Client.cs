@@ -42,7 +42,7 @@ namespace Hokm
             /// </summary>
 
             //this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 55555);
-            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 17 }), 55555);
+            this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 55555);
             for (int i = 0; i < 4; i++)
             {
                 idCard[i] = new List<string>();
