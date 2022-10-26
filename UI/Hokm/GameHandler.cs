@@ -20,8 +20,12 @@ namespace Hokm
     public partial class Client
     {
         /// <summary>
-        /// Client object 
+        /// Seconds Part of Client Object which has the functions that are
+        /// Related to the Algorithm of the game
         /// </summary>
+        /// 
+        
+        // Initiating variables
         public string[] cardShapeSuit;
         public string strongSuit;
         public List<string> usedCards = new List<string>();
@@ -34,6 +38,12 @@ namespace Hokm
 
         public dynamic GameMessageParser(string msg)
         {
+            ///<summary>
+            /// Function parses messages from the server
+            /// <param name="msg">the msg from the server</param>
+            /// <return> None </return>
+            ///</summary>
+
             // Card deck
             if (Char.IsUpper(msg[0]))
             {
@@ -136,7 +146,8 @@ namespace Hokm
                     return "Your client ID is: " + clientId;
                 }
             }
-
+            
+            // UI enabled
             if (enableUI)
             {
                 if (msg == "GAME_OVER")
@@ -905,6 +916,8 @@ namespace Hokm
             /// <param name="playedCards"> recently played cards</param>
             /// <return> true if given id has the highest cards</return>
             ///</summary>
+            ///
+
             bool max = true;
             foreach (string card in playedCards)
             {
@@ -917,7 +930,7 @@ namespace Hokm
                         break;
                     }
 
-                    // Checking if any of played cards is higher than the played card of the id specified, in strong
+                    // Checking if any of played cards is higher than the played card of the id specified, in strong suit
                     else if (card.Split("*")[0] == strongSuit && playedCards[id].Split("*")[0] == strongSuit)
                     {
                         if (Array.IndexOf(ranks, card.Split("*")[1]) > Array.IndexOf(ranks, playedCards[id].Split("*")[1]))
@@ -987,6 +1000,8 @@ namespace Hokm
             /// <param name="suit"> a specified suit </param>
             /// <return> returns all recently put cards in the correct suit by a descending order (as List<string>)</return>
             ///</summary> 
+            ///
+
             List<string> putCards = new List<string>();
 
             // Adds all recently put cards to a list
@@ -1022,7 +1037,7 @@ namespace Hokm
             }
             Dictionary<string, int> s = startingDeckSuits.GroupBy(p => p).OrderByDescending(r => r.Count()).ToDictionary(q => q.Key, q => q.Count());
 
-            // Spposed to the the biggest value
+            // Supposed to the the biggest value
             int MaxValue = s.First().Value;
             string key = s.First().Key;
             bool found = false;
