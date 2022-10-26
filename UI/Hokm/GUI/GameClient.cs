@@ -2,17 +2,9 @@
 using Hokm.Properties;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Numerics;
-using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +14,7 @@ namespace Hokm
 {
     public partial class GameClient : Form
     {
+        #region Variables
         private bool animations = true;
 
         private Card[] deck = new Card[13];
@@ -30,14 +23,17 @@ namespace Hokm
         private Card[] pDeck2 = new Card[13];
         private Card[][] playerDecks = new Card[3][];
         private PictureBox[] activeCards = new PictureBox[5];
+
         private DataAnalyzer dA = new DataAnalyzer();
         private AnimationHandler aH;
+        private Dictionary<string, int> scores = new Dictionary<string, int>();
+
         private int roundN = 0;
         private bool firstTime = true;
-        private Dictionary<string, int> scores = new Dictionary<string, int>();
         private string[] teams;
+        #endregion
 
-
+        #region General
         private PictureBox CardInitializer(Card c, int x, int y, bool rot = false)
         {
             // Initializes a card onscreen using the appropriate values  
@@ -92,6 +88,7 @@ namespace Hokm
             round_title.Text = title;
             winner_label.Text = info;
 
+            // In order to avoid overflow
             if (title.Length > 17)
                 round_title.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
             else
@@ -109,9 +106,9 @@ namespace Hokm
                 ShowPanels(this.winning_panel, false);
             }), 0));
         }
+        #endregion
 
-
-        // Game setup
+        #region Game setup
         private void FirstFiveCardsVisuals(Card[] cards)
         {
             // Shows the first 5 cards on screen
@@ -174,11 +171,12 @@ namespace Hokm
                 this.pDeck2[i] = new Card(cardInfo[0], cardInfo[1], true);
             }
         }
+        #endregion
 
-        // Deck visuals
+        #region Deck visuals
         private void StartingDeckVisuals()
         {
-            // generate the player's deck screen
+            // generates the player's deck screen
             int[] length = { 780, 240, 677 };
             int jump = (length[0] - length[1]) / this.deck.Length;
 
@@ -287,7 +285,8 @@ namespace Hokm
 
             ShowPanels(this.ending_panel, false);
             ShowPanels(this.winning_panel, false);
-
+            
+            // avoid screen stuttering
             this.SetStyle(
                     ControlStyles.AllPaintingInWmPaint |
                     ControlStyles.UserPaint |
@@ -303,10 +302,10 @@ namespace Hokm
 
         }
 
-        ///////////////////////////////////////////////////////////////////////////////
+        #endregion
 
-        // Play Actions
-        // Me
+        #region Play Actions
+        // Player
 
         private void UpdateMyDeck(string played)
         {
@@ -335,6 +334,7 @@ namespace Hokm
 
             int[] cords = { 530, 470 };
 
+            // move to known location
             if (this.animations)
                 this.Invoke(new Action<int>((int _) => { aH.AnimateCard(cords, (PictureBox)this.Controls[p.ToString()]); }), 0);
             else
@@ -442,11 +442,9 @@ namespace Hokm
             int k = UpdateOthersDeck(played, player);
             this.Invoke(new Action<int>((int _) => { OthersCardToMiddle(played, player, k); }), 0);
         }
+        #endregion
 
-
-        ///////////////////////////////////////////////////////////////////////////////
-
-        // Round Over
+        #region Round Over
 
         public void RemoveMiddleCards()
         {
@@ -493,8 +491,9 @@ namespace Hokm
             this.Invoke(new Action<int>((int _) => { ScorePanelText(team); }), 0);
 
         }
+        #endregion
 
-        // Game Over
+        #region Game Over
 
         private void RemoveAllCards()
         {
@@ -514,6 +513,7 @@ namespace Hokm
                 if (c.Name == "ending_winner")
                 {
                     c.Text = "Winner: " + winner;
+                    break;
                 }
             }
         }
@@ -539,7 +539,7 @@ namespace Hokm
                 }
                 else
                 {
-                    gWinner = "erorrr";
+                    gWinner = "ERORR?";
                 }
             }
 
@@ -548,156 +548,6 @@ namespace Hokm
             // exit button
         }
 
-        #region TRASH
-
-        //                                                                                      .     
-        ///////***************************///////////                                ||           \
-        ///////////////////////////////////////////////////////////////////////////////          /
-        ///// *********           **********           **********      //////////////##            |///////>
-        ///////////////////////////////////////////////////////////////////////////////           \
-        /////////////////////////////////------------///                                        /
-        ////   \\(     //////////
-        ////   \\(     ///////                                                                       
-        ////   \(      /////
-        ////   \((     ////
-        ////     \\\(  ///
-        ////          //
-        ///////////////
-        ////////////
-
-        public void EnemiesCardToMiddle(string played, int enemy)
-        {
-            if (played != "None")
-            {
-                //string[] cardInfo = played.Split('*');
-                //Card p = new Card(cardInfo[0], cardInfo[1]);
-                string n = enemy.ToString() + "EP";
-
-                if (enemy == 0)
-                    this.Controls[n].Location = new System.Drawing.Point(340, 380);
-                else if (enemy == 1)
-                    this.Controls[n].Location = new System.Drawing.Point(530, 230);
-                else
-                    this.Controls[n].Location = new System.Drawing.Point(660, 380);
-
-            }
-        }
-
-        // My Cards
-        public void UpdateMyCards(string played)
-        {
-            if (played != "None")
-            {
-                string[] cardInfo = played.Split('*');
-                Card remove = new Card(cardInfo[0], cardInfo[1]);
-                Card[] l = new Card[this.deck.Length];
-                int j = 0;
-                for (int i = 0; i < this.deck.Length; i++)
-                {
-                    Console.WriteLine(this.deck[i]);
-                    Console.WriteLine(remove);
-
-                    if (this.deck[i].ToString() != remove.ToString())
-                    {
-                        l[j] = this.deck[i];
-                        j++;
-                    }
-                }
-                this.deck = l.Where(c => c != null).ToArray(); ;
-            }
-            MyCardToMiddle(played);
-            UpdateMyCardsVisuals();
-        }
-
-        public void UpdateMyCardsVisuals()
-        {
-            int[] sizes = { 100, 160 };
-            int[] length = { 780, 240, 677 };
-            int jump = (length[0] - length[1]) / 13;
-
-            Random rnd = new Random();
-
-            foreach (Card c in this.deck)
-            {
-                Console.WriteLine(c);
-                PictureBox cardBox = new PictureBox();
-                cardBox.Size = new System.Drawing.Size(sizes[0], sizes[1]);
-                cardBox.Location = new System.Drawing.Point(length[0], length[2]);
-
-                // Image
-                string one = c.value;
-                string two = c.shape;
-                Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(one + "_of_" + two);
-                cardBox.Image = bmp;
-
-                cardBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-                cardBox.Name = c.ToString();
-                length[0] -= jump;
-                this.Controls.Add(cardBox);
-            }
-        }
-
-        // Enemies
-
-
-        public void UpdateEnemiesCardsVisuals(int enemy)
-        {
-            int[,] lengthAll = {
-                {55, 55, 200, 770},
-                {780, 240, 37, 37},
-                {950, 950, 200, 770},
-            };
-            int[] length = { lengthAll[enemy, 0], lengthAll[enemy, 1], lengthAll[enemy, 2], lengthAll[enemy, 3] };
-
-            Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject("back");
-            Random rnd = new Random();
-
-            if (enemy == 1)
-            {
-                int jump = (length[0] - length[1]) / 13;
-                int[] sizes = { 100, 160 };
-
-                foreach (Card c in this.deck)
-                {
-                    PictureBox cardBox = new PictureBox();
-                    cardBox.Size = new System.Drawing.Size(sizes[0], sizes[1]);
-                    cardBox.Location = new System.Drawing.Point(length[0], length[2]);
-
-                    // Image 
-                    cardBox.Image = bmp;
-
-                    cardBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-                    cardBox.Name = enemy.ToString() + "EP";
-                    length[0] -= jump;
-                    this.Controls.Add(cardBox);
-                }
-            }
-            else
-            {
-                if (enemy == 0)
-                    bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                else
-                    bmp.RotateFlip(RotateFlipType.Rotate90FlipY);
-
-                int[] sizes = { 160, 100 };
-
-                int jump = (length[2] - length[3]) / 18;
-
-                foreach (Card c in this.deck)
-                {
-                    PictureBox cardBox = new PictureBox();
-                    cardBox.Size = new System.Drawing.Size(sizes[0], sizes[1]);
-                    cardBox.Location = new System.Drawing.Point(length[0], length[2]);
-                    // Image 
-                    cardBox.Image = bmp;
-
-                    cardBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-                    cardBox.Name = enemy.ToString() + "EP";
-                    length[2] -= jump;
-                    this.Controls.Add(cardBox);
-                }
-            }
-        }
         #endregion
 
         public GameClient(string startData = null, string clientID = null, string ruler = null)

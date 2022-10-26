@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Text;
 
 namespace Hokm
 {
     class DataAnalyzer
     {
+        // The class manages the starting string from the server and saves it inside the object
+
         private string startData;
         private string clientID;
         private string rulerID;
@@ -40,8 +41,6 @@ namespace Hokm
             this.startData = startData;
             SetRealOtherID();
         }
-
-
 
         public string ClearString(string data)
         {
@@ -94,7 +93,10 @@ namespace Hokm
 
             return teams;
         }
-    
+        
+        // Each player has its 'Real' ID and 'Fake ID'.
+        // The 'Real' ID means the id of the player on screen.
+        // The 'Fake' ID means the id that the server recognizes the player as
         public void SetRealOtherID()
         {
             string[] teams = GetTeams();
