@@ -32,3 +32,122 @@ C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.
 C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
 C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
 C:\Users\alonl\OneDrive\מסמכים\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Game.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Game.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\projects\Hokm_Game\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Game.resources
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\הורדות\Hokm-Project-Algorithms\Hokm-Project-Algorithms\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+C:\Users\alonl\OneDrive\מסמכים\Hokm\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\Doron\עבודות יב\ערן\HokmProj\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\Cyber\projects\Hokm_Game\Hokm-Project\Hokm-Project-Testing\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+C:\Users\u101040.DESHALIT\Desktop\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.exe
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.deps.json
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.json
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.runtimeconfig.dev.json
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\bin\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.AssemblyReference.cache
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GameClient.resources
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.Properties.Resources.resources
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.GenerateResource.cache
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfoInputs.cache
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.AssemblyInfo.cs
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.csproj.CoreCompileInputs.cache
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.dll
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.pdb
+D:\Cyber\YA_PROJECT\Hokm-Project\UI\Hokm\obj\Debug\netcoreapp3.1\Hokm.genruntimeconfig.cache

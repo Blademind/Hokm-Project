@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,18 +18,34 @@ namespace Hokm
         [STAThread]
         static void Main()
         {
-            Client cli0 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 50000); 
-            Client cli1 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 1234);
-            Client cli2 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 1235);
-            Client cli3 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 1236);
-            Client cli4 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 196 }), 1237);
-
-
-
-            //Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Game());
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Console.WriteLine(@"
+  __   ___   ___  ___  ______       ___  ______  __   _ 
+ |. | /_  | |_  ||_  ||____  |     |_  ||____  | \ \ | |
+  | |   | |   | |  |_|     | |       | |     | |  \ \| |
+  | |___| | __| |     _____| |_      | |     | | __\ ` |
+  |_______||____|    /________/      | |     |_||______|
+                                     |_|                
+              ____  ___  __   __._______                
+             |__  ||_  | \ \ / /|.  __  |               
+                | |  |_|  \ V /  | |  | |               
+            ____| |     ___\  \  | | _| |               
+           /____/\_\   |______|  |_||___|               ");
+           Console.WriteLine(@"
+           .------..------..------..------.
+           |H.--. ||O.--. ||K.--. ||M.--. |
+           | :/\: || :/\: || :/\: || (\/) |
+           | (__) || :\/: || :\/: || :\/: |
+           | '--'H|| '--'O|| '--'K|| '--'M|
+           `------'`------'`------'`------'");
+            //Thread.Sleep(2000);
+            //Client cli1 = new Client(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 1234);
+            //Client cli1 = new Client(new IPAddress(new byte[4] { 172, 16, 49, 212 }), 1234);
+            //Client cli2 = new Client(new IPAddress(new byte[4] { 192, 168, 1, 17 }), 1235);
+            Client cli3 = new Client(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 1236);
+            //Client cli4 = new Client(new IPAddress(new byte[4] { 192, 168, 0, 176 }), 1237);
         }
     }
 }
