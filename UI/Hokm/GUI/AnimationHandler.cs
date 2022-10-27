@@ -21,6 +21,11 @@ namespace Hokm.GUI
 {
     internal class AnimationHandler
     {
+        ///<summary>
+        /// AnimationHandler class contains animation functions for movment of the cards on the HOKM board
+        /// <return> bitmap of card </return>
+        ///</summary> 
+        ///
         private GameClient g;
         private int delay;
 
@@ -41,7 +46,7 @@ namespace Hokm.GUI
         public void AnimateCard(int[] dest, Control control)
         {
             ///<summary>
-            /// Animating the card to the desired location
+            /// The function is animating the card to the desired location
             /// <param name="dest">Array of {x,y} of the destination </param>
             /// <param name="control">The Control the card is on</param>
             /// <return> None </return>
@@ -61,6 +66,7 @@ namespace Hokm.GUI
                 /// The function moves the card by 'jmp' value each call until reached the destination
                 /// <return> None </return>
                 ///</summary>
+                ///
                 int times = 0;
                 int directionX = -1 * jmp;
                 int directionY = -1 * jmp;

@@ -29,6 +29,7 @@ namespace Hokm
             /// <param name="back">If the card's value is unkown, it would be considers as 'back' as it's texture</param>
             /// <return> None </return>
             ///</summary>
+            ///
 
             // Saftey net
             this.value = value.ToLower();
@@ -60,10 +61,11 @@ namespace Hokm
         public void RotateBMP()
         {
             ///<summary>
-            /// Rotates the card's texture
+            /// The function rotates the card's texture
             /// <return> None </return>
             ///</summary>
-            
+            ///
+
             this.bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
             this.x = 160;
             this.y = 100;
@@ -76,6 +78,7 @@ namespace Hokm
             /// <return> bitmap of card </return>
             ///</summary> 
             ///
+
             return this.bmp;
         }
 
@@ -86,6 +89,7 @@ namespace Hokm
             /// <return> String of class variables</return>
             ///</summary> 
             ///
+
             return "shape: " + shape + ", value: " + value;
         }
 

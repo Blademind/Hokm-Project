@@ -45,6 +45,7 @@ namespace Hokm
             /// <param name="port"> the port in which we are connecting </param>
             /// <return> None </return>
             /// </summary>
+            /// 
 
             //this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 127, 0, 0, 1 }), 55555);
             this.serverIpPort = new IPEndPoint(new IPAddress(new byte[4] { 192, 168, 1, 3 }), 55555);
@@ -71,6 +72,7 @@ namespace Hokm
             /// <return> None </return>
             /// </summary>
             /// 
+
             this.clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.buf = new byte[8];
             Server_Connect();
@@ -83,6 +85,7 @@ namespace Hokm
             /// get starting information about the game
             /// <return> None </return>
             /// </summary>
+            /// 
 
             try
             {
