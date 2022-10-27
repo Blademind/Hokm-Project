@@ -24,18 +24,32 @@ namespace Hokm.GUI
         private GameClient g;
         private int delay;
 
-        public AnimationHandler(GameClient g, int delay = 1)
+        public AnimationHandler(GameClient gClient, int delay = 1)
         {
-            this.g = g;
+            ///<summary>
+            /// Initializing the class
+            /// <param name="gClient">The GameClient itself</param>
+            /// <param name="delay">The intervals between each animation in milliseconds</param>
+            /// <return> None </return>
+            ///</summary>
+            
+            this.g = gClient;
             this.delay = delay;
-
         }
 
 
         public void AnimateCard(int[] dest, Control control)
         {
-            int t = 1;
+            ///<summary>
+            /// Animating the card to the desired location
+            /// <param name="dest">Array of {x,y} of the destination </param>
+            /// <param name="control">The Control the card is on</param>
+            /// <return> None </return>
+            ///</summary>
 
+            int jmp = 1;
+
+            // Initializing the timer
             System.Windows.Forms.Timer timerA = new System.Windows.Forms.Timer();
             timerA.Interval = delay;
             timerA.Tick += new EventHandler(TickAnim);
@@ -43,14 +57,18 @@ namespace Hokm.GUI
 
             void TickAnim(object sender, EventArgs e)
             {
+                ///<summary>
+                /// The function moves the card by 'jmp' value each call until reached the destination
+                /// <return> None </return>
+                ///</summary>
                 int times = 0;
-                int directionX = -1 * t;
-                int directionY = -1 * t;
+                int directionX = -1 * jmp;
+                int directionY = -1 * jmp;
 
                 if (dest[0] >= control.Left)
-                    directionX = t;
+                    directionX = jmp;
                 if (dest[1] >= control.Top)
-                    directionY = t;
+                    directionY = jmp;
 
                 while (control.Left != dest[0] || control.Top != dest[1])
                 {
@@ -68,6 +86,7 @@ namespace Hokm.GUI
                             control.Top += directionY;
                         });
                     }
+                    // In order to avoid awful visual bugs, the Control updates itself each 15 iterations
                     if (times % 15 == 0)
                     {
                         control.Update();
@@ -79,51 +98,6 @@ namespace Hokm.GUI
                     times++;
                 }
             }
-
-
-            #region trash
-            /*
-            new Task(() =>
-            {
-                int directionX = -1 * t;
-                int directionY = -1 * t;
-
-                if (dest[0] >= control.Left)
-                    directionX = t;
-                if (dest[1] >= control.Top)
-                    directionY = t;
-
-                while (control.Left != dest[0] || control.Top != dest[1])
-                {
-                    try
-                    {
-                        if (control.Left != dest[0])
-                        {
-                            this.g.Invoke((Action)delegate ()
-                            {
-                                control.Left += directionX;
-                            });
-                        }
-                        if (control.Top != dest[1])
-                        {
-                            this.g.Invoke((Action)delegate ()
-                            {
-                                control.Top += directionY;
-                            });
-                        }
-                        control.Refresh();
-                        //Thread.Sleep(this.delay);
-                    }
-                    catch
-                    {
-                        // form could be disposed
-                        break;
-                    }
-                }
-
-
-            }).Start();*/
-            #endregion
         }
 
     }

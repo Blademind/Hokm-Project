@@ -15,6 +15,9 @@ namespace Hokm
     public partial class GameClient : Form
     {
         #region Variables
+        /// <summary>
+        /// Initiating variables 
+        /// </summary>
         private bool animations = true;
 
         private Card[] deck = new Card[13];
@@ -36,8 +39,14 @@ namespace Hokm
         #region General
         private PictureBox CardInitializer(Card c, int x, int y, bool rot = false)
         {
-            // Initializes a card onscreen using the appropriate values  
-
+            ///<summary>
+            /// Initializes a card onscreen using the appropriate values 
+            /// <param name="c">The Card to show on screen</param>
+            /// <param name="x">the x value on screen</param>
+            /// <param name="y">the y value on screen</param>
+            /// <param name="rot">enable rotation</param>
+            /// <return> The PictureBox of the card </return>
+            ///</summary>
 
             Random rnd = new Random();
             PictureBox cardBox = new PictureBox();
@@ -62,7 +71,13 @@ namespace Hokm
 
         private void ShowPanels(Control cc, bool show = true)
         {
-            // A simple function that shows or hides the control and its childrens
+            ///<summary>
+            /// A simple function that shows or hides the control and its childrens
+            /// <param name="cc">The control we want to hide</param>
+            /// <param name="show">Either show or hide</param>
+            /// <return> None </return>
+            ///</summary>
+
             if (show)
             {
                 cc.Visible = show;
@@ -82,9 +97,16 @@ namespace Hokm
             }
         }
 
-        public void PopUpMessage(string title, string info, int mil)
+        public void PopUpMessage(string title, string info, int mil=2300)
         {
-            // Shows a popup message to the user on top of the screen
+            ///<summary>
+            /// Shows a popup message to the user on top of the screen
+            /// <param name="title">The title of the popup</param>
+            /// <param name="info">The subtext of the popup</param>
+            /// <param name="mil">The time duration of the popup to show</param>
+            /// <return> None </return>
+            ///</summary>
+            
             round_title.Text = title;
             winner_label.Text = info;
 
@@ -102,7 +124,7 @@ namespace Hokm
 
             this.Invoke(new Action<int>((int _) => { ShowPanels(this.winning_panel); }), 0);
 
-            Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
+            Task.Delay(mil).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
                 ShowPanels(this.winning_panel, false);
             }), 0));
         }
@@ -111,7 +133,12 @@ namespace Hokm
         #region Game setup
         private void FirstFiveCardsVisuals(Card[] cards)
         {
-            // Shows the first 5 cards on screen
+            ///<summary>
+            /// Shows the first 5 cards on screen
+            /// <param name="cards">The array of the first five cards</param>
+            /// <return> None </return>
+            ///</summary>
+            
             int[] loc = { 310, 500 };
             foreach (Card c in cards)
             {
@@ -123,7 +150,13 @@ namespace Hokm
 
         public void FirstFiveCards(string cardsString)
         {
-            // Manages the first five cards at the start of the game
+            ///<summary>
+            /// Manages the first five cards at the start of the game
+            /// <param name="cardsString">The message from the server that includes the 
+            ///     first 5 cards</param>
+            /// <return> None </return>
+            ///</summary>
+
             string[] cards = cardsString.Split('|');
             Array.Sort(cards, StringComparer.InvariantCulture);
             Card[] fiveDeck = new Card[cards.Length];
@@ -142,7 +175,13 @@ namespace Hokm
 
         private void SetStartingDeck(string data)
         {
-            // manages the starting deck of the player using a Card array
+            ///<summary>
+            /// Manages the starting deck of the player using a Card array
+            /// <param name="data">The message from the server that includes the 
+            ///     player's deck, hokm and hakm</param>
+            /// <return> None </return>
+            ///</summary>
+            
             int pFrom = 0;
             int pTo = data.LastIndexOf(",teams");
 
@@ -161,8 +200,11 @@ namespace Hokm
 
         private void SetOthersStartingDeck()
         {
-            // manages the starting deck of the other players
-
+            ///<summary>
+            /// Manages the starting deck of the other players
+            /// <return> None </return>
+            ///</summary>
+            
             for (int i = 0; i < pDeck0.Length; i++)
             {
                 string[] cardInfo = "back*back".Split('*');
@@ -176,7 +218,11 @@ namespace Hokm
         #region Deck visuals
         private void StartingDeckVisuals()
         {
-            // generates the player's deck screen
+            ///<summary>
+            /// generates the player's deck screen
+            /// <return> None </return>
+            ///</summary>
+            
             int[] length = { 780, 240, 677 };
             int jump = (length[0] - length[1]) / this.deck.Length;
 
@@ -190,7 +236,12 @@ namespace Hokm
 
         private void OthersStartingDeckVisuals(int player)
         {
-            // generate the others player's deck screen by ID
+            ///<summary>
+            /// Generates the others player's deck screen by ID
+            /// <param name="player">The ID of the player</param>
+            /// <return> None </return>
+            ///</summary>
+
             int[,] lengthAll = {
                 {55, 55, 200, 770},
                 {780, 240, 37, 37},
@@ -199,6 +250,7 @@ namespace Hokm
             int[] length = { lengthAll[player, 0], lengthAll[player, 1], lengthAll[player, 2], lengthAll[player, 3] };
             Card[] d = this.playerDecks[player];
             int i = 0;
+            // Every player ID, requires a different attributes for the card to be displayed correctly
             if (player == 1)
             {
                 int jump = (length[0] - length[1]) / 13;
@@ -231,7 +283,13 @@ namespace Hokm
 
         private void StartInitializer(string startData, string clientID, string rulerID)
         {
-            // Setups all the different and important arguments for the UI to work correctly
+            ///<summary>
+            /// Setup for all the different and important arguments for the UI to work correctly
+            /// <param name="startData">The raw message from the server</param>
+            /// <param name="clientID">The user's ID</param>
+            /// <param name="rulerID">The hakm's ID</param>
+            /// <return> None </return>
+            ///</summary>
 
             this.aH = new AnimationHandler(this);
 
@@ -286,7 +344,7 @@ namespace Hokm
             ShowPanels(this.ending_panel, false);
             ShowPanels(this.winning_panel, false);
             
-            // avoid screen stuttering
+            // Avoid screen stuttering
             this.SetStyle(
                     ControlStyles.AllPaintingInWmPaint |
                     ControlStyles.UserPaint |
@@ -297,9 +355,9 @@ namespace Hokm
 
         public void PublicStartInitializer(string startData, string clientID, string rulerID)
         {
+            // Avoid threading issues
             this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
             this.Invoke(new Action<int>((int _) => { StartInitializer(startData, clientID, rulerID); }), 0);
-
         }
 
         #endregion
@@ -309,8 +367,14 @@ namespace Hokm
 
         private void UpdateMyDeck(string played)
         {
-            // When a player plays a card, the visuals and his deck needs to be update
-            // this function manages the operation
+            ///<summary>
+            /// When a player plays a card, the visuals and his deck needs to be update
+            /// this function manages the operation
+            /// <param name="played">The played card string</param>
+            /// <return> None </return>
+            ///</summary>
+
+
             string[] cardInfo = played.Split('*');
             Card remove = new Card(cardInfo[0], cardInfo[1]);
             Card[] l = new Card[this.deck.Length - 1];
@@ -328,6 +392,12 @@ namespace Hokm
 
         private void MyCardToMiddle(string played)
         {
+            ///<summary>
+            /// Moves the desired card to the middle
+            /// <param name="played">The played card</param>
+            /// <return> None </return>
+            ///</summary>
+
             string[] cardInfo = played.Split('*');
             Card p = new Card(cardInfo[0], cardInfo[1]);
 
@@ -345,7 +415,12 @@ namespace Hokm
 
         public void PlayCard(string played)
         {
-            // Manages the logics and visuals when playing a card
+            ///<summary>
+            /// Manages the logics and visuals when playing a card
+            /// <param name="played">The played card</param>
+            /// <return> None </return>
+            ///</summary>
+
             this.Invoke(new Action<int>((int _) => { UpdateMyDeck(played); }), 0);
             this.Invoke(new Action<int>((int _) => { MyCardToMiddle(played); }), 0);
             this.Invoke(new Action<int>((int _) => { this.ResumeLayout(false); }), 0);
@@ -448,11 +523,15 @@ namespace Hokm
 
         public void RemoveMiddleCards()
         {
-            // Clears all the middle cards at the end of the round
+            ///<summary>
+            /// Clears all the middle cards at the end of the round
+            /// <return> None </return>
+            ///</summary>
             void Re()
             {
                 foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
                 {
+                    // Clears every card location in the middle in case of a bug
                     if (p.Location == new Point(403, 350) ||
                         p.Location == new Point(530, 230) ||
                         p.Location == new Point(660, 350) ||
@@ -468,7 +547,12 @@ namespace Hokm
 
         private void ScorePanelText(string winnerTeam)
         {
-            // Manages the values and viewing of the scores panel
+            ///<summary>
+            /// Manages the values and viewing of the scores panel
+            /// <param name="winnerTeam">The winner team string</param>
+            /// <return> None </return>
+            ///</summary>
+            
             this.scores[winnerTeam] += 1;
 
             this.score_text.Text = teams[0] + ": " + this.scores[teams[0]]
@@ -481,7 +565,12 @@ namespace Hokm
 
         public void RoundEnding(string team)
         {
-            // Manages the logics and visuals when at the end of each round
+            ///<summary>
+            /// Manages the logics and visuals when at the end of each round
+            /// <param name="team">The winner team</param>
+            /// <return> None </return>
+            ///</summary>
+
             this.Invoke(new Action<int>((int _) => {
                 this.roundN++;
                 this.winner_label.Text = "Winner: " + team;
@@ -497,6 +586,11 @@ namespace Hokm
 
         private void RemoveAllCards()
         {
+            ///<summary>
+            /// Removes every card onscreen
+            /// <return> None </return>
+            ///</summary>
+            
             foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
             {
                 this.Controls.Remove(p);
@@ -506,6 +600,12 @@ namespace Hokm
 
         private void EndingScreen(string winner)
         {
+            ///<summary>
+            /// Enables the ending screen at the end of the game
+            /// <param name="winner">The game winner team</param>
+            /// <return> None </return>
+            ///</summary>
+            
             this.ending_panel.Visible = true;
             foreach (Control c in this.ending_panel.Controls)
             {
@@ -525,7 +625,12 @@ namespace Hokm
 
         public void GameOver(string gWinner = null)
         {
-            // Manages the logics and visuals when at the end of the game
+            ///<summary>
+            /// Manages the logics and visuals when at the end of the game
+            /// <param name="gWinner">The game winner</param>
+            /// <return> None </return>
+            ///</summary>
+            
             if (gWinner == null)
             {
                 string[] t = this.score_text.Text.Split("\n");
