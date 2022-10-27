@@ -43,6 +43,7 @@ namespace Hokm
             /// <param name="msg">the msg from the server</param>
             /// <return> None </return>
             ///</summary>
+            ///
 
             // Card deck
             if (Char.IsUpper(msg[0]))
@@ -211,6 +212,7 @@ namespace Hokm
             /// <param name="played"> information about cards played before out turn </param>
             /// <return> None </return>
             ///</summary>
+            ///
 
             // If we have only one card in the deck, send it
             if (deck.Count == 1)
@@ -950,6 +952,7 @@ namespace Hokm
             /// <param name="suit"> a specified suit </param>
             /// <return> true if card with suit exists (as bool) </return>
             ///</summary>
+            ///
 
             foreach (string card in deck)
             {
@@ -968,6 +971,7 @@ namespace Hokm
             /// <param name="rank"> a specified rank </param>
             ///</summary>
             ///
+
             foreach (string card in deck)
             {
                 if (card.Split("*")[0] == suit && rank == card.Split("*")[1])
@@ -984,6 +988,7 @@ namespace Hokm
             /// <param name="index"> the index from the deck list </param>
             /// <return> None </return>
             ///</summary>
+            ///
 
             // Random r = new Random();
             string msg_to_send = "play_card:" + deck[index];
@@ -1024,6 +1029,7 @@ namespace Hokm
             /// Function sends strong suit to server if chosen as ruler
             /// <return> None </return>
             ///</summary> 
+            ///
 
             strongSuits = new string[4] { "SPADES", "CLUBS", "DIAMONDS", "HEARTS" };
             List<string> startingDeckSuits = new List<string>();

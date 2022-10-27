@@ -6,10 +6,17 @@ namespace Hokm
 {
     class DataAnalyzer
     {
+        /// <summary>
+        /// DataAnalyzer class parses the data that it receives from Client class for the UI
+        /// </summary>
+        /// 
+
+        // Initializing variabels
         private string startData;
         private string clientID;
         private string rulerID;
         private string[] players;
+
         public DataAnalyzer(string clientID,string rulerID, string startData)
         {
             ///<summary>
@@ -34,21 +41,44 @@ namespace Hokm
             /// Initializing the class in case of the data is not available yet
             /// <return> None </return>
             ///</summary>
+            ///
+
             this.players = new string[3];
         }
 
 
         public void SetClientID(string clientID)
         {
+            ///<summary>
+            /// Setter for clientID
+            /// <param name="clientID">The client ID/param>
+            /// <return> None </return>
+            ///</summary>
+            ///
+
             this.clientID = clientID;
         }
         public void SetRulerID(string rulerID)
         {
+            ///<summary>
+            /// Setter for ruler id
+            /// <param name="rulerID">The ruler ID/param>
+            /// <return> None </return>
+            ///</summary>
+            ///
+
             this.rulerID = rulerID;
         }
 
         public void SetStartData(string startData)
         {
+            ///<summary>
+            /// The function sets the starting data for the game
+            /// <param name="startData">The starting data for the game/param>
+            /// <return> None </return>
+            ///</summary>
+            ///
+
             this.startData = startData;
             SetRealOtherID();
         }
@@ -56,10 +86,11 @@ namespace Hokm
         public string ClearString(string data)
         {
             ///<summary>
-            /// Cleaning the data from any unnecessary characters
+            /// The function is cleaning the data from any unnecessary characters
             /// <param name="data">The data/param>
             /// <return> Cleared String </return>
             ///</summary>
+            ///
 
             List<string> charsToRemove = new List<string>() { "[", "]", " "};
             foreach (var c in charsToRemove)
@@ -71,21 +102,34 @@ namespace Hokm
 
         public string GetClientID()
         {
+            ///<summary>
+            /// Getter for client id
+            /// <return>int of the client id </return>
+            ///</summary>
+            ///
+
             return this.clientID;
         }
 
         public string GetRuler()
         {
+            ///<summary>
+            /// Getter for ruler id
+            /// <return>int of the ruler id </return>
+            ///</summary>
+            ///
+
             return this.rulerID;
         }
 
         public string GetStrong()
         {
             ///<summary>
-            /// Returns the strong character
+            /// The function returns the strong character
             /// <return> Hokm sign </return>
             ///</summary>
-            
+            ///
+
             List<string> list = new List<string>() { "♠", "♣", "♦", "♥️" };
             int from = this.startData.IndexOf("strong:") + "strong:".Length;
             string strng = ClearString(this.startData.Substring(from));
@@ -107,9 +151,10 @@ namespace Hokm
         public string[] GetTeams()
         {
             ///<summary>
-            /// Returns the teams
+            /// The function returns the teams
             /// <return> Array of the two teams </return>
             ///</summary>
+            ///
 
             int pFrom = this.startData.IndexOf(",teams:") + ",teams:".Length;
             int pTo = this.startData.LastIndexOf(",strong");
@@ -126,13 +171,15 @@ namespace Hokm
             The 'Real' ID means the id of the player on screen.
             The 'Fake' ID means the id that the server recognizes the player as
         */
+
         public void SetRealOtherID()
         {
             ///<summary>
-            /// Sets the 'real' ID of the players
+            /// The function sets the 'real' ID of the players
             /// <return> None </return>
             ///</summary>
-            
+            ///
+
             string[] teams = GetTeams();
             if (teams[0].Contains(GetClientID()))
             {
@@ -155,10 +202,11 @@ namespace Hokm
         public int GetRealPlayerID(string fakeID)
         {
             ///<summary>
-            /// Returns the 'real' ID of a player by a 'fake' ID
+            /// The function returns the 'real' ID of a player by a 'fake' ID
             /// <param name="fakeID">The 'fake' ID of the player</param>
             /// <return>int of the ID </return>
             ///</summary>
+            ///
 
             Console.WriteLine(this.players);
             for (int i = 0; i < this.players.Length; i++)
@@ -173,6 +221,13 @@ namespace Hokm
 
         public string GetFakeID(int realID)
         {
+            ///<summary>
+            /// Getter for fake id
+            /// <param name="realID">The 'real' ID of the player</param>
+            /// <return>int of the ID </return>
+            ///</summary>
+            ///
+
             return this.players[realID];
         }
 

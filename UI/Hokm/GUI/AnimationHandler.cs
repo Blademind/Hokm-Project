@@ -86,6 +86,7 @@ namespace Hokm.GUI
                             control.Top += directionY;
                         });
                     }
+
                     // In order to avoid awful visual bugs, the Control updates itself each 15 iterations
                     if (times % 15 == 0)
                     {

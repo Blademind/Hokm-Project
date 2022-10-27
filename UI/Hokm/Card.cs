@@ -9,6 +9,12 @@ namespace Hokm
 {
     public class Card
     {
+        /// <summary>
+        /// Card class represents that settings of a regular HOKM card
+        /// </summary>
+        /// 
+
+        // Initializing varibales
         public string shape { get; set; }
         public string value { get; set; }
         public int x, y;
@@ -65,11 +71,21 @@ namespace Hokm
 
         public Bitmap GetBMP()
         {
+            ///<summary>
+            /// Getter function for bitmap
+            /// <return> bitmap of card </return>
+            ///</summary> 
+            ///
             return this.bmp;
         }
 
         public override string ToString()
         {
+            ///<summary>
+            /// ToString class method (prints the variables)
+            /// <return> String of class variables</return>
+            ///</summary> 
+            ///
             return "shape: " + shape + ", value: " + value;
         }
 

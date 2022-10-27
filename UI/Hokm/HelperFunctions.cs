@@ -19,6 +19,8 @@ namespace Hokm
         /// <summary>
         /// Static class contains helper functions for client object
         /// </summary>
+        /// 
+
         public static Dictionary<string, int> MakeCounter(List<string> deck)
         {
             ///<summary>
@@ -26,6 +28,7 @@ namespace Hokm
             /// <param name="deck"> the current deck</param>
             /// <return> a counter dictioary of the current deck (as Dictionary<string, int>)</return>
             ///</summary>
+            ///
 
             List<string> d = new List<string>();
             foreach (string card in deck)
