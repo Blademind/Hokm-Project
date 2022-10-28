@@ -142,7 +142,7 @@ namespace Hokm
             int[] loc = { 310, 500 };
             foreach (Card c in cards)
             {
-                Console.WriteLine(c);
+                // Console.WriteLine(c);
                 CardInitializer(c, loc[0], loc[1]);
                 loc[0] += 115;
             }
@@ -446,7 +446,7 @@ namespace Hokm
                 }
             }
             this.playerDecks[player] = l;
-            Console.WriteLine(this.playerDecks[player]);
+            // Console.WriteLine(this.playerDecks[player]);
             return k;
         }
 
@@ -613,7 +613,6 @@ namespace Hokm
                 if (c.Name == "ending_winner")
                 {
                     c.Text = "Winner: " + winner;
-                    break;
                 }
             }
         }
@@ -648,9 +647,11 @@ namespace Hokm
                 }
             }
 
-            this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
-            this.Invoke(new Action<int>((int _) => { EndingScreen(gWinner); }), 0);
-            // exit button
+            //this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
+            //this.Invoke(new Action<int>((int _) => { EndingScreen(gWinner); }), 0);
+            //// exit button
+            Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int_ ) => { RemoveAllCards(); }), 0));
+            Task.Delay(2300).ContinueWith(t => this.Invoke(new Action<int>((int_ ) => { EndingScreen(gWinner); }), 0));
         }
 
         #endregion

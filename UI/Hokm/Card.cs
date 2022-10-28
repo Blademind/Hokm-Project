@@ -47,7 +47,7 @@ namespace Hokm
 
             if (!back)
             {
-                Console.WriteLine(this.value + "_of_" + this.shape);
+                // Console.WriteLine(this.value + "_of_" + this.shape);
                 this.bmp = (Bitmap)Resources.ResourceManager.GetObject(this.value + "_of_" + this.shape);
             }
             else

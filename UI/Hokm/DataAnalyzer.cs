@@ -208,7 +208,7 @@ namespace Hokm
             ///</summary>
             ///
 
-            Console.WriteLine(this.players);
+            // Console.WriteLine(this.players);
             for (int i = 0; i < this.players.Length; i++)
             {
                 if (this.players[i] == fakeID)

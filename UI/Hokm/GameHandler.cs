@@ -24,7 +24,17 @@ namespace Hokm
         /// Related to the Algorithm of the game
         /// </summary>
         /// 
-        
+
+        // --------------------------- Console.WriteLine Table ---------------------------
+        // deck.ForEach(x => Console.Write(x + ", ")); --> Prints the entire deck before sendingg card
+        // Console.WriteLine("010: " + deck[highestPossible]); --> Sending highest rank possible
+        // Console.WriteLine("011: " + deck[deck.FindIndex(a => a.Contains(card))]); --> Sending ace
+        // Console.WriteLine("1: " + deck[cardToSend]); --> Sending lowest possible card
+        // Console.WriteLine("4: " + deck[cardToSend]); --> Sending lowest non strong and non played card
+        // Console.WriteLine("2: " + deck[cardToSend]); --> Sending strong winning card
+        // Console.WriteLine("3: " + deck[cardToSend]); --> Sending winning played suit card
+        // Console.WriteLine("5: " + deck[cardToSend]); --> Sending lowest strong suit card
+
         // Initiating variables
         public string[] cardShapeSuit;
         public string strongSuit;
@@ -431,7 +441,7 @@ namespace Hokm
                                             {
 
                                                 last = putCards[0];
-                                                Console.WriteLine(putCards[0].Split("*")[1]);
+                                                // Console.WriteLine(putCards[0].Split("*")[1]);
                                                 
                                                 // If the first card is an ace
                                                 if (putCards[0].Split("*")[1] == "rank_A")
@@ -441,8 +451,8 @@ namespace Hokm
                                                         // Checking if the last put card is at least 2 ranks above the current card
                                                         if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                         {
-                                                            Console.WriteLine(last);
-                                                            Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+                                                            // Console.WriteLine(last);
+                                                            // Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
 
                                                             // Checking for 1 lower rank than the last put card that is at least 2 ranks
                                                             // above the current card in our deck
@@ -572,7 +582,7 @@ namespace Hokm
                                 cardToSend = FindSuit(suit, rank);
                             }
                             
-                            // Sending lowest possible card
+                            // Sending lowest possible
                             if (cardToSend != -1)
                             {
                                 flag = false;
@@ -704,7 +714,7 @@ namespace Hokm
                                                     {
 
                                                         last = putCards[0];
-                                                        Console.WriteLine(putCards[0].Split("*")[1]);
+                                                        // Console.WriteLine(putCards[0].Split("*")[1]);
 
                                                         // If the first card is an ace
                                                         if (putCards[0].Split("*")[1] == "rank_A")
@@ -714,8 +724,8 @@ namespace Hokm
                                                                 // Checking if the last put card is at least 2 ranks above the current card
                                                                 if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                                 {
-                                                                    Console.WriteLine(last);
-                                                                    Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+                                                                    // Console.WriteLine(last);
+                                                                    // Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
 
                                                                     // Checking for 1 lower rank than the last put card that is at least 2 ranks
                                                                     // above the current card in our deck
@@ -821,6 +831,12 @@ namespace Hokm
                                         rank = ranks[index];
                                         index += 1;
                                         cardToSend = FindSuit(suit, rank);
+                                    }
+                                    if (cardToSend != -1)
+                                    {
+                                        deck.ForEach(a => Console.Write(a + ", "));
+                                        Console.WriteLine();
+                                        Console.WriteLine("5: " + deck[cardToSend]);
                                     }
                                 }
                             }
