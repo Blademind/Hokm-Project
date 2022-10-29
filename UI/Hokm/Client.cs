@@ -91,7 +91,6 @@ namespace Hokm
             {
                 clientSock.Connect(this.serverIpPort);
                 Console.WriteLine("connected to server");
-                //Listen();
                 Thread th = new Thread(new ThreadStart(Listen));
                 th.Start();
             }
@@ -160,8 +159,9 @@ namespace Hokm
                 {
                     // If we are client id number 3 handling socket errors with the server
                     Console.WriteLine("Its our turn");
-                    if (clientId == 3 && runOnce)
+                    if (clientId == 3 && runOnce && ruler == 3)
                     {
+
                         // Cleaning buffer
                         this.buf = new byte[8];
                         this.rec = this.clientSock.Receive(this.buf);

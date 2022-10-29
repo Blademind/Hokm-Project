@@ -88,7 +88,7 @@ namespace Hokm
                     if (enableUI)
                         gameClient.PublicStartInitializer(msg, clientId.ToString(), ruler.ToString());
 
-                    if(msg.Split(",").Length != 3)
+                    if (msg.Split(",").Length != 3)
                     {
                         HandleValueError();
                     }
@@ -152,12 +152,14 @@ namespace Hokm
                 // Our client id
                 else if (splitMessage[0] == "client_id")
                 {
+                    // In tournament day we will need to send username
+
                     clientId = Int32.Parse(splitMessage[1]);
 
                     return "Your client ID is: " + clientId;
                 }
             }
-            
+
             // UI enabled
             if (enableUI)
             {
