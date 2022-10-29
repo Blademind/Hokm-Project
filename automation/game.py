@@ -42,7 +42,7 @@ class Game:
                 print(self.round_state.played_suit)
                 print(card)
                 print(*player.hand,sep=" , ")
-                print("card doesn't match round suit while player has matching card")
+                print("f")
                 return (False, False)
         
         self.round_state.played_cards.append(card)

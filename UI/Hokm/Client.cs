@@ -159,26 +159,26 @@ namespace Hokm
                 {
                     // If we are client id number 3 handling socket errors with the server
                     Console.WriteLine("Its our turn");
-                    if (clientId == 3 && runOnce && ruler == 3)
-                    {
+                    //if (clientId == 3 && runOnce && ruler == 3)
+                    //{
 
-                        // Cleaning buffer
-                        this.buf = new byte[8];
-                        this.rec = this.clientSock.Receive(this.buf);
-                        data = new byte[this.rec];
-                        Array.Copy(this.buf, data, this.rec);
+                    //    // Cleaning buffer
+                    //    this.buf = new byte[8];
+                    //    this.rec = this.clientSock.Receive(this.buf);
+                    //    data = new byte[this.rec];
+                    //    Array.Copy(this.buf, data, this.rec);
 
-                        // Requesting data again
-                        this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data)); // the message's size
-                        this.buf = new byte[this.msgSize];
-                        this.rec = this.clientSock.Receive(this.buf);
-                        data = new byte[this.rec];
-                        Array.Copy(this.buf, data, this.rec);
-                        new_msg = Encoding.ASCII.GetString(data);
+                    //    // Requesting data again
+                    //    this.msgSize = Int32.Parse(Encoding.ASCII.GetString(data)); // the message's size
+                    //    this.buf = new byte[this.msgSize];
+                    //    this.rec = this.clientSock.Receive(this.buf);
+                    //    data = new byte[this.rec];
+                    //    Array.Copy(this.buf, data, this.rec);
+                    //    new_msg = Encoding.ASCII.GetString(data);
 
-                        GameMessageParser(new_msg);
-                        runOnce = false;
-                    }
+                    //    GameMessageParser(new_msg);
+                    //    runOnce = false;
+                    //}
 
                     // Playing turn
                     PlayTurn(msg);

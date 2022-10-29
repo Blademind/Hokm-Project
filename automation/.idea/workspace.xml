@@ -4,14 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be67a216-a505-486b-9de2-5eb3dabed08c" name="Default Changelist" comment="" />
+    <list default="true" id="be67a216-a505-486b-9de2-5eb3dabed08c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/FileContentIndex/a206db7a-aa6a-43c3-83ea-987c2c192f11.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.metadata.v5.1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.projects.v5.1" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -25,7 +31,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/alonl/OneDrive/מסמכים/Hokm/automation"
   }
 }]]></component>
   <component name="RunManager" selected="Python.automation2">
@@ -219,8 +226,8 @@
       <list>
         <item itemvalue="Python.automation2" />
         <item itemvalue="Python.automation" />
-        <item itemvalue="Python.human_dumb_client" />
         <item itemvalue="Python.handler" />
+        <item itemvalue="Python.human_dumb_client" />
       </list>
     </recent_temporary>
   </component>

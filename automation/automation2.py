@@ -24,7 +24,7 @@ def run_command(cmd):
                             stdin=subprocess.PIPE)
     for line in iter(a.stdout.readline, ""):
         decoded_line = str(line)
-        # print(decoded_line)
+        print(decoded_line)
         if not line:
             break
         if ".and." in decoded_line:
@@ -33,7 +33,8 @@ def run_command(cmd):
         if "bad_play" in decoded_line:
             return None
         if "card doesn't match round suit while player has matching card" in decoded_line:
-            return None
+            print("BUG!")
+            return s_lines
         s_lines += decoded_line
 
     return s_lines

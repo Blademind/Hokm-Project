@@ -503,8 +503,8 @@ namespace Hokm
                                                 }
                                             }
 
-                                            // Checking if there is an ace in the played cards
-                                            if (FindSuit(card.Split("*")[0], "rank_A") != -1)
+                                            //// Checking if there is an ace in the played cards
+                                            if (FindSuit(card.Split("*")[0], "rank_A") != -1 && card.Split("*")[0] == playedSuit)
                                             {
                                                 cardToSend = deck.IndexOf(card.Split("*")[0] + "*" + "rank_A");
                                                 haveAce = true;

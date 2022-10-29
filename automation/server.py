@@ -74,6 +74,8 @@ class Server:
 
         self.__messages_to_send.append((client_sock, msg))
 
+        self.__send_messages(self.wlist)
+
     def send_to_server_gui(self, msg):
         """
         adding the message that need to be sent to the server gui to the message list
@@ -96,6 +98,8 @@ class Server:
                     print(f"game over(2) for {self.__client_ids[client_sock]}")
                 self.__messages_to_send.append((client_sock, msg))
 
+        self.__send_messages(self.wlist)
+
     def _handle_data(self, client_id, msg, msg_type="data"):
         """
         method to be overwritten by handler class
@@ -113,9 +117,9 @@ class Server:
         print("server started")
         self.run = True
         # main server loop
-        wlist = []
+        self.wlist = []
         while self.run:
-            rlist, wlist, _ = select(
+            rlist, self.wlist, _ = select(
                 self.__clients + [self.__server_socket], self.__clients, [])
 
             # handling readable sockets
@@ -161,24 +165,14 @@ class Server:
             # print("a")
             # while len(self.__messages_to_send) > 0:
             #     print("b")
-            self.__send_messages(wlist)
+            self.__send_messages(self.wlist)
 
         # for clients to recv last messages
         while len(self.__messages_to_send) > 0:
-            self.__send_messages(wlist)
+            self.__send_messages(self.wlist)
         time.sleep(5)
 
         self.close()
-
-    def emergency_send_to_all_clients(self):
-        data = "SERVER_DISCONNECTED"
-
-        for client in self.__clients:
-            try:
-                client.send(str(len(data.encode())).zfill(8).encode() + data.encode())
-            except:
-                pass
-        time.sleep(1)
 
     def __send_messages(self, wlist):
         """
@@ -186,6 +180,8 @@ class Server:
         :param wlist: list[socket] - list of sockets that can be send to
         :return: None
         """
+        to_delete = []
+
         # print("wlist is:", ",".join([f"{self.__client_ids[so]}" for so in wlist]))
         for message in self.__messages_to_send:
             client, data = message
@@ -194,7 +190,8 @@ class Server:
             #     print(f"game over msg for {self.__client_ids[client]}")
 
             if client not in self.__clients:
-                self.__messages_to_send.remove(message)
+                # self.__messages_to_send.remove(message)
+                to_delete.append(message)
                 continue
             if client in wlist:
                 try:
@@ -205,7 +202,11 @@ class Server:
                     print("error")
                     # pass
 
-                self.__messages_to_send.remove(message)
+                # self.__messages_to_send.remove(message)
+                to_delete.append(message)
+
+        for msg in to_delete:
+            self.__messages_to_send.remove(msg)
 
     def __recv_from_socket(self, sock):
         """
