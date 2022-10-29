@@ -430,46 +430,43 @@ namespace Hokm
                                     {
                                         if (card.Split("*")[1] != "rank_A")
                                         {
-                                            // If my teammate has put an ace, sending the lowest card in the played suit
-                                            if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId && card.Split("*")[1] == "rank_A")
-                                            {
-                                                friendWins = true;
-                                                flag = false;
-                                                break;
-                                            }
 
                                             // If during the game at least 2 cards had been put in the played suit
                                             if (putCards.Count > 1)
                                             {
+                                                // If my teammate has put an ace, sending the lowest card in the played suit
+                                                if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
+                                                {
+                                                    friendWins = true;
+                                                    flag = false;
+                                                    break;
+                                                }
 
                                                 last = putCards[0];
                                                 // Console.WriteLine(putCards[0].Split("*")[1]);
-                                                
-                                                // If the first card is an ace
-                                                if (putCards[0].Split("*")[1] == "rank_A")
-                                                {
-                                                    foreach (string item in putCards.ToArray())
-                                                    {
-                                                        // Checking if the last put card is at least 2 ranks above the current card
-                                                        if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
-                                                        {
-                                                            // Console.WriteLine(last);
-                                                            // Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
 
-                                                            // Checking for 1 lower rank than the last put card that is at least 2 ranks
-                                                            // above the current card in our deck
-                                                            if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
-                                                            {
-                                                                cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
-                                                                winningCardExists = true;
-                                                            }
-                                                            break;
+                                                foreach (string item in putCards.ToArray())
+                                                {
+                                                    // Checking if the last put card is at least 2 ranks above the current card
+                                                    if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
+                                                    {
+                                                        // Console.WriteLine(last);
+                                                        // Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+
+                                                        // Checking for 1 lower rank than the last put card that is at least 2 ranks
+                                                        // above the current card in our deck
+                                                        if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
+                                                        {
+                                                            cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
+                                                            winningCardExists = true;
                                                         }
-                                                        last = item;
+                                                        break;
                                                     }
+                                                    last = item;
                                                 }
+
                                             }
-                                            
+
                                             // If found a winning card
                                             if (winningCardExists)
                                             {
@@ -509,7 +506,7 @@ namespace Hokm
                                             // Checking if there is an ace in the played cards
                                             if (FindSuit(card.Split("*")[0], "rank_A") != -1)
                                             {
-                                                cardToSend = deck.IndexOf(card.Split("*")[0]+"*"+"rank_A");
+                                                cardToSend = deck.IndexOf(card.Split("*")[0] + "*" + "rank_A");
                                                 haveAce = true;
                                                 break;
                                             }
@@ -545,7 +542,7 @@ namespace Hokm
                                 {
                                     break;
                                 }
-                                
+
                                 // If found a winning card
                                 if (flag)
                                 {
@@ -565,7 +562,6 @@ namespace Hokm
                     // If a card wasn't found
                     if (cardToSend == -1 || !flag)
                     {
-
                         bool temp_flag = true;
                         suit = playedSuit;
                         availableSuits.Remove(suit);
@@ -583,7 +579,7 @@ namespace Hokm
                                 index += 1;
                                 cardToSend = FindSuit(suit, rank);
                             }
-                            
+
                             // Sending lowest possible
                             if (cardToSend != -1)
                             {
@@ -703,43 +699,39 @@ namespace Hokm
                                             {
                                                 if (card.Split("*")[1] != "rank_A")
                                                 {
-                                                    // If our teammate wins the round
-                                                    if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId && card.Split("*")[1] == "rank_A")
-                                                    {
-                                                        friendWins = true;
-                                                        flag = false;
-                                                        break;
-                                                    }
 
                                                     // If during the game at least 2 cards had been put in the played suit
                                                     if (putCards.Count > 1)
                                                     {
+                                                        // If our teammate wins the round
+                                                        if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
+                                                        {
+                                                            friendWins = true;
+                                                            flag = false;
+                                                            break;
+                                                        }
 
                                                         last = putCards[0];
                                                         // Console.WriteLine(putCards[0].Split("*")[1]);
 
-                                                        // If the first card is an ace
-                                                        if (putCards[0].Split("*")[1] == "rank_A")
+                                                        foreach (string item in putCards.ToArray())
                                                         {
-                                                            foreach (string item in putCards.ToArray())
+                                                            // Checking if the last put card is at least 2 ranks above the current card
+                                                            if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
                                                             {
-                                                                // Checking if the last put card is at least 2 ranks above the current card
-                                                                if (Array.IndexOf(ranks, last.Split("*")[1]) - Array.IndexOf(ranks, item.Split("*")[1]) > 1)
-                                                                {
-                                                                    // Console.WriteLine(last);
-                                                                    // Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
+                                                                // Console.WriteLine(last);
+                                                                // Console.WriteLine("deck1: " + deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]));
 
-                                                                    // Checking for 1 lower rank than the last put card that is at least 2 ranks
-                                                                    // above the current card in our deck
-                                                                    if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
-                                                                    {
-                                                                        cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
-                                                                        winningCardExists = true;
-                                                                    }
-                                                                    break;
+                                                                // Checking for 1 lower rank than the last put card that is at least 2 ranks
+                                                                // above the current card in our deck
+                                                                if (deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]) != -1)
+                                                                {
+                                                                    cardToSend = deck.IndexOf(playedSuit + "*" + ranks[Array.IndexOf(ranks, last.Split("*")[1]) - 1]);
+                                                                    winningCardExists = true;
                                                                 }
-                                                                last = item;
+                                                                break;
                                                             }
+                                                            last = item;
                                                         }
                                                     }
 
@@ -846,18 +838,6 @@ namespace Hokm
                             // If card not found, send a non playing card and non strong card
                             if (cardToSend == -1)
                             {
-                                //if (deck[0].Split("*")[0] == availableSuits[0])
-                                //{
-                                //    suit = availableSuits[0];
-                                //    availableSuits.Remove(suit);
-
-                                //}
-                                //else
-                                //{
-                                //    suit = availableSuits[1];
-                                //    availableSuits.Remove(suit);
-                                //}
-
                                 index = 0;
                                 rank = ranks[index];
                                 cardToSend = CardByRank(rank);
@@ -871,38 +851,6 @@ namespace Hokm
                                 Console.WriteLine();
                                 Console.WriteLine("4: " + deck[cardToSend]);
                                 SendCard(cardToSend);
-                                //// If card not found, send the lowest non playing and non strong card
-                                //if (cardToSend == -1)
-                                //{
-                                //    suit = availableSuits[0];
-                                //    Console.WriteLine("Last available suit: " + suit);
-                                //    index = 0;
-                                //    rank = ranks[index];
-                                //    cardToSend = FindSuit(suit, rank);
-
-                                //    while (cardToSend == -1 && index <= 12)
-                                //    {
-                                //        rank = ranks[index];
-                                //        index += 1;
-                                //        cardToSend = FindSuit(suit, rank);
-                                //    }
-
-                                //    deck.ForEach(a => Console.Write(a + ", "));
-                                //    Console.WriteLine();
-
-                                //    Console.WriteLine("4: " + deck[cardToSend]);
-                                //    SendCard(cardToSend);
-
-                                //}
-
-                                //// TODO
-                                //else
-                                //{
-                                //    deck.ForEach(x => Console.Write(x + ", "));
-                                //    Console.WriteLine();
-                                //    Console.WriteLine("5: " + deck[cardToSend]);
-                                //    SendCard(cardToSend);
-                                //}
                             }
 
                             // If we found winning strong card

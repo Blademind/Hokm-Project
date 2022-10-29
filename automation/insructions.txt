@@ -1,0 +1,93 @@
+Socket info:
+    the server is working on port 55555 and any ip that the computer has (localhost included)
+
+    Send format:
+        when sending a message to the server you need to send the length of the message in the first 8 bytes
+        example:
+            the message "hello world", and the length of the message is 11.
+            format: "00000011hello world"
+            the length is 11 and it was padded to fit 8 bytes and after that is the message
+    
+    Recv format:
+        when receiving a message you do the opposite, recv the first 8 bytes and then recv the message by the length you got.
+        example:
+            length = socket.recv(8)  # length will be b"00000011"
+            length = int(length)  # length will be 11
+
+            msg = socket.recv(length)  # msg will be b"hello world"
+            msg = msg.decode()  # msg will be "hello world"
+
+
+general game flow:
+    1) connect to server and receive client id
+    2) send player username to server
+    3) wait for all players to join
+    4) server sends to all players who the ruler is and the first 5 cards
+    5) the ruler sends the strong suit to the server, and the server respond to the ruler "ok" if the suit is fine and "bad" otherwise
+    6) server sends all 13 cards to all players and sends the strong suit to all players and the teams as well
+    *game starts*
+    7) server sends the status of the round to the player that their turn is happening
+    8) The player whose turn occurs sends to the server the card he wants to play
+    9) server response to the player "ok" if card is fine or "bad_card" if the card is not well formatted or "bad_play" if the card is against the rules
+    10) once the round ends the server sends to all players which team won the round and the score of each team and the cards that were played in the round
+    11) repeat from (6). if a team reached 7 points the server will send "GAME_OVER" and shut down
+
+Notes:
+    1) if a player disconnect the server will send "PLAYER_DISCONNECTED" and shut down because the game can't continue
+
+    2) if (6) gets wrong data then do the following:
+        1) receive from client socket to clear the buffer
+        2) send to the server "request_start_info"
+        3) receive like (6) the data
+        4) send to the server "request_turn" so the turn would start again
+
+        * there is an example in the dumb_client_new.py in the start_game function using the handle_value_error function
+
+    3) if the server crashes the server will send "SERVER_DISCONNECTED" and will shut down and follow this instructions:
+        1) close client socket
+        2) block code with readline or with input until the server is open
+        3) reconnect to the server, recv id and send username by unblocking the code - reconnect in the same order as the start of the game
+        
+        * if the server crash when receiving round status or card response then replay the turn - when until round status and play normally
+          if the server crash when receiving scores and round winner then wait for new round winner
+
+        ** there is an example in the dumb_client_new.py in the game_loop function in the conditions that equalls "SERVER_DISCONNECTED"
+
+Formatting of game flow:
+    1) client id in format: "client_id:[id in number from 1-4]"
+    2) username format msg: "username:[game-username-by-admin]" //write the code but keep it commented - wont be active until tournament day
+    4) sends in 2 messages (in order):
+        1)the ruler: "ruler:[client_id]"
+        2)the first 5 cards: "card|card|card|card|card"
+    5) two stages:
+        1) strong suit: "set_strong:[SUIT]"
+        2) server response: "ok" or "bad"
+    6) 13 cards, teams and strong: "card|card|card|card|card|card|card|card|card|card|card|card|card,teams:[team1]|[team2],strong:[SUIT]"
+    7) status: "played_suit:[SUIT - empty string if first],played_cards:[card_id1|card_id2|card_id3|card_id4 - empty if didn't play]"
+    8) play card: "play_card:[card]"
+    9) server response: "ok" or "bad_card" or "bad_play"
+    10) round end: "round_winner:[team],scores:[team]*[points]|[team]*[points],round_cards:[card_id1|card_id2|card_id3|card_id4]"
+    11) game over: "GAME_OVER"
+
+Formatting:
+    card format: "suit*rank"
+    team format: "[client_id]+[client_id]"
+    SUITS:
+        "SPADES"
+        "CLUBS"
+        "DIAMONDS"
+        "HEARTS"
+    RANKS:
+        "rank_2"
+        "rank_3"
+        "rank_4"
+        "rank_5"
+        "rank_6"
+        "rank_7"
+        "rank_8"
+        "rank_9"
+        "rank_10"
+        "rank_J"
+        "rank_Q"
+        "rank_K"
+        "rank_A"
