@@ -25,7 +25,7 @@ namespace Hokm
         private Card[] pDeck1 = new Card[13];
         private Card[] pDeck2 = new Card[13];
         private Card[][] playerDecks = new Card[3][];
-        private PictureBox[] activeCards = new PictureBox[5];
+        private PictureBox[] activeCards = new PictureBox[54];
 
         private DataAnalyzer dA = new DataAnalyzer();
         private AnimationHandler aH;
@@ -34,6 +34,8 @@ namespace Hokm
         private int roundN = 0;
         private bool firstTime = true;
         private string[] teams;
+        private bool initiated = false;
+        private string[] inta = new string[3];
         #endregion
 
         #region General
@@ -291,73 +293,84 @@ namespace Hokm
             /// <return> None </return>
             ///</summary>
 
-            this.aH = new AnimationHandler(this);
+            if (!this.initiated)
+            {
+                this.initiated = true;
+                this.aH = new AnimationHandler(this);
 
-            this.playerDecks[0] = this.pDeck0;
-            this.playerDecks[1] = this.pDeck1;
-            this.playerDecks[2] = this.pDeck2;
+                this.playerDecks[0] = this.pDeck0;
+                this.playerDecks[1] = this.pDeck1;
+                this.playerDecks[2] = this.pDeck2;
 
-            dA.SetClientID(clientID);
-            dA.SetRulerID(rulerID);
-            dA.SetStartData(startData);
+                dA.SetClientID(clientID);
+                dA.SetRulerID(rulerID);
+                dA.SetStartData(startData);
 
-            // Set hokm+hakem
-            info_text.ForeColor = SystemColors.ControlText;
-            info_text.Text = "Hokm: " + dA.GetStrong() + "\n" + "Hakem: " + dA.GetRuler();
+                // Set hokm+hakem
+                info_text.ForeColor = SystemColors.ControlText;
+                info_text.Text = "Hokm: " + dA.GetStrong() + "\n" + "Hakem: " + dA.GetRuler();
 
-            // Set IDs on screen
-            this.p_id_0.Text = dA.GetClientID() + " - You";
-            this.p_id_1.Text = dA.GetFakeID(1);
-            this.p_id_2.Text = dA.GetFakeID(0);
-            this.p_id_3.Text = dA.GetFakeID(2);
+                // Set IDs on screen
+                this.p_id_0.Text = dA.GetClientID() + " - You";
+                this.p_id_1.Text = dA.GetFakeID(1);
+                this.p_id_2.Text = dA.GetFakeID(0);
+                this.p_id_3.Text = dA.GetFakeID(2);
 
-            //Set ruler color
-            if (dA.GetRuler() == dA.GetClientID())
-                this.p_id_0.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            else if (dA.GetRuler() == dA.GetFakeID(1))
-                this.p_id_1.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            else if (dA.GetRuler() == dA.GetFakeID(0))
-                this.p_id_2.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            else
-                this.p_id_3.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+                //Set ruler color
+                if (dA.GetRuler() == dA.GetClientID())
+                    this.p_id_0.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+                else if (dA.GetRuler() == dA.GetFakeID(1))
+                    this.p_id_1.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+                else if (dA.GetRuler() == dA.GetFakeID(0))
+                    this.p_id_2.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+                else
+                    this.p_id_3.ForeColor = Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 
-            // Set teams
-            this.teams = dA.GetTeams();
-            score_text.ForeColor = SystemColors.ControlText;
-            score_text.Text = teams[0] + ": 0" + "\n" + teams[1] + ": 0";
-            scores.Add(teams[0], 0);
-            scores.Add(teams[1], 0);
+                // Set teams
+                this.teams = dA.GetTeams();
+                score_text.ForeColor = SystemColors.ControlText;
+                score_text.Text = teams[0] + ": 0" + "\n" + teams[1] + ": 0";
+                scores.Add(teams[0], 0);
+                scores.Add(teams[1], 0);
 
-            //Set decks
-            SetStartingDeck(dA.ClearString(startData));
-            SetOthersStartingDeck();
+                //Set decks
+                SetStartingDeck(dA.ClearString(startData));
+                SetOthersStartingDeck();
 
-            //Visuals
-            StartingDeckVisuals();
+                //Visuals
+                StartingDeckVisuals();
 
-            //Others
-            OthersStartingDeckVisuals(1);
-            OthersStartingDeckVisuals(2);
-            OthersStartingDeckVisuals(0);
-            this.firstTime = false;
+                //Others
+                OthersStartingDeckVisuals(1);
+                OthersStartingDeckVisuals(2);
+                OthersStartingDeckVisuals(0);
+                this.firstTime = false;
 
-            ShowPanels(this.ending_panel, false);
-            ShowPanels(this.winning_panel, false);
-            
-            // Avoid screen stuttering
-            this.SetStyle(
-                    ControlStyles.AllPaintingInWmPaint |
-                    ControlStyles.UserPaint |
-                    ControlStyles.DoubleBuffer,
-                    true);
-            this.UpdateStyles();
+                ShowPanels(this.ending_panel, false);
+                ShowPanels(this.winning_panel, false);
+
+                // Avoid screen stuttering
+                this.SetStyle(
+                        ControlStyles.AllPaintingInWmPaint |
+                        ControlStyles.UserPaint |
+                        ControlStyles.DoubleBuffer,
+                        true);
+                this.UpdateStyles();
+            }
         }
 
         public void PublicStartInitializer(string startData, string clientID, string rulerID)
         {
             // Avoid threading issues
-            this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
-            this.Invoke(new Action<int>((int _) => { StartInitializer(startData, clientID, rulerID); }), 0);
+            inta[0] = startData;
+            inta[1] = clientID;
+            inta[2] = rulerID;
+
+            Task.Delay(2000).ContinueWith(t => this.Invoke(new Action<int>((int _) => {
+                this.Invoke(new Action<int>((int _) => { RemoveAllCards(false); }), 0);
+                this.Invoke(new Action<int>((int _) => { StartInitializer(startData, clientID, rulerID); }), 0);
+            }), 0));
+
         }
 
         #endregion
@@ -403,14 +416,14 @@ namespace Hokm
 
 
             int[] cords = { 530, 470 };
-
+            this.Controls[p.ToString()].Name += "#";
             // move to known location
             if (this.animations)
-                this.Invoke(new Action<int>((int _) => { aH.AnimateCard(cords, (PictureBox)this.Controls[p.ToString()]); }), 0);
+                this.Invoke(new Action<int>((int _) => { aH.AnimateCard(cords, (PictureBox)this.Controls[p.ToString()+"#"]); }), 0);
             else
-                this.Controls[p.ToString()].Location = new Point(530, 470);
+                this.Controls[p.ToString() + "#"].Location = new Point(530, 470);
 
-            this.activeCards[0] = (PictureBox)this.Controls[p.ToString()];
+            this.activeCards[0] = (PictureBox)this.Controls[p.ToString() + "#"];
         }
 
         public void PlayCard(string played)
@@ -420,6 +433,12 @@ namespace Hokm
             /// <param name="played">The played card</param>
             /// <return> None </return>
             ///</summary>
+
+            if (!this.initiated)
+            {
+                this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
+                this.Invoke(new Action<int>((int _) => { StartInitializer(inta[0], inta[1], inta[2]); }), 0);
+            }
 
             this.Invoke(new Action<int>((int _) => { UpdateMyDeck(played); }), 0);
             this.Invoke(new Action<int>((int _) => { MyCardToMiddle(played); }), 0);
@@ -472,6 +491,7 @@ namespace Hokm
                 d++;
                 k = d;
             }
+            p.Name += "#";
 
             if (this.animations)
             {
@@ -512,6 +532,12 @@ namespace Hokm
 
         public void PlayOtherCard(string played, int player)
         {
+            if (!this.initiated)
+            {
+                this.Invoke(new Action<int>((int _) => { RemoveAllCards(); }), 0);
+                this.Invoke(new Action<int>((int _) => { StartInitializer(inta[0], inta[1], inta[2]); }), 0);
+            }
+
             // Manages the logics and visuals when others play a card
             player = dA.GetRealPlayerID(player.ToString());
             int k = UpdateOthersDeck(played, player);
@@ -535,7 +561,10 @@ namespace Hokm
                     if (p.Location == new Point(403, 350) ||
                         p.Location == new Point(530, 230) ||
                         p.Location == new Point(660, 350) ||
-                        p.Location == new Point(530, 470))
+                        p.Location == new Point(530, 470) ||
+                        p.Name[p.Name.Length - 1] == '#'
+
+                        )
                     {
                         this.Controls.Remove(p);
                     }
@@ -584,17 +613,20 @@ namespace Hokm
 
         #region Game Over
 
-        private void RemoveAllCards()
+        private void RemoveAllCards(bool end=true)
         {
             ///<summary>
             /// Removes every card onscreen
             /// <return> None </return>
             ///</summary>
-            
-            foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
+
+            if (!this.initiated || end)
             {
-                this.Controls.Remove(p);
-                p.Dispose();
+                foreach (PictureBox p in this.Controls.OfType<PictureBox>().ToList())
+                {
+                    this.Controls.Remove(p);
+                    p.Dispose();
+                }
             }
         }
 
