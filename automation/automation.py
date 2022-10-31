@@ -45,7 +45,6 @@ def start_our_main_client():
     process = run_command(
         exe)
     for line in process.stdout:
-        # print(line)
         if "raw_message: round_winner" in line:
             a = line.split(",")[1].split(":")[1].split("|")[0]
             b = line.split(",")[1].split(":")[1].split("|")[1]

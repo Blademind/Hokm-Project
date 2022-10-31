@@ -311,7 +311,7 @@ namespace Hokm
                     }
 
                     // Intiating scanning variable
-                    bool flag = false;
+                    bool winnable = false;
                     suit = playedSuit;
                     index = 12;
                     int size;
@@ -336,7 +336,7 @@ namespace Hokm
                     {
                         List<string> putCards = FindWinningCards(suit);
                         string last;
-                        flag = true;
+                        winnable = true;
                         bool friendWins = false;
                         bool strongExists = false;
                         bool winningCardExists = false;
@@ -361,14 +361,14 @@ namespace Hokm
                                         if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
                                         {
                                             friendWins = true;
-                                            flag = false;
+                                            winnable = false;
                                             break;
                                         }
 
                                         // If one of the played cards is higher than all of the cards in our deck
                                         if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
                                         {
-                                            flag = false;
+                                            winnable = false;
                                             break;
                                         }
 
@@ -378,15 +378,15 @@ namespace Hokm
                                             if (!IsExists(strongSuit))
                                             {
                                                 strongExists = true;
-                                                flag = false;
+                                                winnable = false;
                                                 break;
                                             }
                                         }
                                     }
                                 }
 
-                                // If flag is true, sending candidate winning card
-                                if (flag)
+                                // If winnable is true, sending candidate winning card
+                                if (winnable)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
                                     break;
@@ -438,7 +438,7 @@ namespace Hokm
                                                 if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
                                                 {
                                                     friendWins = true;
-                                                    flag = false;
+                                                    winnable = false;
                                                     break;
                                                 }
 
@@ -498,7 +498,7 @@ namespace Hokm
                                                 if (!IsExists(strongSuit))
                                                 {
                                                     strongExists = true;
-                                                    flag = false;
+                                                    winnable = false;
                                                     break;
                                                 }
                                             }
@@ -512,9 +512,9 @@ namespace Hokm
                                             }
 
                                             // Checking if one of the played cards is 3 ranks above our candidate card
-                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
+                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
                                             {
-                                                flag = false;
+                                                winnable = false;
                                                 break;
                                             }
                                         }
@@ -523,7 +523,7 @@ namespace Hokm
                                         else
                                         {
                                             aceFound = true;
-                                            flag = false;
+                                            winnable = false;
                                             break;
                                         }
                                     }
@@ -544,7 +544,7 @@ namespace Hokm
                                 }
 
                                 // If found a winning card
-                                if (flag)
+                                if (winnable)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
                                     break;
@@ -560,16 +560,16 @@ namespace Hokm
                     }
 
                     // If a card wasn't found
-                    if (cardToSend == -1 || !flag)
+                    if (cardToSend == -1 || !winnable)
                     {
                         bool temp_flag = true;
                         suit = playedSuit;
                         availableSuits.Remove(suit);
 
                         // If winning card was not found and playedSuit exists in deck, send lowest possible card
-                        if (!flag || IsExists(playedSuit))
+                        if (!winnable || IsExists(playedSuit))
                         {
-                            flag = true;
+                            winnable = true;
                             index = 0;
                             rank = ranks[index];
                             cardToSend = FindSuit(suit, rank);
@@ -583,7 +583,7 @@ namespace Hokm
                             // Sending lowest possible
                             if (cardToSend != -1)
                             {
-                                flag = false;
+                                winnable = false;
                                 temp_flag = false;
                                 deck.ForEach(x => Console.Write(x + ", "));
                                 Console.WriteLine();
@@ -593,9 +593,9 @@ namespace Hokm
                         }
 
                         // If card wasn't found, switching to strong suit
-                        if (flag || cardToSend == -1 && temp_flag)
+                        if (winnable || cardToSend == -1 && temp_flag)
                         {
-                            flag = false;
+                            winnable = false;
                             suit = strongSuit;
                             availableSuits.Remove(suit);
                             index = 12;
@@ -621,7 +621,7 @@ namespace Hokm
                             {
                                 List<string> putCards = FindWinningCards(suit);
                                 string last;
-                                flag = true;
+                                winnable = true;
                                 bool friendWins = false;
                                 bool winningCardExists = false;
                                 bool aceFound = false;
@@ -644,21 +644,21 @@ namespace Hokm
                                                 if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
                                                 {
                                                     friendWins = true;
-                                                    flag = false;
+                                                    winnable = false;
                                                     break;
                                                 }
 
                                                 // If one of the played cards is higher than all of the cards in our deck
                                                 if (Array.IndexOf(ranks, card.Split("*")[1]) > size && playedSuit == candidate.Split("*")[0])
                                                 {
-                                                    flag = false;
+                                                    winnable = false;
                                                     break;
                                                 }
                                             }
                                         }
 
-                                        // If flag is true, sending candidate winning card
-                                        if (flag)
+                                        // If winnable is true, sending candidate winning card
+                                        if (winnable)
                                         {
                                             cardToSend = deck.IndexOf(candidate);
                                             break;
@@ -707,7 +707,7 @@ namespace Hokm
                                                         if (Wins(Array.IndexOf(playedCards, card), playedCards) && Array.IndexOf(playedCards, card) == friendId)
                                                         {
                                                             friendWins = true;
-                                                            flag = false;
+                                                            winnable = false;
                                                             break;
                                                         }
 
@@ -769,9 +769,9 @@ namespace Hokm
                                                     }
 
                                                     // Checking if one of the played cards is 3 ranks above our candidate card
-                                                    if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
+                                                    if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
                                                     {
-                                                        flag = false;
+                                                        winnable = false;
                                                         break;
                                                     }
                                                 }
@@ -780,7 +780,7 @@ namespace Hokm
                                                 else
                                                 {
                                                     aceFound = true;
-                                                    flag = false;
+                                                    winnable = false;
                                                     break;
                                                 }
                                             }
@@ -800,7 +800,7 @@ namespace Hokm
                                         }
 
                                         // If found a winning card
-                                        if (flag)
+                                        if (winnable)
                                         {
                                             cardToSend = deck.IndexOf(candidate);
                                             break;
@@ -865,7 +865,7 @@ namespace Hokm
                     }
 
                     // If currently winning card was found, send it
-                    else if (flag)
+                    else if (winnable)
                     {
                         deck.ForEach(x => Console.Write(x + ", "));
                         Console.WriteLine();

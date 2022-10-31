@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be67a216-a505-486b-9de2-5eb3dabed08c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/FileContentIndex/a206db7a-aa6a-43c3-83ea-987c2c192f11.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.futdcache.v2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/Hokm/v17/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.metadata.v5.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/../UI/Hokm/.vs/ProjectEvaluation/hokm.projects.v5.1" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,13 +24,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/alonl/OneDrive/מסמכים/Hokm/automation"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alonl/OneDrive/מסמכים/Hokm/automation&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.automation2">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="git-project-HOKM-main" />

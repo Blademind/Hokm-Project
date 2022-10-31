@@ -24,7 +24,7 @@ def run_command(cmd):
                             stdin=subprocess.PIPE)
     for line in iter(a.stdout.readline, ""):
         decoded_line = str(line)
-        print(decoded_line)
+        # print(decoded_line)
         if not line:
             break
         if ".and." in decoded_line:
@@ -43,7 +43,6 @@ def run_command(cmd):
 def run(a):
     global wins, failures
     if a:
-        #print(a)
         a = a.replace("'b'", "")
         won_or_failed = a.split("\\r\\n")[-2].split(".and.")
         if int(won_or_failed[0]) == 0 and int(won_or_failed[1]) == 0:
@@ -62,5 +61,7 @@ n = 200
 for i in range(n):
     a = run_command("python automation.py")
     run(a)
+    print(str(wins * 100 / (wins + failures)) + "%", "won")  # percentage
 
+print("-----FINAL RESULTS-----")
 print(str(wins * 100 / (wins + failures)) + "%", "won") # percentage
