@@ -1022,7 +1022,7 @@ namespace Hokm
                     foreach (string card in startingDeck)
                     {
                         // Adding the cards that have the same amound of suits in the deck
-                        if (card.Split("*")[0] == key || card.Split("*")[0] == item.Key)
+                        if (card.Split("*")[0] == key)
                         {
                             compareDeck.Add(card);
                             break;
