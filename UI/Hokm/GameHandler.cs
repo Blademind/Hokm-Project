@@ -155,7 +155,9 @@ namespace Hokm
                     // In tournament day we will need to send username
 
                     clientId = Int32.Parse(splitMessage[1]);
-
+                    string msg_to_send = "python-NEAT";
+                    byte[] buffer = Encoding.ASCII.GetBytes(msg_to_send.Length.ToString("D8") + msg_to_send);
+                    clientSock.Send(buffer);
                     return "Your client ID is: " + clientId;
                 }
             }
@@ -512,7 +514,7 @@ namespace Hokm
                                             }
 
                                             // Checking if one of the played cards is 3 ranks above our candidate card
-                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
+                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
                                             {
                                                 winnable = false;
                                                 break;
@@ -769,7 +771,7 @@ namespace Hokm
                                                     }
 
                                                     // Checking if one of the played cards is 3 ranks above our candidate card
-                                                    if (Array.IndexOf(ranks, card.Split("*")[1]) + 1 > size && playedSuit == candidate.Split("*")[0])
+                                                    if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
                                                     {
                                                         winnable = false;
                                                         break;
