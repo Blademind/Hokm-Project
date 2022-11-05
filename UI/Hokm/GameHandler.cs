@@ -44,7 +44,7 @@ namespace Hokm
         public string[] startingDeck;
         public GameClient gameClient;
         public string[] playedCards;
-        public bool enableUI = true;
+        public bool enableUI = false;
 
         public dynamic GameMessageParser(string msg)
         {
@@ -344,6 +344,7 @@ namespace Hokm
                         bool winningCardExists = false;
                         bool aceFound = false;
                         bool haveAce = false;
+                        bool possibleWin = false;
 
                         // 4th player in line
                         if (playedCards.Count(s => s != "") == 3)
@@ -417,7 +418,7 @@ namespace Hokm
 
                             // Sorting by descending again in order to find a winning card
                             putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-
+                            int highestCard = Array.IndexOf(ranks, putCards[0].Split("*")[1]);
                             // Scanning through candidates
                             foreach (string candidate in candidates)
                             {
@@ -514,9 +515,9 @@ namespace Hokm
                                             }
 
                                             // Checking if one of the played cards is 3 ranks above our candidate card
-                                            if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
+                                            if (highestCard + 2 < size && playedSuit == candidate.Split("*")[0])
                                             {
-                                                winnable = false;
+                                                possibleWin = true;
                                                 break;
                                             }
                                         }
@@ -547,6 +548,11 @@ namespace Hokm
 
                                 // If found a winning card
                                 if (winnable)
+                                {
+                                    cardToSend = deck.IndexOf(candidate);
+                                    break;
+                                }
+                                if (possibleWin)
                                 {
                                     cardToSend = deck.IndexOf(candidate);
                                     break;
@@ -604,7 +610,7 @@ namespace Hokm
                             rank = ranks[index];
                             candidates = new List<string>();
                             cardToSend = FindSuit(suit, rank);
-
+                            
                             // Find highest ranks candidates
                             while (index >= 0)
                             {
@@ -628,6 +634,7 @@ namespace Hokm
                                 bool winningCardExists = false;
                                 bool aceFound = false;
                                 bool haveAce = false;
+                                bool possibleWin = false;
 
                                 // 4th player in line
                                 if (playedCards.Count(s => s != "") == 3)
@@ -689,7 +696,7 @@ namespace Hokm
 
                                     // Sorting by descending again in order to find a winning card
                                     putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-
+                                    int highestCard = Array.IndexOf(ranks, putCards[0].Split("*")[1]);
                                     // Scanning through candidates
                                     foreach (string candidate in candidates)
                                     {
@@ -771,9 +778,9 @@ namespace Hokm
                                                     }
 
                                                     // Checking if one of the played cards is 3 ranks above our candidate card
-                                                    if (Array.IndexOf(ranks, card.Split("*")[1]) + 2 > size && playedSuit == candidate.Split("*")[0])
+                                                    if (highestCard + 2 > size && playedSuit == candidate.Split("*")[0])
                                                     {
-                                                        winnable = false;
+                                                        possibleWin = true;
                                                         break;
                                                     }
                                                 }
@@ -807,7 +814,11 @@ namespace Hokm
                                             cardToSend = deck.IndexOf(candidate);
                                             break;
                                         }
-
+                                        if (possibleWin)
+                                        {
+                                            cardToSend = deck.IndexOf(candidate);
+                                            break;
+                                        }
                                         // If our friend wins or an ace was found in played cards
                                         if (friendWins || aceFound)
                                         {
