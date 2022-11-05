@@ -44,7 +44,7 @@ namespace Hokm
         public string[] startingDeck;
         public GameClient gameClient;
         public string[] playedCards;
-        public bool enableUI = false;
+        public bool enableUI = true;
 
         public dynamic GameMessageParser(string msg)
         {
@@ -246,8 +246,6 @@ namespace Hokm
             // First turn
             if (playedSuit == "")
             {
-                bool found = false;
-
                 // Parsing through deck checking for highest rank possible
                 index = 12;
                 rank = ranks[index];
@@ -345,6 +343,7 @@ namespace Hokm
                         bool aceFound = false;
                         bool haveAce = false;
                         bool possibleWin = false;
+                        int highestCard;
 
                         // 4th player in line
                         if (playedCards.Count(s => s != "") == 3)
@@ -412,13 +411,24 @@ namespace Hokm
                                 if (card != "")
                                 {
                                     if (Array.IndexOf(putCards.ToArray(), card) == -1 && card.Split("*")[0] == suit)
+                                    {
+                                        Console.WriteLine("got here");
                                         putCards.Add(card);
+                                    }
                                 }
                             }
 
                             // Sorting by descending again in order to find a winning card
                             putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-                            int highestCard = Array.IndexOf(ranks, putCards[0].Split("*")[1]);
+                            if (putCards.Count > 0)
+                            {
+                                highestCard = Array.IndexOf(ranks, putCards[0].Split("*")[1]);
+                            }
+                            else
+                            {
+                                highestCard = int.MaxValue;
+                            }
+
                             // Scanning through candidates
                             foreach (string candidate in candidates)
                             {
@@ -515,7 +525,7 @@ namespace Hokm
                                             }
 
                                             // Checking if one of the played cards is 3 ranks above our candidate card
-                                            if (highestCard + 2 < size && playedSuit == candidate.Split("*")[0])
+                                            if (highestCard + 1 < size && playedSuit == candidate.Split("*")[0])
                                             {
                                                 possibleWin = true;
                                                 break;
@@ -635,6 +645,7 @@ namespace Hokm
                                 bool aceFound = false;
                                 bool haveAce = false;
                                 bool possibleWin = false;
+                                int highestCard;
 
                                 // 4th player in line
                                 if (playedCards.Count(s => s != "") == 3)
@@ -696,7 +707,16 @@ namespace Hokm
 
                                     // Sorting by descending again in order to find a winning card
                                     putCards = putCards.OrderByDescending(a => Array.IndexOf(ranks, a.Split("*")[1])).ToList();
-                                    int highestCard = Array.IndexOf(ranks, putCards[0].Split("*")[1]);
+                                    if (putCards.Count > 0)
+                                    {
+                                        highestCard = Array.IndexOf(ranks, putCards[0].Split("*")[1]);
+                                    }
+                                    else
+                                    {
+                                        highestCard = int.MaxValue;
+                                    }
+
+
                                     // Scanning through candidates
                                     foreach (string candidate in candidates)
                                     {
@@ -778,7 +798,7 @@ namespace Hokm
                                                     }
 
                                                     // Checking if one of the played cards is 3 ranks above our candidate card
-                                                    if (highestCard + 2 > size && playedSuit == candidate.Split("*")[0])
+                                                    if (highestCard + 1 > size && playedSuit == candidate.Split("*")[0])
                                                     {
                                                         possibleWin = true;
                                                         break;
